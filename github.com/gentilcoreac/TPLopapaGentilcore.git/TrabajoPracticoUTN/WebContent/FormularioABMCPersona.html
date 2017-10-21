@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">MyReserva</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="Inicio.html">Inicio</a></li>
+      <li><a href="#">Reservar</a></li>
+      <li><a href="#">Elementos</a></li>
+      <li class="active"><a href="#">Usuarios</a></li>
+    </ul>
+    <form class="navbar-form navbar-left">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</nav>
+
+
+<div class="container">
+  <h2>Formulario de Persona: input</h2>
+  <p>Ingrese los datos y a continuación presione guardar:</p>
+  
+  <form name="signin" action="ServletABMCPersona" method="post"> 
+  
+    <div class="form-group">
+      <label for="inputusr">Usuario:</label>
+      <input name="usuario" type="text" class="form-control" id="inputusr">
+    </div>
+    <div class="form-group">
+      <label for="inputpwd">Contraseña:</label>
+      <input name="contrasenia" type="password" class="form-control" id="inputpwd">
+    </div>
+    <div class="form-group">
+      <label for="inputcategoria">Categoria:</label>
+      <input name="categoria" type="text" class="form-control" id="inputcategoria">
+    </div>       
+    <div class="form-group">
+      <label for="inputapel">Apellido:</label>
+      <input name="apellido" type="text" class="form-control" id="inputapel">
+    </div>
+    <div class="form-group">
+      <label for="inputnombre">Nombre:</label>
+      <input name="nombre" type="text" class="form-control" id="inputnombre">
+    </div>
+    <div class="form-group">
+      <label for="inputdni">Dni:</label>
+      <input name="dni" type="text" class="form-control" id="inputdni">
+    </div>
+    <div class="form-group">
+      <label for="inputemail">Email:</label>
+      <input name="email" type="text" class="form-control" id="inputemail">
+    </div>
+    <br> 
+    <br> 
+<h3>  faltaria agregar el habilitado, y tambien corregir lo de categoria(que sea seleccionable)    </h3> 
+<br> <br> 
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
+	
+	</form>
+</div>
+</body>
+</html>
