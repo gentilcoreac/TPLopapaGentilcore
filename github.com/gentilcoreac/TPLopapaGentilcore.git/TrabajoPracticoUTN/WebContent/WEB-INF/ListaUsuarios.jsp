@@ -43,8 +43,12 @@
 
 
 <div class="container">
-  <h2>Usuarios</h2>
-  <p>Usuarios subtitulos:</p>            
+
+  <h2>Lista de usuarios</h2>
+  <p>Tipea algo en el campo de entrada para buscar en la tabla para buscar por alguno de los campos:</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>
+  
   <table class="table table-striped">
   
       <thead>
@@ -54,8 +58,7 @@
         <th>Nombre</th>
       </tr>
     </thead>
-    
-    <tbody>
+    <tbody id="myTable">
 		<%
 			ArrayList<Persona>listaPers= (ArrayList<Persona>)request.getAttribute("listaPersonas");
 			for(Persona p : listaPers){
@@ -71,6 +74,18 @@
     </tbody>
   </table>
 </div>
+
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 
 </body>
 </html>

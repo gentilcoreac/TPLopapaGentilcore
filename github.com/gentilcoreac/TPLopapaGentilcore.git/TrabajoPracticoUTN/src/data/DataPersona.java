@@ -27,7 +27,7 @@ public class DataPersona{
 							p.setApellido(rs.getString("apellido"));
 							p.setDni(rs.getString("dni"));
 							p.setUsuario(rs.getString("usuario"));		
-							p.setContrasenia(rs.getString("contrasenia"));	//NO DEBER�A SER ALGUN METODO DE CONTRASE�AS?							
+							p.setContrasenia(rs.getString("contrasenia"));							
 							p.setEmail(rs.getString("email"));
 							p.setHabilitado(rs.getBoolean("habilitado"));		
 							int idCat= rs.getInt("id_categoria");
