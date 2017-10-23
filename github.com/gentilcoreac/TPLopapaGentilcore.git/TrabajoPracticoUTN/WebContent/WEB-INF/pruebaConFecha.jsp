@@ -18,7 +18,18 @@
       <li><a href="#">Inicio</a></li>
       <li><a href="#">Reservar</a></li>
       <li><a href="#">Elementos</a></li>
-      <li  class="active"><a href="#">Usuarios</a></li>
+      <li class="dropdown" >
+          <a href="FormularioABMCPersona.html" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Usuarios <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Ver listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="FormularioABMCPersona.html">Agregar usuario</a></li>
+            <li><a href="#">Editar usuario</a></li>
+            <li><a href="#">Borrar usuario</a></li>
+          </ul>
+        </li>
     </ul>
     <form class="navbar-form navbar-left">
       <div class="input-group">
