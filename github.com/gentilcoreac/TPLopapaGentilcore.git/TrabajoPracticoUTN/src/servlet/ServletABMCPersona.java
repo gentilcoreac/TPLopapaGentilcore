@@ -55,7 +55,7 @@ public class ServletABMCPersona extends HttpServlet {
 				per.setApellido(request.getParameter("apellido"));		
 				per.setNombre(request.getParameter("nombre"));
 				per.setDni(request.getParameter("dni"));
-			//	per.setHabilitado(Boolean.parseBoolean(request.getParameter("habilitado")));
+				per.setHabilitado(Boolean.parseBoolean(request.getParameter("habilitado")));
 				per.setEmail(request.getParameter("email"));
 				
 				
@@ -63,13 +63,15 @@ public class ServletABMCPersona extends HttpServlet {
 		try {
 			
 			ctrl.add(per);
-			
+			request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response);
+
 		} catch (Exception e) {
-			e.printStackTrace();			//redirigir
+			e.printStackTrace();			//redirigir. AVERIGUAR COMO ES ESTO AL MOMENTO D REDIRIGIR----------
+			request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
+
 		}
 		
 		
-		request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response);
 
 
 	//	doGet(request, response);

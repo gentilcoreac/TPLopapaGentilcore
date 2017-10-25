@@ -23,7 +23,7 @@
       <a class="navbar-brand" href="#">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="Inicio.html">Inicio</a></li>
+      <li><a href="WEB-INF/Inicio.jsp">Inicio</a></li>
       <li><a href="#">Reservar</a></li>
       <li><a href="#">Elementos</a></li>
      
