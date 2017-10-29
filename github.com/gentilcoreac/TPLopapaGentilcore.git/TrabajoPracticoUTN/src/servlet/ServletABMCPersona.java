@@ -70,8 +70,6 @@ public class ServletABMCPersona extends HttpServlet {
 			request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
 
 		}
-		
-		
 
 
 	//	doGet(request, response);

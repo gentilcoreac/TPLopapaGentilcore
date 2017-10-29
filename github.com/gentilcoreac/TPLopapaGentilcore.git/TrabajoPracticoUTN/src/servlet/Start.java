@@ -67,7 +67,7 @@ public class Start extends HttpServlet {
 				request.getRequestDispatcher("Errores/UsuarioNoEncontrado.jsp").forward(request, response);								
 			}
 			else{
-			
+				
 			request.setAttribute("listaPersonas", ctrl.getAll());
 			request.getSession().setAttribute("user", pers);		//1 atributo: user es un atributo q yo creo
 																	//2 parametro: es un objeto java(debe ser serializable y javabin)
@@ -83,7 +83,7 @@ public class Start extends HttpServlet {
 			//response.getWriter().append(user).append(" ").append(pass);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();			
 		}
 		//doGet(request, response);
 	}

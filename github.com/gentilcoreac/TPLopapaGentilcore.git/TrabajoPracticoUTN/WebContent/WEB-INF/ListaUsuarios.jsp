@@ -81,6 +81,11 @@
 			<td><%=p.getDni() %></td>
 			<td><%=p.getApellido() %></td>
 			<td><%=p.getNombre() %></td>
+			<td>
+				<form action="" method="post" enctype="text/plain" name="mihidden">
+					<input type="hidden" name="opcion" value=<%=p.getDni() %>>
+				</form>
+			</td>
 		</tr>
 		<%
 			}
