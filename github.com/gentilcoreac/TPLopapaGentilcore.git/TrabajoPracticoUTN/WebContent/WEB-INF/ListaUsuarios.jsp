@@ -169,15 +169,15 @@
 			<td><%=p.isHabilitado() %></td>											
 			<td>
 				<form action="ABMCPersonaEliminar" method="post" name="formOpcion" id="formB">
-
-					<input name="eliminar" type="hidden" id="inputEliminar" value="<%=p.getId()%>" >
+					<input name="DNIeliminar" type="hidden" id="inputEliminar" value="<%=p.getDni()%>" >
+					<input name="opcion" type="hidden" id="opcionElegida" value="eliminar">					
 					<button class="btn" type="submit">Eliminar</button>					
 				</form>
 			</td>
 			<td>
 				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formM">
-
-					<input name="editar" type="hidden" id="inputEliminar" value="<%=p.getId()%>" >
+					<input name="DNIeditar" type="hidden" id="inputEditar" value="<%=p.getDni()%>" >
+					<input name="opcion" type="hidden" id="opcionElegida" value="editar">				<!-- esta es para  -->
 					<button class="btn" type="submit">Editar</button>					
 				</form>
 			</td>

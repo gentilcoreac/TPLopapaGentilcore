@@ -63,10 +63,11 @@ public class ServletABMCPersona extends HttpServlet {
 		try {
 			
 			ctrl.add(per);
-			request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response); 	//webinf o para mantener los atributos input
+			
 
 		} catch (Exception e) {
-			e.printStackTrace();			//redirigir. AVERIGUAR COMO ES ESTO AL MOMENTO D REDIRIGIR----------
+
 			//request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
 			response.sendRedirect("Errores/PaginaDeErrores.jsp");
 		}

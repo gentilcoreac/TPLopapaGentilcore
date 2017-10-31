@@ -12,16 +12,16 @@ import business.entities.Persona;
 import business.logic.CtrlPersonaLogic;
 
 /**
- * Servlet implementation class ABMCPersonaEliminar
+ * Servlet implementation class ABMCPersonaEditar
  */
-@WebServlet("/ABMCPersonaEliminar")
-public class ABMCPersonaEliminar extends HttpServlet {
+@WebServlet("/ABMCPersonaEditar")
+public class ABMCPersonaEditar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ABMCPersonaEliminar() {
+    public ABMCPersonaEditar() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,25 +38,31 @@ public class ABMCPersonaEliminar extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
+		
 		Persona per = new Persona();
-		//System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("eliminar")));
-		per.setDni(request.getParameter("DNIeliminar"));
+		//System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("editar")));
+		per.setDni(request.getParameter("DNIeditar"));
+		per.setApellido(request.getParameter("ApellidoEditar"));
+		Categoria cat = new Categoria();
+		cat.setId(Integer.parseInt(request.getParameter("CategoriaEditar"))); 
+		per.setContrasenia(request.getParameter("ContraseniaEditar"));
+		per.setEmail(request.getParameter("EmailEditar"));
+		per.setHabilitado(Boolean.parseBoolean(request.getParameter("HabilitadoEditar")));
+		per.setId(Integer.parseInt(request.getParameter("IdEditar")));
+		per.setNombre(request.getParameter("NombreEditar"));
+		per.setUsuario(request.getParameter("UsuarioEditar"));
 		
 		CtrlPersonaLogic ctrl= new CtrlPersonaLogic();		
 			try {
-				ctrl.delete(per);
-				//System.out.println("Persona ID eliminada"+  request.getParameter("eliminar"));
+				ctrl.update(per);
+				//System.out.println("Persona ID editada"+  request.getParameter("editar"));
 				//request.getRequestDispatcher("WEB-INF/ListaUsuario.jsp").forward(request, response);
 				request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response);
-				
+		
 			} catch (Exception e) {
 				response.sendRedirect("Errores/PaginaDeErrores.jsp");
+
 				//-------------->>>>>>>>>>REDIRIGIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-
 			}
-
- 	}
-
+	}
 }
