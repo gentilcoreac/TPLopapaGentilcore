@@ -39,15 +39,16 @@ public class ABMCPersonaEliminar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
+	
 		Persona per = new Persona();
-		System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("eliminar")));
+		//System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("eliminar")));
 		per.setId(Integer.parseInt(request.getParameter("eliminar")));
 		
 		CtrlPersonaLogic ctrl= new CtrlPersonaLogic();		
 			try {
 				ctrl.delete(per);
+				//System.out.println("Persona ID eliminada"+  request.getParameter("eliminar"));
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
