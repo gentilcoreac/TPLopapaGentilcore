@@ -56,20 +56,99 @@
 </nav>
 
 
+
+
+
+
+
+<div class="container">
+  <h2>Formulario de Persona</h2>
+  <p>Ingrese los datos y a continuación presione crear usuario:</p>
+  
+  <form name="signin" action="ServletABMCPersona" method="post"> 
+  
+    <div class="form-group">
+      <label for="inputusr">Usuario:</label>
+      <input name="usuario" type="text" class="form-control" id="inputusr">
+    </div>
+    <div class="form-group">
+      <label for="inputpwd">Contraseña:</label>
+      <input name="contrasenia" type="password" class="form-control" id="inputpwd">
+    </div>
+    <div class="form-group">
+      <label for="inputCategoriaLista">Categoria</label>
+      <select name="categoria" class="form-control" id="inputCategoriaLista">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+    </div>   
+    <div class="form-group">
+      <label for="inputapel">Apellido:</label>
+      <input name="apellido" type="text" class="form-control" id="inputapel">
+    </div>
+    <div class="form-group">
+      <label for="inputnombre">Nombre:</label>
+      <input name="nombre" type="text" class="form-control" id="inputnombre">
+    </div>
+    <div class="form-group">
+      <label for="inputdni">Dni:</label>
+      <input name="dni" type="text" class="form-control" id="inputdni">
+    </div>
+    <div class="form-group">
+      <label for="inputemail">Email:</label>
+      <input name="email" type="text" class="form-control" id="inputemail">
+    </div>
+	<div class="checkbox">
+	  <label for="inputhabilitado">Habilitado:</label>
+	  <input name="habilitado" type="checkbox" value="1" id="inputhabilitado">
+	</div>   
+    <br> 
+    <br> 
+	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
+	<br> <br> 
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
+	</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="container">
 
   <h2>Lista de usuarios</h2>
-  <p>Tipea algo en el campo de entrada para buscar en la tabla para buscar por alguno de los campos:</p>  
+  <p>Tipeá algo en el campo de entrada para buscar en la tabla para buscar por alguno de los campos:</p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
   
   <table class="table table-striped">
   
+  
+  <!--.............................................  poner el formulario de ingreso de valores...............................-->
+  
       <thead>
       <tr>
+        <th>ID</th>
         <th>DNI</th>
         <th>Apellido</th>
         <th>Nombre</th>
+        <th>Usuario</th>
+        <th>Contraseña</th>
+        <th>Email</th>
+        <th>Id Categoria</th>        
+        <th>Categoria</th>
+        <th>Habilitado</th>
       </tr>
     </thead>
     <tbody id="myTable">
@@ -78,21 +157,39 @@
 			for(Persona p : listaPers){
 		%>
 		<tr>
+			<td><%=p.getId() %></td>			
 			<td><%=p.getDni() %></td>
 			<td><%=p.getApellido() %></td>
-			<td><%=p.getNombre() %></td>
+			<td><%=p.getNombre() %></td>	
+			<td><%=p.getUsuario() %></td>	
+			<td><%=p.getContrasenia() %></td>	
+			<td><%=p.getEmail() %></td>	
+			<td><%=p.getCategoria().getId() %></td>																		
+			<td><%=p.getCategoria().getDescripcion() %></td>
+			<td><%=p.isHabilitado() %></td>											
 			<td>
-				<form action="" method="post" enctype="text/plain" name="mihidden">
-					<input type="hidden" name="opcion" value=<%=p.getDni() %>>
+				<form action="ABMCPersonaEliminar" method="post" name="formOpcion" id="formABMC">
+
+					<input name="eliminar" type="hidden" id="inputEliminar" value="<%=p.getId()%>" >
+					<button class="btn" type="submit">Eliminar</button>					
 				</form>
 			</td>
 		</tr>
 		<%
 			}
 		%>
+		
     </tbody>
   </table>
 </div>
+
+
+
+
+
+
+
+
 
 <!--  Como buena practica el script me parece que no va acá. Probé funcionalidades con esto-->
 <script>

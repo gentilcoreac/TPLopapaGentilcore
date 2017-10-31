@@ -67,8 +67,8 @@ public class ServletABMCPersona extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();			//redirigir. AVERIGUAR COMO ES ESTO AL MOMENTO D REDIRIGIR----------
-			request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
-
+			//request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
+			response.sendRedirect("Errores/PaginaDeErrores.jsp");
 		}
 
 
