@@ -168,7 +168,7 @@
 			<td><%=p.getCategoria().getDescripcion() %></td>
 			<td><%=p.isHabilitado() %></td>											
 			<td>
-				<form action="ABMCPersonaEliminar" method="post" name="formOpcion" id="formB">
+				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formB">
 					<input name="DNIeliminar" type="hidden" id="inputEliminar" value="<%=p.getDni()%>" >
 					<input name="opcion" type="hidden" id="opcionElegida" value="eliminar">					
 					<button class="btn" type="submit">Eliminar</button>					
@@ -178,7 +178,7 @@
 				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formM">
 					<input name="DNIeditar" type="hidden" id="inputEditar" value="<%=p.getDni()%>" >
 					<input name="opcion" type="hidden" id="opcionElegida" value="editar">				<!-- esta es para  -->
-					<button class="btn" type="submit">Editar</button>					
+					<button class="btn" type="submit"><img alt="Icono de editar" width="20px" height="20px" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698873-icon-136-document-edit-512.png"></button>					
 				</form>
 			</td>
 		</tr>

@@ -39,6 +39,32 @@ public class ABMCPersonaEditar extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+
+		
+		//#####
+		String opcion = request.getParameter("opcion");
+		if(opcion.equals("eliminar"))
+		{
+		Persona per = new Persona();
+		//System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("eliminar")));
+		per.setDni(request.getParameter("DNIeliminar"));
+		
+		CtrlPersonaLogic ctrl= new CtrlPersonaLogic();		
+			try {
+				ctrl.delete(per);
+				//System.out.println("Persona ID eliminada"+  request.getParameter("eliminar"));
+				//request.getRequestDispatcher("WEB-INF/ListaUsuario.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response);
+				
+			} catch (Exception e) {
+				response.sendRedirect("Errores/PaginaDeErrores.jsp");
+				//-------------->>>>>>>>>>REDIRIGIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+			}
+		}	
+			
+		//####
+		if(opcion.equals("editar")){
 		Persona per = new Persona();
 		//System.out.println("El valor es en el servlet"+  Integer.parseInt(request.getParameter("editar")));
 		per.setDni(request.getParameter("DNIeditar"));
@@ -64,5 +90,7 @@ public class ABMCPersonaEditar extends HttpServlet {
 
 				//-------------->>>>>>>>>>REDIRIGIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 			}
+			
+		}
 	}
 }
