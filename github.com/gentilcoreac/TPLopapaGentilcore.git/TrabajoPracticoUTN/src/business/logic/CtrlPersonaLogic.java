@@ -55,10 +55,7 @@ public class CtrlPersonaLogic {
 	
 	public Persona getLoggedUser(String usuario,String pass)throws Exception{
 		return dataPer.getLoggedUser(usuario, pass);
-	} //SACADO PORQUE POR RECOMENDACION DE MECA SE PASAN OBJETOS COMO PARAMETROS.
-	public Persona getLoggedUser(Persona per)throws Exception{
-		return dataPer.getLoggedUser(per);
-	}	
+	}
 	
 	public ArrayList<Categoria> getCategorias() throws Exception{
 		return dataCat.getAll();

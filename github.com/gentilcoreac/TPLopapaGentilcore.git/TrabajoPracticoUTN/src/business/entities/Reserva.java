@@ -3,8 +3,18 @@ package business.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+
+
+
+
+
+
 public class Reserva implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id_reserva;
 	private Persona persona;
 	private Elemento elemento;
@@ -27,7 +37,7 @@ public class Reserva implements Serializable{
 		this.persona = id_persona;
 		this.elemento = id_elemento;
 		this.fecha_hora_reserva_hecha = fecha_hora_reserva_hecha;
-		this.fecha_hora_desde_solicitada = fecha_hora_desde_solicitada;
+		this.fecha_hora_desde_solicitada =fecha_hora_desde_solicitada;
 		this.fecha_hora_hasta_solicitada = fecha_hora_hasta_solicitada;
 		this.fecha_hora_entregado = fecha_hora_entregado;
 		this.detalle = detalle;

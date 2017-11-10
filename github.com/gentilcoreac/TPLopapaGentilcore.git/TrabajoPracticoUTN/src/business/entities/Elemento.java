@@ -3,6 +3,10 @@ package business.entities;
 import java.io.Serializable;
 
 public class Elemento implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id_elemento;
 	private String nombre; //este es opcional
 	private TipoDeElemento tipo;

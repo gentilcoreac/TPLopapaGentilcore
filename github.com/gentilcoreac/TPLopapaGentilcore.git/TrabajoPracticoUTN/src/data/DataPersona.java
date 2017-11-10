@@ -27,7 +27,7 @@ public class DataPersona{
 							p.setApellido(rs.getString("apellido"));
 							p.setDni(rs.getString("dni"));
 							p.setUsuario(rs.getString("usuario"));		
-							p.setContrasenia(rs.getString("contrasenia"));							
+							p.setContrasenia(rs.getString("contrasenia"));	//NO DEBERï¿½A SER ALGUN METODO DE CONTRASEï¿½AS?							
 							p.setEmail(rs.getString("email"));
 							p.setHabilitado(rs.getBoolean("habilitado"));		
 							int idCat= rs.getInt("id_categoria");
@@ -73,9 +73,8 @@ public class DataPersona{
 				p.setId(keyResultSet.getInt(1));				
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al agregar persona. "
-					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser únicos. "
-					+ " En caso de no poder resolver contáctese con Patalalas S.A.");
+			throw new AppDataException(sqlex,"Error al agregar persona.\n"
+					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos.");
 		}
 		finally{
 			try {
@@ -107,13 +106,13 @@ public class DataPersona{
 			stmt.setBoolean(7, p.isHabilitado());
 			stmt.setInt(8, p.getCategoria().getId());
 			stmt.setString(9, p.getDni());
-			stmt.executeUpdate();
-			
+			int rowsAffected=stmt.executeUpdate();
+			if(rowsAffected==0){throw new AppDataException(new Exception("Persona Inexistente, no se pudo actualizar"),"Error");}
 			
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex,"Error al modificar persona. "
-					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser únicos. "
-					+ " En caso de no poder resolverlo contáctese con Patalalas S.A.");
+					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos. "
+					+ " En caso de no poder resolverlo contactese con Patalalas S.A.");
 		} 
 		finally {
 			try {
@@ -129,27 +128,27 @@ public class DataPersona{
 	public void delete(Persona p) throws SQLException,AppDataException{	/////////////preguntar si baja logica o baja fisica///////////////////////
 		PreparedStatement pstmt1 = null;
 		PreparedStatement pstmt2 = null;
-		PreparedStatement pstmt3 = null;
 		try {
-			pstmt1=FactoryConexion.getInstancia().getConn().prepareStatement("delete from reserva where id_persona=?;");
-			pstmt1.setInt(1, p.getId());
+			pstmt1=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"delete from reserva "
+					+ "where id_persona in "
+					+ "(select id_persona from persona where dni=?);");
+			pstmt1.setString(1, p.getDni());
 			pstmt1.executeUpdate();
-			
 			pstmt2=FactoryConexion.getInstancia().getConn().prepareStatement("delete from persona where dni=?;");
 			pstmt2.setString(1,p.getDni());
-			pstmt2.executeUpdate();	
-			
-			pstmt3=FactoryConexion.getInstancia().getConn().prepareStatement("delete from persona where id_persona=?;");
-			pstmt3.setInt(1,p.getId());
-			pstmt3.executeUpdate();
+			int rowsAffected=pstmt2.executeUpdate();
+			if(rowsAffected==0){
+				throw new AppDataException(new Exception("Persona inexistente\nNo se pudo eliminar"),"Error");
+			}
 			
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al eliminar persona"
-											+ " En caso de no poder resolverlo contáctese con Patalalas S.A.");
+											+ " En caso de no poder resolverlo contactese con Patalalas S.A.");
 		}
 		finally{
 			if(pstmt1!=null){pstmt1.close();}
-	//		if(pstmt2!=null){pstmt2.close();}
+			if(pstmt2!=null){pstmt2.close();}
 			FactoryConexion.getInstancia().releaseConn();
 		}
 	}
@@ -200,18 +199,7 @@ public class DataPersona{
 		DataCategoria dc = new DataCategoria();
 		try {
 			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select "
-							+"id_persona"
-							+ ",nombre "
-							+ ",apellido"
-							+ ",dni"
-							+ ",usuario"
-							+ ",contrasenia"
-							+ ",email"
-							+ ",habilitado"
-							+ "id_categoria "
-					+ " from persona "
-					+ " where id_persona=?");
+					"select * from persona where id_persona=?");
 			pstmt.setInt(1, per.getId());
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -249,17 +237,7 @@ public class DataPersona{
 		DataCategoria dc = new DataCategoria();
 		try {
 			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select "
-							+"id_persona"
-							+ ",nombre "
-							+ ",apellido"
-							+ ",dni"
-							+ ",usuario"
-							+ ",contrasenia"
-							+ ",email"
-							+ ",habilitado"
-							+ "id_categoria "
-							+ " from persona where id_persona=?");
+					"select * from persona where id_persona=?");
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -364,31 +342,32 @@ public class DataPersona{
 		}		
 	}
 	
-
 	
-	public Persona getLoggedUser(String usr, String pass)throws SQLException,AppDataException{
-		Persona p=null;
+	
+	
+	public Persona getLoggedUser(String usuario,String pass)throws SQLException,AppDataException{
+		Persona per=null;
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
 		try{
 			
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					"select * from persona where usuario=? and contrasenia=?;");
-			pstmt.setString(1, usr);
+			pstmt.setString(1, usuario);
 			pstmt.setString(2, pass);
 			res=pstmt.executeQuery();
 			if(res!=null && res.next()){
-				p=new Persona();
-				p.setId(res.getInt("id_persona"));
-				p.setDni(res.getString("dni"));
-				p.setNombre(res.getString("nombre"));
-				p.setApellido(res.getString("apellido"));
-				p.setUsuario(res.getString("usuario"));
-				p.setContrasenia(res.getString("contrasenia"));
-				p.setHabilitado(res.getBoolean("habilitado"));
+				per=new Persona();
+				per.setId(res.getInt("id_persona"));
+				per.setDni(res.getString("dni"));
+				per.setNombre(res.getString("nombre"));
+				per.setApellido(res.getString("apellido"));
+				per.setUsuario(res.getString("usuario"));
+				per.setContrasenia(res.getString("contrasenia"));
+				per.setHabilitado(res.getBoolean("habilitado"));
 				int id_categoria=res.getInt("id_categoria");
-				p.setCategoria(new DataCategoria().getOne(id_categoria));
-				p.setEmail(res.getString("email"));
+				per.setCategoria(new DataCategoria().getOne(id_categoria));
+				per.setEmail(res.getString("email"));
 			}
 			
 		}
@@ -404,52 +383,7 @@ public class DataPersona{
 				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
 			}
 		}
-		return p;
-	}
-	
-	
-
-	public Persona getLoggedUser(Persona per)throws SQLException,AppDataException{
-		Persona p=null;
-		PreparedStatement pstmt=null;
-		ResultSet res=null;
-		try{
-			
-			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from persona where usuario=? and contrasenia=?;");
-			/*pstmt.setString(1, usuario);
-			pstmt.setString(2, pass);*/
-			pstmt.setString(1, per.getUsuario());				//POR RECOMENDACION DE MECA SE PASAN OBJETOS COMO PARAMETROS
-			pstmt.setString(2, per.getContrasenia());			//POR RECOMENDACION DE MECA SE PASAN OBJETOS COMO PARAMETROS.
-			res=pstmt.executeQuery();
-			if(res!=null && res.next()){
-				p=new Persona();
-				p.setId(res.getInt("id_persona"));
-				p.setDni(res.getString("dni"));
-				p.setNombre(res.getString("nombre"));
-				p.setApellido(res.getString("apellido"));
-				p.setUsuario(res.getString("usuario"));
-				p.setContrasenia(res.getString("contrasenia"));
-				p.setHabilitado(res.getBoolean("habilitado"));
-				int id_categoria=res.getInt("id_categoria");
-				p.setCategoria(new DataCategoria().getOne(id_categoria));
-				p.setEmail(res.getString("email"));
-			}
-			
-		}
-		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar usuario logueado");
-		}
-		finally{
-			try{
-			if(res!=null)res.close();
-			if(pstmt!=null)pstmt.close();
-			FactoryConexion.getInstancia().releaseConn();}
-			catch(SQLException sqlex){
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
-			}
-		}
-		return p;
+		return per;
 	}
 	
 }

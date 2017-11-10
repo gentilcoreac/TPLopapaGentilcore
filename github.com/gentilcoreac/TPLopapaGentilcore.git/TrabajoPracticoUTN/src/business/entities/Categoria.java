@@ -3,6 +3,10 @@ package business.entities;
 import java.io.Serializable;
 
 public class Categoria implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id_categoria;
 	private String descripcion;
 
