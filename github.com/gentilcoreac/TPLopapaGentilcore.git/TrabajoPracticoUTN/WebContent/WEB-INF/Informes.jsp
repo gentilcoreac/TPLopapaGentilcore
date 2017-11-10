@@ -51,7 +51,7 @@
 <body>
 <h3> Upss, hubo un problema </h3>
 
-La solicitud no pudo ser completada
+<%=request.getAttribute("Error")%>
 
 <br>
 <img class="img-responsive" src="http://1.bp.blogspot.com/_hljKDuw-cxQ/TUh2B2hfqfI/AAAAAAAARh0/eKrBYxnZyKU/s00/nobuscador.jpg" alt="Chania"> 
