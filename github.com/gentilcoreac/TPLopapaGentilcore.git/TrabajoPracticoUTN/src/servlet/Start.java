@@ -64,6 +64,7 @@ public class Start extends HttpServlet {
 			Persona pers=ctrl.getLoggedUser(user,pass);			
 			
 			if(pers==null){		//en caso que no exista el que se ingres�
+				request.setAttribute("Titulo", "Usuario inexistente");
 				request.setAttribute("Error", "Usuario no encontrado");
 				request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);								
 			}
