@@ -10,7 +10,9 @@
   <title>Lista Usuarios</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/formPersona.css" >
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -61,23 +63,23 @@
 
 
 
-<div class="container">
+<div class="container-form-per">
   <h2>Formulario de Persona</h2>
   <p>Ingrese los datos y a continuación presione crear usuario:</p>
   
-  <form name="signin" action="ServletABMCPersona" method="post"> 
+  <form name="form-per" class="form-per" action="ServletABMCPersona" method="post"> 
   
     <div class="form-group">
       <label for="inputusr">Usuario:</label>
-      <input name="usuario" type="text" class="form-control" id="inputusr">
+      <input name="usuario" type="text" class="form-control" id="inputusr" required="">
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="password" class="form-control" id="inputpwd">
+      <input name="contrasenia" type="password" class="form-control" id="inputpwd" required="" >
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
-      <select name="categoria" class="form-control" id="inputCategoriaLista">
+      <select name="categoria" class="form-control" id="inputCategoriaLista" required="" >
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -85,34 +87,30 @@
     </div>   
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
-      <input name="apellido" type="text" class="form-control" id="inputapel">
+      <input name="apellido" type="text" class="form-control" id="inputapel" required="" >
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre">
+      <input name="nombre" type="text" class="form-control" id="inputnombre"  required="" >
     </div>
     <div class="form-group">
       <label for="inputdni">Dni:</label>
-      <input name="dni" type="text" class="form-control" id="inputdni">
+      <input name="dni" type="text" class="form-control" id="inputdni"  required="" >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail">
+      <input name="email" type="text" class="form-control" id="inputemail"  required="" >
     </div>
 	<div class="checkbox">
 	  <label for="inputhabilitado">Habilitado:</label>
 	  <input name="habilitado" type="checkbox" value="1" id="inputhabilitado">
 	</div>   
-    <br> 
-    <br> 
-	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
-	<br> <br> 
        <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
 	</form>
 </div>
 
 
-
+	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
 
 
 
@@ -153,7 +151,7 @@
     </thead>
     <tbody id="myTable">
 		<%
-			ArrayList<Persona>listaPers= (ArrayList<Persona>)request.getAttribute("listaPersonas");
+			ArrayList<Persona> listaPers= (ArrayList<Persona>)request.getAttribute("listaPersonas");
 			for(Persona p : listaPers){
 		%>
 		<tr>

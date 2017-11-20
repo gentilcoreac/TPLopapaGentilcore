@@ -6,15 +6,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import business.entities.Persona;
 import business.logic.CtrlPersonaLogic;
-import tools.AppDataException;
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Level;
+
 
 
 /**
@@ -26,13 +23,10 @@ public class Start extends HttpServlet {
 	private Logger logger;
 
     /**
-
      * Default constructor. 
-     * @return 
-
      */
 
-    public void Start() {
+    public Start() {
     	logger = LogManager.getLogger(getClass());
     }
 
@@ -51,44 +45,42 @@ public class Start extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 					//todo lo qe me mandan dentro del form esta en el request
-		try {
+		try{
 			String user=request.getParameter("user");
 			String pass=request.getParameter("pass");
+			CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
+			Persona usu=ctrl.getLoggedUser(user, pass);
+			if(usu!=null){
+				if(usu.isHabilitado()==true){
+					request.setAttribute("listaPersonas", ctrl.getAll());
+					request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
+																			//2 parametro: es un objeto java(debe ser serializable y javabin)
 
-	//		Persona per=new Persona();
-	//		per.setUsuario(user);
-	//		per.setContrasenia(pass);
-
-			CtrlPersonaLogic ctrl= new CtrlPersonaLogic();		
-
-			Persona pers=ctrl.getLoggedUser(user,pass);			
-			
-			if(pers==null){		//en caso que no exista el que se ingres�
-				request.setAttribute("Titulo", "Usuario inexistente");
-				request.setAttribute("Error", "Usuario no encontrado");
-				request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);								
+				/*   *todo lo que tenga que durar en muchas paginas, lo guardo en el servidor. El usuario logueado , que debe durar durante toda la sesion, se lo asigno al servidor
+					 * Si guardo un listado de reservas en la sesion, cuando haya miles de usuarios a la vez, saturar� el servidor
+					 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas.
+					 * 
+				*/
+					logger.log(Level.INFO,"log in "+usu.getDni());
+					request.getRequestDispatcher("WEB-INF/ListaUsuarios.jsp").forward(request, response);
+				}else{
+					request.setAttribute("Titulo", "Usuario inhabilitado");
+					request.setAttribute("Mensaje", "El usuario no se halla habilitado para ingresar al sistema");
+					request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
+				}
 			}
 			else{
-				
-			request.setAttribute("listaPersonas", ctrl.getAll());
-			request.getSession().setAttribute("user", pers);		//1 atributo: user es un atributo q yo creo
-																	//2 parametro: es un objeto java(debe ser serializable y javabin)
-
-		/*   *todo lo que tenga que durar en muchas paginas, lo guardo en el servidor. El usuario logueado , que debe durar durante toda la sesion, se lo asigno al servidor
-			 * Si guardo un listado de reservas en la sesion, cuando haya miles de usuarios a la vez, saturar� el servidor
-			 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas.
-			 * 
-		*/
-			
-			request.getRequestDispatcher("WEB-INF/ListaUsuarios.jsp").forward(request, response);
-
-			}
-			//response.getWriter().append(user).append(" ").append(pass);
-
-		} catch (Exception e) {
-			e.printStackTrace();			
+				request.setAttribute("Titulo", "Usuario inexistente");
+				request.setAttribute("Mensaje", "Usuario no encontrado");
+				request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);				}
 		}
-		//doGet(request, response);
+		catch(Exception ex){
+			request.setAttribute("Titulo", "Error");
+			request.setAttribute("Mensaje", ex.getMessage());
+			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
+		}
+
 	}
+	
 	
 }

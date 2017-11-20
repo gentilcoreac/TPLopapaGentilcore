@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,27 +16,62 @@
       <a class="navbar-brand" href="#">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Inicio</a></li>
-      <li><a href="#">Reservar</a></li>		
-      <li><a href="#">Elementos</a></li>
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Reservas<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="#">Agregar Reserva</a></li>
+            <li><a href="#">Cerrar Reserva</a></li>
+            <li><a href="#">Borrar Reserva</a></li>
+          </ul>
+        </li>	
+      
+      	<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Elementos<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="#">Agregar Elemento</a></li>
+            <li><a href="#">Editar Elemento</a></li>
+            <li><a href="#">Borrar Elemento</a></li>
+          </ul>
+        </li>
     
-        <li class="dropdown">
-          <a href="FormularioABMCPersona.html" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+		<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
                 aria-expanded="false">Usuarios <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Ver listado</a></li>
+            <li><a href="#">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="FormularioABMCPersona.html">Agregar usuario</a></li>
+            <li><a href="#">Agregar usuario</a></li>
             <li><a href="#">Editar usuario</a></li>
             <li><a href="#">Borrar usuario</a></li>
+          </ul>
+        </li>
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Tipos de Elementos<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="#">Agregar Tipo de Elemento</a></li>
+            <li><a href="#">Editar Tipo de Elemento</a></li>
+            <li><a href="#">Borrar Tipo de Elemento</a></li>
           </ul>
         </li>
 	
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="Login.html"><span class="glyphicon glyphicon-user"> Iniciar sesión</span> </a></li>
+      <li><a href="Login.html"><span class="glyphicon glyphicon-user">Sing out</span> </a></li>
     </ul>
   </div>
 </nav>

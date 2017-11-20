@@ -19,7 +19,7 @@
   </head>
 <body>
 
-<span> <%=request.getAttribute("Error")%> </span>
+<span> <%=request.getAttribute("Mensaje")%> </span>
 
 <br>
 </body>
