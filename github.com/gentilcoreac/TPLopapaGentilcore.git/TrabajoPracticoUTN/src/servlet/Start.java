@@ -53,6 +53,7 @@ public class Start extends HttpServlet {
 			if(usu!=null){
 				if(usu.isHabilitado()==true){
 					request.setAttribute("listaPersonas", ctrl.getAll());
+					request.getSession().setAttribute("user",null);
 					request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
 																			//2 parametro: es un objeto java(debe ser serializable y javabin)
 
@@ -62,7 +63,7 @@ public class Start extends HttpServlet {
 					 * 
 				*/
 					logger.log(Level.INFO,"log in "+usu.getDni());
-					request.getRequestDispatcher("WEB-INF/ListaUsuarios.jsp").forward(request, response);
+					request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
 				}else{
 					request.setAttribute("Titulo", "Usuario inhabilitado");
 					request.setAttribute("Mensaje", "El usuario no se halla habilitado para ingresar al sistema");
