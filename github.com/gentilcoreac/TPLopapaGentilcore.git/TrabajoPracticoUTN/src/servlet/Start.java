@@ -52,7 +52,6 @@ public class Start extends HttpServlet {
 			Persona usu=ctrl.getLoggedUser(user, pass);
 			if(usu!=null){
 				if(usu.isHabilitado()==true){
-					request.setAttribute("listaPersonas", ctrl.getAll());
 					request.getSession().setAttribute("user",null);
 					request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
 																			//2 parametro: es un objeto java(debe ser serializable y javabin)

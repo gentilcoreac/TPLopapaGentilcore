@@ -16,7 +16,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">MyReserva</a>
+      <a class="navbar-brand" href="Redireccionador?destino=WEB-INF/Inicio.jsp">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="dropdown">
@@ -26,8 +26,13 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Agregar Reserva</a></li>
+            <li><a href="#">Hacer Reserva</a></li>
+            <%Persona per=((Persona)request.getSession().getAttribute("user"));
+           	  String categoria=per.getCategoria().getDescripcion();
+           	if(categoria.equals("Administrador")){
+              %>
             <li><a href="#">Cerrar Reserva</a></li>
+            <% }%>
             <li><a href="#">Borrar Reserva</a></li>
           </ul>
         </li>	
@@ -38,15 +43,16 @@
           </a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Listado</a></li>
+            <%if(categoria.equals("Administrador")){ %>
             <li class="divider"></li>            
             <li><a href="#">Agregar Elemento</a></li>
             <li><a href="#">Editar Elemento</a></li>
             <li><a href="#">Borrar Elemento</a></li>
+            <%} %>
           </ul>
         </li>
         
-    <%	Persona per=((Persona)request.getSession().getAttribute("user"));
-    	String categoria=per.getCategoria().getDescripcion();
+    <%	
     	if(categoria.equals("Administrador")){ %>
 		<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
@@ -82,12 +88,11 @@
                 aria-expanded="false"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+","+per.getApellido()%></span><span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="Perfil.jsp" >Perfil</a></li>
+            <li><a href="Redireccionador?destino=WEB-INF/Perfil.jsp" >Perfil</a></li>
             <li class="divider"></li>            
             <li><a href="Login.html">Salir</a></li>
           </ul>
         </li>
-      <!--  <li><a href="Login.html"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+","+per.getApellido()%></span> </a></li>-->
     </ul>
   </div>
 </nav>
