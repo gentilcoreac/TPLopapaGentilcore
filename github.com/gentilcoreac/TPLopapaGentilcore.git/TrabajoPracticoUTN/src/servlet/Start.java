@@ -35,7 +35,7 @@ public class Start extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -52,7 +52,6 @@ public class Start extends HttpServlet {
 			Persona usu=ctrl.getLoggedUser(user, pass);
 			if(usu!=null){
 				if(usu.isHabilitado()==true){
-					request.getSession().setAttribute("user",null);
 					request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
 																			//2 parametro: es un objeto java(debe ser serializable y javabin)
 

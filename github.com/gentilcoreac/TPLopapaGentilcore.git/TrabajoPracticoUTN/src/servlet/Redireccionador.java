@@ -27,8 +27,14 @@ public class Redireccionador extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String destino=String.valueOf(request.getParameter("destino"));
-		request.getRequestDispatcher(destino).forward(request,response);
+		try{
+		doPost(request, response);
+		}
+		catch(Exception ex){
+			request.setAttribute("Titulo", "Error");
+			request.setAttribute("Mensaje", ex.getMessage());
+			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -36,7 +42,24 @@ public class Redireccionador extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try{
+			if(String.valueOf(request.getParameter("logout")).equals("si")){
+	
+	
+				request.getSession().invalidate();
+				request.getRequestDispatcher("WEB-INF/Logout.jsp").forward(request,response);
+			
+			}
+			else{
+				String destino=String.valueOf(request.getParameter("destino"));
+				request.getRequestDispatcher(destino).forward(request,response);
+			}
+		}
+		catch(Exception ex){
+			request.setAttribute("Titulo", "Error");
+			request.setAttribute("Mensaje", ex.getMessage());
+			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
+		}
 	}
 
 }
