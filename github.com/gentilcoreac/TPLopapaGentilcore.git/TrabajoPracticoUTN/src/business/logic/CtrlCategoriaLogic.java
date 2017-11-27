@@ -1,10 +1,10 @@
 package business.logic;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import business.entities.Categoria;
 import data.DataCategoria;
-import tools.AppDataException;
+
 
 public class CtrlCategoriaLogic {
 	private DataCategoria dataCat;
@@ -22,7 +22,10 @@ public class CtrlCategoriaLogic {
 	public Categoria getOne(Categoria c) throws Exception{
 		return this.dataCat.getOne(c);
 	}
-
+	
+	public Categoria getOne(String d) throws Exception{
+		return this.dataCat.getOne(d);
+	}
 	
 	public Categoria getOne(int idCat) throws Exception{
 		Categoria c = new Categoria();

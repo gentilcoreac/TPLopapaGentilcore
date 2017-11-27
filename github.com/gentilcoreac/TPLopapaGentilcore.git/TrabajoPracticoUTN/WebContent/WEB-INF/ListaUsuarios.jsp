@@ -11,10 +11,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/formPersona.css" >
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+  <script src="scripts/buscatabla.js"></script>
+    <script type="text/javascript">
+    	function submitForm(met,id) {
+    		//document.myForm.action=met;
+    		document.getElementById(id).action =met;
+    		document.getElementById(id).submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -62,7 +70,7 @@
 
 
 
-
+<!-- 
 <div class="container-form-per">
   <h2>Formulario de Persona</h2>
   <p>Ingrese los datos y a continuación presione crear usuario:</p>
@@ -112,7 +120,7 @@
 
 	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
 
-
+ -->
 
 
 
@@ -126,15 +134,17 @@
 <div class="container">
 
   <h2>Lista de usuarios</h2>
-  <p>Tipeá algo en el campo de entrada para buscar en la tabla para buscar por alguno de los campos:</p>  
+  <form method="post" action="ServletFormsUsuarios?accion=alta">
+  	<button style="float:right;" class="btn btn-success btn-md" type="submit">
+  		<span class="glyphicon glyphicon-plus">&nbspNuevo</span>
+  	</button>
+  </form>
+  <br>
+  <p>Busque por algun dato del usuario:</p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
   
-  <table class="table table-striped">
-  
-  
-  <!--.............................................  poner el formulario de ingreso de valores...............................-->
-  
+  <table class="table table-striped">  
       <thead>
       <tr>
         <th>ID</th>
@@ -144,8 +154,7 @@
         <th>Usuario</th>
         <th>Contraseña</th>
         <th>Email</th>
-        <th>Id Categoria</th>        
-        <th>Categoria</th>
+        <th>Categoria</th>        
         <th>Habilitado</th>
       </tr>
     </thead>
@@ -162,22 +171,25 @@
 			<td><%=p.getUsuario() %></td>	
 			<td><%=p.getContrasenia() %></td>	
 			<td><%=p.getEmail() %></td>	
-			<td><%=p.getCategoria().getId() %></td>																		
-			<td><%=p.getCategoria().getDescripcion() %></td>
+			<td><%=p.getCategoria().getDescripcion() %></td>																		
 			<td><%=p.isHabilitado() %></td>											
 			<td>
-				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formB">
-					<input name="DNIeliminar" type="hidden" id="inputEliminar" value="<%=p.getDni()%>" >
-					<input name="opcion" type="hidden" id="opcionElegida" value="eliminar">					
-					<button class="btn" type="submit">Eliminar</button>					
+			
+				<form  id=<%=p.getId()%> name="myForm" action="" method="post">
+					<input type="hidden" name="id" value=<%=p.getId() %> >
+					<input type="hidden" name="dni" value=<%=p.getDni()%> >		
+					<input type="hidden" name="apellido" value=<%=p.getApellido() %> >		
+					<input type="hidden" name="nombre" value=<%=p.getNombre() %> >		
+					<input type="hidden" name="usuario" value=<%=p.getUsuario() %> >		
+					<input type="hidden" name="contrasenia" value=<%=p.getContrasenia() %> >		
+					<input type="hidden" name="email" value=<%=p.getEmail() %> >		
+					<input type="hidden" name="categoria" value=<%=p.getCategoria() %> >		
+					<input type="hidden" name="habilitado" value=<%=p.isHabilitado() %> >		
+					<button class="btn" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)" >Eliminar</button>	
+					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)"><span class="glyphicon glyphicon-pencil"></span></button>	
+								
 				</form>
-			</td>
-			<td>
-				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formM">
-					<input name="DNIeditar" type="hidden" id="inputEditar" value="<%=p.getDni()%>" >
-					<input name="opcion" type="hidden" id="opcionElegida" value="editar">				<!-- esta es para  -->
-					<button class="btn" type="submit"><img alt="Icono de editar" width="20px" height="20px" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698873-icon-136-document-edit-512.png"></button>					
-				</form>
+		
 			</td>
 		</tr>
 		<%
@@ -188,25 +200,6 @@
   </table>
 </div>
 
-
-
-
-
-
-
-
-
-<!--  Como buena practica el script me parece que no va acá. Probé funcionalidades con esto-->
-<script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
 
 
 </body>

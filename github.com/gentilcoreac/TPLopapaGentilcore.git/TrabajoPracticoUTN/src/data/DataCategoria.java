@@ -45,14 +45,14 @@ public class DataCategoria {
 	
 	public Categoria getOne(Categoria cat)throws SQLException,AppDataException{
 		Categoria c = null;
-		PreparedStatement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id_categoria, descripcion from categoria where id_categoria=?");
-			stmt.setInt(1,cat.getId());
-			rs= stmt.executeQuery();
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from categoria where id_categoria=?");
+			pstmt.setInt(1,cat.getId());
+			rs= pstmt.executeQuery();
 			if(rs != null && rs.next()){
 				c = new Categoria();
 				c.setId(rs.getInt("id_categoria"));
@@ -60,16 +60,48 @@ public class DataCategoria {
 				
 			}
 		} catch (SQLException sqlex) {
-			sqlex.printStackTrace();
+			throw new AppDataException(sqlex, "Error al buscar una categoria por id");
 		}
 		
 		finally{
 		try {
 			if(rs != null) rs.close();
-			if(stmt != null) stmt.close();
+			if(pstmt != null) pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception sqlex) {
+			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+		}
+		}
+		return c;
+	}
+	
+	public Categoria getOne(String descripcion)throws SQLException,AppDataException{
+		Categoria c = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from categoria where descripcion=?");
+			pstmt.setString(1,descripcion);
+			rs= pstmt.executeQuery();
+			if(rs != null && rs.next()){
+				c = new Categoria();
+				c.setId(rs.getInt("id_categoria"));
+				c.setDescripcion(rs.getString("descripcion"));
+				
+			}
+		} catch (SQLException sqlex) {
+			throw new AppDataException(sqlex, "Error al buscar una categoria por id");
+		}
+		
+		finally{
+		try {
+			if(rs != null) rs.close();
+			if(pstmt != null) pstmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (Exception sqlex) {
+			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
 		}
 		}
 		return c;

@@ -12,68 +12,164 @@ import org.apache.logging.log4j.Logger;
 
 import business.entities.Categoria;
 import business.entities.Persona;
+import business.logic.CtrlCategoriaLogic;
 import business.logic.CtrlPersonaLogic;
+import tools.Campo;
 
 /**
  * Servlet implementation class ABMCPersona
  */
-@WebServlet({ "/ServletABMCPersona", "/servletabmcpersona", "/ServletAbmcpersona",  "/servletabmcPersona", "/ServletAbmcPersona", "/SERVLETABMCPERSONA", "/servletABMCpersona" })
-public class ServletABMCPersona extends HttpServlet {
+@WebServlet({ "/ServletABMCPersona/*", "/servletabmcpersona/*", "/ServletAbmcpersona/*",  "/servletabmcPersona/*", "/ServletAbmcPersona/*", "/SERVLETABMCPERSONA/*", "/servletABMCpersona/*" })
+public class ServletABMCPersona extends HttpServletConFunciones {
 	private static final long serialVersionUID = 1L;
-	private Logger logger;       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public ServletABMCPersona() {
     	super();
-    //   	logger = LogManager.getLogger(getClass());
+
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+
+		switch (request.getParameter("accion")) {
+		case "alta":
+			this.alta(request,response);
+			break;
+			
+		case "baja":
+			this.baja(request,response);
+			break;
+			
+		case "modificacion":
+			this.modificacion(request,response);
+			break;
+			
+		case "consulta":
+			this.consulta(request,response);
+			break;
+
+		default:
+			this.error(request,response);
+			break;
+		}
+		
+		
+		
+
+
+	}
+
+
+	private void consulta(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Persona per=new CtrlPersonaLogic().getByDni(request.getParameter("dni"));
+			if(per==null){
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni:"+request.getParameter("dni"));			
+
+			}
+			else{
+				request.setAttribute("id", String.valueOf(per.getId()));
+				request.setAttribute("dni", per.getDni());
+				request.setAttribute("apellido", per.getApellido());
+				request.setAttribute("nombre", per.getNombre());
+				request.setAttribute("usuario", per.getUsuario());
+				request.setAttribute("contrasenia", per.getContrasenia());
+				request.setAttribute("email", per.getEmail());
+				request.setAttribute("categoria", per.getCategoria().getDescripcion());
+				request.setAttribute("habilitado", per.isHabilitado());
+				request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion=modificacion").forward(request, response);;
+			}
+			
+			
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
+		}
+		
+	}
+
+
+	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	private void modificacion(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			Persona per=new Persona();
+			//per.setId(Integer.parseInt(request.getParameter("id")));
+			per.setUsuario(request.getParameter("usuario"));
+			per.setContrasenia(request.getParameter("contrasenia"));
+			per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
+			per.setApellido(request.getParameter("apellido"));		
+			per.setNombre(request.getParameter("nombre"));
+			per.setDni(request.getParameter("dni"));
+			per.setHabilitado(request.getParameter("habilitado")==null?false:true);
+			per.setEmail(request.getParameter("email"));
+			
+			
+				
+			if(this.validaCampos(per.getDni(), per.getEmail())){
+				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
+				ctrl.update(per);
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente");			
+			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
+			}
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
+		}
+	}
+
+
+	private void alta(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			Persona per=new Persona();
+			per.setUsuario(request.getParameter("usuario"));
+			per.setContrasenia(request.getParameter("contrasenia"));
+			per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
+			per.setApellido(request.getParameter("apellido"));		
+			per.setNombre(request.getParameter("nombre"));
+			per.setDni(request.getParameter("dni"));
+			per.setHabilitado(request.getParameter("habilitado")==null?false:true);
+			per.setEmail(request.getParameter("email"));
+			
+			
+			
+			if(this.validaCampos(per.getDni(), per.getEmail())){
+				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
+				ctrl.add(per);
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente");			
+			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
+			}
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
+		}
+		
+	}
+	
+	private boolean validaCampos(String dni,String email) {
 
 		
-		//Persona pers=ctrl.getLoggedUser(user,pass); este se podria usar solo para obtener el usuario y si es admin puede ingresar. Pienso al aire				
-		Persona per=new Persona();
-				
-				per.setUsuario(request.getParameter("usuario"));
-				per.setContrasenia(request.getParameter("contrasenia"));
-				Categoria cat = new Categoria();
-				cat.setId(Integer.parseInt(request.getParameter("categoria")));
-				per.setCategoria(cat);
-				per.setApellido(request.getParameter("apellido"));		
-				per.setNombre(request.getParameter("nombre"));
-				per.setDni(request.getParameter("dni"));
-				per.setHabilitado(Boolean.parseBoolean(request.getParameter("habilitado")));
-				per.setEmail(request.getParameter("email"));
-				
-				
-		CtrlPersonaLogic ctrl= new CtrlPersonaLogic();		
-		try {
-			
-			ctrl.add(per);
-			request.getRequestDispatcher("WEB-INF/pruebaConFecha.jsp").forward(request, response); 	//webinf o para mantener los atributos input
-			
+		return (Campo.Valida(dni, Campo.tipo.DNI) && 
+		   Campo.Valida(email, Campo.tipo.EMAIL));
+		 
 
-		} catch (Exception e) {
-
-			//request.getRequestDispatcher("Errores/PaginaDeErrores.jsp").forward(request, response);
-			response.sendRedirect("Errores/PaginaDeErrores.jsp");
-		}
-
-
-	//	doGet(request, response);
 	}
 
 }

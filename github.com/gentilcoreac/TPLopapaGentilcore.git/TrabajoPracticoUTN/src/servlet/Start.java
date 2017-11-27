@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Level;
  * Servlet implementation class Starts
  */
 @WebServlet({"/Start","/start"})
-public class Start extends HttpServlet {
+public class Start extends HttpServletConFunciones {
 	private static final long serialVersionUID = 1L;
 	private Logger logger;
 
@@ -63,20 +63,15 @@ public class Start extends HttpServlet {
 					logger.log(Level.INFO,"log in "+usu.getDni());
 					request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
 				}else{
-					request.setAttribute("Titulo", "Usuario inhabilitado");
-					request.setAttribute("Mensaje", "El usuario no se halla habilitado para ingresar al sistema");
-					request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
-				}
+					 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
+					 }
 			}
 			else{
-				request.setAttribute("Titulo", "Usuario inexistente");
-				request.setAttribute("Mensaje", "Usuario no encontrado");
-				request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);				}
+				this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
+				}
 		}
 		catch(Exception ex){
-			request.setAttribute("Titulo", "Error");
-			request.setAttribute("Mensaje", ex.getMessage());
-			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
+			this.error(request, response, ex);	
 		}
 
 	}

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Redireccionador
  */
 @WebServlet("/Redireccionador")
-public class Redireccionador extends HttpServlet {
+public class Redireccionador extends HttpServletConFunciones {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -27,14 +27,9 @@ public class Redireccionador extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try{
+
 		doPost(request, response);
-		}
-		catch(Exception ex){
-			request.setAttribute("Titulo", "Error");
-			request.setAttribute("Mensaje", ex.getMessage());
-			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);
-		}
+
 	}
 
 	/**
@@ -56,9 +51,7 @@ public class Redireccionador extends HttpServlet {
 			}
 		}
 		catch(Exception ex){
-			request.setAttribute("Titulo", "Error");
-			request.setAttribute("Mensaje", ex.getMessage());
-			request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);	
+			error(request, response, ex);	
 		}
 	}
 

@@ -66,7 +66,7 @@ if(session.getAttribute("user")==null){
                 aria-expanded="false">Usuarios <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaUsuarios">Listado</a></li>
             <li class="divider"></li>            
             <li><a href="#">Agregar usuario</a></li>
             <li><a href="#">Editar usuario</a></li>
