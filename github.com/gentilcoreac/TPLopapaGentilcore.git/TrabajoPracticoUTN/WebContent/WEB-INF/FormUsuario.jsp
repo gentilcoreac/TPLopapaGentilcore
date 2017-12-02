@@ -13,9 +13,14 @@
   <script type="text/javascript">
    	function submitForm(met) {
    		//document.myForm.action=met;
+        /* document.getElementbyName("contrasenia").val(document.getElementbyName("passqueseborra"));
+        document.getElementbyName("contraseborra").remove();
+        document.getElementbyName("passqueseborra").remove(); */
+
    		document.getElementById("myForm").action =met;
    		document.getElementById("myForm").submit();
        }
+
   </script>
 <title>Formulario</title>
 </head>
@@ -29,46 +34,50 @@ case "alta":%>
   <h2>Agregar Persona</h2>
 
   
-  <form name="form-per" class="form-per" action="ServletABMCPersona/alta" method="post"> 
+  <form name="myForm" id="myForm" class="form-per" action="" method="post" autocomplete="off"> 
   	
+
   	<div class="form-group">
       <label for="inputdni">Dni:</label>
       <input name="dni" type="text" class="form-control" id="inputdni"  required="" >
-
     </div>
+
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
-      <input name="apellido" type="text" class="form-control" id="inputapel" required="" >
+      <input name="apellido" type="text" class="form-control" id="inputapel" required=""    >
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre"  required="" >
+      <input name="nombre" type="text" class="form-control" id="inputnombre"  required=""   >
     </div>
     <div class="form-group">
       <label for="inputusr">Usuario:</label>
-      <input name="usuario" type="text" class="form-control" id="inputusr" required="">
+      <input name="usuario" type="text" class="form-control" id="inputusr" required=""   >
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="password" class="form-control" id="inputpwd" required="" >
+      <input name="contrasenia" type="text" autocomplete="off" class="form-control" id="inputpwd" required >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail"  required="" >
+      <input name="email" type="text" class="form-control" id="inputemail"  required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Formato de email invalido')" onchange="try{setCustomValidity('')}catch(e){}">
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
-      <select name="categoria" class="form-control" id="inputCategoriaLista" required="" >
+      <select name="categoria" class="form-control" id="inputCategoriaLista" required=""   >
         <option>Administrador</option>
         <option>Encargado</option>
         <option>Usuario</option>
       </select>
     </div>   
 	<div class="checkbox">
-	  <label for="inputhabilitado">Habilitado:</label>
-	  <input name="habilitado" type="checkbox" value="1" id="inputhabilitado">
-	</div>   
-       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
+	  <label for="inputhabilitado"></label>
+	  <input name="habilitado" type="checkbox"  id="inputhabilitado">Habilitado</input>
+	</div>
+	<div class="botones">
+    	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCPersona?accion=alta')">Agregar</button>		
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+	</div>
 	</form>
 </div>
 <% 
@@ -90,7 +99,7 @@ case "modificacion":
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button onclick="javascript: submitForm('ServletABMCPersona?accion=consulta')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCPersona?accion=consulta&fin=modificacion')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 
@@ -113,7 +122,7 @@ case "modificacion":
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="password" class="form-control" id="inputpwd" required=""  value=<%=request.getAttribute("contrasenia") %> >
+      <input name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value=<%=request.getAttribute("contrasenia") %> >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
@@ -130,12 +139,77 @@ case "modificacion":
 	<div class="checkbox">
 	  <label for="inputhabilitado"></label>
 	  <input name="habilitado" type="checkbox" value=<%=request.getAttribute("habilitado") %> <%if(request.getAttribute("habilitado").equals("true")){ %>checked<%} %> id="inputhabilitado">Habilitado</input>
-	</div>   
-        <button class="btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCPersona?accion=modificacion')">Guardar Cambios</button>		
-		<button class="btn btn-lg btn-default " onclick="javascript: submitForm('ServletListaUsuarios')">Cancelar</button>
+	</div>
+	<div class="botones">
+    	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCPersona?accion=modificacion')">Guardar Cambios</button>		
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+	</div>
 	</form>
 </div>
 <% 
+break;
+case "baja":
+%>
+<div class="container-form-per">
+  <h2>Eliminar Persona</h2>
+
+  
+  <form name="myForm" id="myForm" class="form-per" action="" method="post"> 
+  	
+
+  	<div class="form-group">
+      <table>
+       <tr><td>
+      	  <label for="inputdni">Dni:</label>
+      	  <input name="dni" type="text" class="form-control" id="inputdni"  required="" value=<%=request.getAttribute("dni")%> >
+		  </td>
+	   	  <td align="center" valign="bottom">
+	   	  &nbsp
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCPersona?accion=consulta&fin=baja')" type="submit" class="btn btn-default btn-lg">
+	      	<span class="glyphicon glyphicon-search"></span>
+	      </button>
+	   </td></tr> 
+      </table>
+    </div>
+    <div class="form-group">
+      <label for="inputapel">Apellido:</label>
+      <input disabled name="apellido" type="text" class="form-control" id="inputapel" required=""  value=<%=request.getAttribute("apellido") %> >
+    </div>
+    <div class="form-group">
+      <label for="inputnombre">Nombre:</label>
+      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required=""  value=<%=request.getAttribute("nombre") %> >
+    </div>
+    <div class="form-group">
+      <label for="inputusr">Usuario:</label>
+      <input disabled name="usuario" type="text" class="form-control" id="inputusr" required="" value=<%=request.getAttribute("usuario") %> >
+    </div>
+    <div class="form-group">
+      <label for="inputpwd">Contraseña:</label>
+      <input disabled name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value=<%=request.getAttribute("contrasenia") %> >
+    </div>
+    <div class="form-group">
+      <label for="inputemail">Email:</label>
+      <input disabled name="email" type="text" class="form-control" id="inputemail"  required=""  value=<%=request.getAttribute("email") %> >
+    </div>
+    <div class="form-group">
+      <label for="inputCategoriaLista">Categoria</label>
+      <select disabled name="categoria" class="form-control" id="inputCategoriaLista" required=""  value=<%=request.getAttribute("categoria") %> >
+        <option>Administrador</option>
+        <option>Encargado</option>
+        <option>Usuario</option>
+      </select>
+    </div>   
+	<div class="checkbox">
+	  <label for="inputhabilitado"></label>
+	  <input disabled name="habilitado" type="checkbox" value=<%=request.getAttribute("habilitado") %> <%if(request.getAttribute("habilitado").equals("true")){ %>checked<%} %> id="inputhabilitado">Habilitado</input>
+	</div>
+	<div class="botones">
+    	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCPersona?accion=baja')">Eliminar</button>		
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+	</div>
+	</form>
+</div>
+<%	
 break;
 default:
 	response.sendRedirect("ServletListaUsuarios");

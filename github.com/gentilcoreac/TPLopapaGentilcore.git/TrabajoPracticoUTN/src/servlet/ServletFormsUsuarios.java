@@ -42,7 +42,9 @@ public class ServletFormsUsuarios extends HttpServletConFunciones {
 		case "modificacion":
 			this.modificacion(request, response);
 			break;
-
+		case "baja":
+			this.baja(request, response);
+			break;
 		default:
 			this.error(request,response);
 			break;
@@ -51,8 +53,21 @@ public class ServletFormsUsuarios extends HttpServletConFunciones {
 	}
 	
 
+	private void baja(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			request.setAttribute("urlcancelar", request.getHeader("Referer"));
+			this.setearAtributos(request);
+			request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion=baja").forward(request, response);
+		} catch (ServletException | IOException e) {
+			error(request,response,e);
+		}
+		
+	}
+
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion=alta").forward(request, response);
 		} catch (ServletException | IOException e) {
 			error(request,response,e);
@@ -60,18 +75,10 @@ public class ServletFormsUsuarios extends HttpServletConFunciones {
 	}
 	private void modificacion(HttpServletRequest request, HttpServletResponse response) {
 		
-		request.setAttribute("id", request.getParameter("id"));
-		request.setAttribute("dni", request.getParameter("dni"));
-		request.setAttribute("apellido", request.getParameter("apellido"));
-		request.setAttribute("nombre", request.getParameter("nombre"));
-		request.setAttribute("usuario", request.getParameter("usuario"));
-		request.setAttribute("contrasenia", request.getParameter("contrasenia"));
-		request.setAttribute("email", request.getParameter("email"));
-		request.setAttribute("categoria", request.getParameter("categoria"));
-		request.setAttribute("habilitado", request.getParameter("habilitado"));
 		
 		try {
-
+			request.setAttribute("urlcancelar", request.getHeader("Referer"));
+			setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion=modificacion").forward(request, response);
 	
 		} catch (ServletException | IOException e) {
@@ -79,6 +86,18 @@ public class ServletFormsUsuarios extends HttpServletConFunciones {
 		}	
 
 		
+	}
+
+	private void setearAtributos(HttpServletRequest request) {
+		request.setAttribute("id", request.getParameter("id")==null?"":request.getParameter("id"));
+		request.setAttribute("dni", request.getParameter("dni")==null?"":request.getParameter("dni"));
+		request.setAttribute("apellido", request.getParameter("apellido")==null?"":request.getParameter("apellido"));
+		request.setAttribute("nombre", request.getParameter("nombre")==null?"":request.getParameter("nombre"));
+		request.setAttribute("usuario", request.getParameter("usuario")==null?"":request.getParameter("usuario"));
+		request.setAttribute("contrasenia", request.getParameter("contrasenia")==null?"":request.getParameter("contrasenia"));
+		request.setAttribute("email", request.getParameter("email")==null?"":request.getParameter("email"));
+		request.setAttribute("categoria", request.getParameter("categoria")==null?"":request.getParameter("categoria"));
+		request.setAttribute("habilitado", request.getParameter("habilitado")==null?"":request.getParameter("habilitado"));
 	}
 		
 	

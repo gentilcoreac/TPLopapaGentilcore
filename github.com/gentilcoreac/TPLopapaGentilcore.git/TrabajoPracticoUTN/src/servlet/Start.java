@@ -46,29 +46,35 @@ public class Start extends HttpServletConFunciones {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 					//todo lo qe me mandan dentro del form esta en el request
 		try{
-			String user=request.getParameter("user");
-			String pass=request.getParameter("pass");
-			CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
-			Persona usu=ctrl.getLoggedUser(user, pass);
-			if(usu!=null){
-				if(usu.isHabilitado()==true){
-					request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
-																			//2 parametro: es un objeto java(debe ser serializable y javabin)
-
-				/*   *todo lo que tenga que durar en muchas paginas, lo guardo en el servidor. El usuario logueado , que debe durar durante toda la sesion, se lo asigno al servidor
-					 * Si guardo un listado de reservas en la sesion, cuando haya miles de usuarios a la vez, saturar� el servidor
-					 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas.
-					 * 
-				*/
-					logger.log(Level.INFO,"log in "+usu.getDni());
-					request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
-				}else{
-					 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
-					 }
-			}
-			else{
-				this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
+			if(request.getParameter("username")!=null){
+				String user=request.getParameter("username");
+				String pass=request.getParameter("password");
+				CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
+				Persona usu=ctrl.getLoggedUser(user, pass);
+				if(usu!=null){
+					if(usu.isHabilitado()==true){
+						request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
+																				//2 parametro: es un objeto java(debe ser serializable y javabin)
+	
+					/*   *todo lo que tenga que durar en muchas paginas, lo guardo en el servidor. El usuario logueado , que debe durar durante toda la sesion, se lo asigno al servidor
+						 * Si guardo un listado de reservas en la sesion, cuando haya miles de usuarios a la vez, saturar� el servidor
+						 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas.
+						 * 
+					*/
+						logger.log(Level.INFO,"log in "+usu.getDni());
+						request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
+					}else{
+						 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
+						 }
 				}
+				else{
+					this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
+					}
+			}
+		else{
+			request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
+
+			}
 		}
 		catch(Exception ex){
 			this.error(request, response, ex);	

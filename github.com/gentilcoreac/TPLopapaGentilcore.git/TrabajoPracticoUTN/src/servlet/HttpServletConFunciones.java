@@ -55,8 +55,13 @@ public class HttpServletConFunciones extends HttpServlet {
 	}
 	
 	protected void hacerInforme(HttpServletRequest request, HttpServletResponse response,TipoInforme tipo,String titulo,String mensaje){
+		this.hacerInforme(request, response, tipo, titulo, mensaje, null);
+	}
+	
+	protected void hacerInforme(HttpServletRequest request, HttpServletResponse response,TipoInforme tipo,String titulo,String mensaje,String urlvolver){
 		request.setAttribute("Titulo", titulo);
 		request.setAttribute("Mensaje", mensaje);
+		request.setAttribute("urlvolver", urlvolver);
 		try{
 			request.getRequestDispatcher("WEB-INF/Informes.jsp?tipo="+tipo).forward(request, response);				
 		} catch (Exception e) {

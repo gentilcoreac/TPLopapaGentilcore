@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/formPersona.css" >
+  <link rel="stylesheet" href="css/listado.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/buscatabla.js"></script>
@@ -70,73 +70,13 @@
 
 
 
-<!-- 
-<div class="container-form-per">
-  <h2>Formulario de Persona</h2>
-  <p>Ingrese los datos y a continuación presione crear usuario:</p>
-  
-  <form name="form-per" class="form-per" action="ServletABMCPersona" method="post"> 
-  
-    <div class="form-group">
-      <label for="inputusr">Usuario:</label>
-      <input name="usuario" type="text" class="form-control" id="inputusr" required="">
-    </div>
-    <div class="form-group">
-      <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="password" class="form-control" id="inputpwd" required="" >
-    </div>
-    <div class="form-group">
-      <label for="inputCategoriaLista">Categoria</label>
-      <select name="categoria" class="form-control" id="inputCategoriaLista" required="" >
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-      </select>
-    </div>   
-    <div class="form-group">
-      <label for="inputapel">Apellido:</label>
-      <input name="apellido" type="text" class="form-control" id="inputapel" required="" >
-    </div>
-    <div class="form-group">
-      <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre"  required="" >
-    </div>
-    <div class="form-group">
-      <label for="inputdni">Dni:</label>
-      <input name="dni" type="text" class="form-control" id="inputdni"  required="" >
-    </div>
-    <div class="form-group">
-      <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail"  required="" >
-    </div>
-	<div class="checkbox">
-	  <label for="inputhabilitado">Habilitado:</label>
-	  <input name="habilitado" type="checkbox" value="1" id="inputhabilitado">
-	</div>   
-       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
-	</form>
-</div>
-
-
-	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
-
- -->
-
-
-
-
-
-
-
-
-
-
 <div class="container">
 
   <h2>Lista de usuarios</h2>
+  <br>
   <form method="post" action="ServletFormsUsuarios?accion=alta">
-  	<button style="float:right;" class="btn btn-success btn-md" type="submit">
-  		<span class="glyphicon glyphicon-plus">&nbspNuevo</span>
+  	<button class="btn btn-success btn-md nuevo" type="submit">
+  		<span class="glyphicon glyphicon-plus" >&nbspNuevo</span>
   	</button>
   </form>
   <br>
@@ -172,7 +112,7 @@
 			<td><%=p.getContrasenia() %></td>	
 			<td><%=p.getEmail() %></td>	
 			<td><%=p.getCategoria().getDescripcion() %></td>																		
-			<td><%=p.isHabilitado() %></td>											
+			<td><%=p.isHabilitado()?"Si":"No" %></td>											
 			<td>
 			
 				<form  id=<%=p.getId()%> name="myForm" action="" method="post">
@@ -185,7 +125,7 @@
 					<input type="hidden" name="email" value=<%=p.getEmail() %> >		
 					<input type="hidden" name="categoria" value=<%=p.getCategoria() %> >		
 					<input type="hidden" name="habilitado" value=<%=p.isHabilitado() %> >		
-					<button class="btn" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)" >Eliminar</button>	
+					<button class="btn eliminar" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)" >Eliminar</button>	
 					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)"><span class="glyphicon glyphicon-pencil"></span></button>	
 								
 				</form>

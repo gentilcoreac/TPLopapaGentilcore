@@ -23,7 +23,7 @@ if(session.getAttribute("user")==null){
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="Redireccionador?destino=WEB-INF/Inicio.jsp">MyReserva</a>
+      <a class="navbar-brand" href="Start">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="dropdown">
@@ -68,9 +68,9 @@ if(session.getAttribute("user")==null){
           <ul class="dropdown-menu" role="menu">
             <li><a href="ServletListaUsuarios">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Agregar usuario</a></li>
-            <li><a href="#">Editar usuario</a></li>
-            <li><a href="#">Borrar usuario</a></li>
+            <li><a href="ServletFormsUsuarios?accion=alta">Agregar usuario</a></li>
+            <li><a href="ServletFormsUsuarios?accion=modificacion">Editar usuario</a></li>
+            <li><a href="ServletFormsUsuarios?accion=baja">Borrar usuario</a></li>
           </ul>
         </li>
         

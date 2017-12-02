@@ -71,7 +71,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 		try {
 			Persona per=new CtrlPersonaLogic().getByDni(request.getParameter("dni"));
 			if(per==null){
-				hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni:"+request.getParameter("dni"));			
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
 
 			}
 			else{
@@ -83,8 +83,8 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 				request.setAttribute("contrasenia", per.getContrasenia());
 				request.setAttribute("email", per.getEmail());
 				request.setAttribute("categoria", per.getCategoria().getDescripcion());
-				request.setAttribute("habilitado", per.isHabilitado());
-				request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion=modificacion").forward(request, response);;
+				request.setAttribute("habilitado", String.valueOf(per.isHabilitado()));
+				request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion="+request.getParameter("fin")).forward(request, response);;
 			}
 			
 			
@@ -97,8 +97,22 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
+		Persona per=new Persona();
+		per.setDni(request.getParameter("dni"));
+		if(Campo.Valida(per.getDni(), Campo.tipo.DNI)){
+			try{
+				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
+				ctrl.delete(per);
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
+
+			}
+			catch(Exception ex){
+				this.error(request, response,ex);
+			}
+		}
+		else{
+			hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
+		}
 	}
 
 
@@ -121,7 +135,8 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 			if(this.validaCampos(per.getDni(), per.getEmail())){
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.update(per);
-				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente");			
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente","ServletListaUsuarios");			
+
 			}
 			else{
 				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
@@ -151,7 +166,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 			if(this.validaCampos(per.getDni(), per.getEmail())){
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.add(per);
-				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente");			
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente","ServletListaUsuarios");			
 			}
 			else{
 				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			

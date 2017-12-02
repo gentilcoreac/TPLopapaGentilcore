@@ -1,4 +1,15 @@
+.botones{
+	margin-right:10px;
+	text-align:center;
+	
+}
+.btn{
+	margin-right:30px;
+	padding:auto auto auto auto;
+	
+}
 .container-form-per {
+
 	
 }
 
@@ -7,10 +18,7 @@ h2 {
   text-align: center;
 }
 
-.btn{
-	text-align: center;
-	margin-right:30px;
-}
+
 
 .form-per {
 

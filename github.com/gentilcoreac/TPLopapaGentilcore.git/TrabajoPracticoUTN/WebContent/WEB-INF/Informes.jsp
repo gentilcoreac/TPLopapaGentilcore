@@ -25,14 +25,24 @@
 		<div class="alert alert-info">
 		 	 <%=request.getAttribute("Mensaje")%>
 		</div>
-		<img  src="imagenes/404.gif"  alt="imagen errir"></img>
+		<br>
+		<form action="javascript:window.history.back();" method="post">
+		<button class="btn btn-default" type="submit">Volver</button>
+		</form>
+		<br>
+		<img  src="imagenes/404.gif"  alt="imagen info"></img>
 		<% 
 		break;
 		case "error":%>
 		<div class="alert alert-danger">
 		  	<strong>Error:</strong> <pre><%=request.getAttribute("Mensaje")%></pre>
 		</div>
-		<img  src="imagenes/404.gif"  alt="imagen errir"></img>
+		<br>
+		<form action="javascript:window.history.back();" method="post">
+		<button class="btn btn-default" type="submit">Volver</button>
+		</form>
+		<br>
+		<img  src="imagenes/404.gif"  alt="imagen error"></img>
 		<% 
 		break;
 		case "exito":
@@ -40,13 +50,14 @@
 		<div class="alert alert-success">
 		 	 <%=request.getAttribute("Mensaje")%>
 		</div>
-		<form action="ServletListaUsuarios" method="post">
-			<button class="btn btn-default" type="submit">Volver</button>
+		<br>
+		<form action=<%=request.getAttribute("urlvolver") %> method="post">
+		<button class="btn btn-default" type="submit">Ir al Listado</button>
 		</form>
 		<%
 		break;
 	}
 	%>
-	
+
 </body>
 </html>
