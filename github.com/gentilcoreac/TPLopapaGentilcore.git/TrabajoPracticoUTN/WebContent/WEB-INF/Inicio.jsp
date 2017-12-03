@@ -81,9 +81,9 @@ if(session.getAttribute("user")==null){
           <ul class="dropdown-menu" role="menu">
             <li><a href="ServletListaTiposDeElementos">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Agregar Tipo de Elemento</a></li>
-            <li><a href="#">Editar Tipo de Elemento</a></li>
-            <li><a href="#">Borrar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=alta">Agregar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=modificacion">Editar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=baja">Borrar Tipo de Elemento</a></li>
           </ul>
         </li>
 	<%}%>

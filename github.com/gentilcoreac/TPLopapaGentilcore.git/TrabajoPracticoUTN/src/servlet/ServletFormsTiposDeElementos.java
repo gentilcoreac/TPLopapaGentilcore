@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import business.entities.TipoDeElemento;
+import business.logic.CtrlTipoDeElementoLogic;
+import servlet.HttpServletConFunciones.TipoInforme;
+
 
 @WebServlet({"/ServletFormsTiposDeElementos","/servletformstiposdeelementos","/SERVLETFORMSTIPOSDEELEMENTOS"})
 public class ServletFormsTiposDeElementos extends HttpServletConFunciones {
@@ -42,6 +46,8 @@ public class ServletFormsTiposDeElementos extends HttpServletConFunciones {
 			break;
 		}
 	}
+	
+ 
 	
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		

@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import business.entities.Persona;
+import business.logic.CtrlPersonaLogic;
+import servlet.HttpServletConFunciones.TipoInforme;
+
 /**
  * Servlet implementation class ServletFormsUsuarios
  */
@@ -52,6 +56,7 @@ public class ServletFormsUsuarios extends HttpServletConFunciones {
 
 	}
 	
+
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		

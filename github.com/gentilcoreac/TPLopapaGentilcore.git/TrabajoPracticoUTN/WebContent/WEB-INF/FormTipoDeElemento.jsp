@@ -40,15 +40,15 @@ case "alta":%>
 
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input name="cant_max_res_pen" type="number" min="1" value="1" class="form-control" id="inputcant_max_res_pen" required   >
+      <input name="cant_max_res_pen" type="number" min="1" value="1" class="form-control" id="inputcant_max_res_pen" required  oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input name="limite_horas_res" type="number" min="1" value="1" class="form-control" id="inputlimite_horas_res"  required  >
+      <input name="limite_horas_res" type="number" min="1" value="1" class="form-control" id="inputlimite_horas_res"  required  oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}">
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input name="dias_max_anticipacion" type="number" min="1" value="1" class="form-control" id="inputdias_max_anticipacion" required   >
+      <input name="dias_max_anticipacion" type="number" min="1" value="1" class="form-control" id="inputdias_max_anticipacion" required   oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}">
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>
@@ -79,7 +79,7 @@ case "modificacion":
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=modificacion')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=modificacion&urlcancelar=<%=request.getAttribute("urlcancelar") %>')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 
@@ -87,15 +87,15 @@ case "modificacion":
     </div>
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input name="cant_max_res_pen" type="text" class="form-control" id="inputcant_max_res_pen" required  value=<%=request.getAttribute("cant_max_res_pen") %> >
+      <input name="cant_max_res_pen"  type="number" min="1" class="form-control" id="inputcant_max_res_pen" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value=<%=request.getAttribute("cant_max_res_pen") %> >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input name="limite_horas_res" type="text" class="form-control" id="inputlimite_horas_res"  required  value=<%=request.getAttribute("limite_horas_res") %> >
+      <input name="limite_horas_res" type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value=<%=request.getAttribute("limite_horas_res") %> >
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input name="dias_max_anticipacion" type="text" class="form-control" id="inputdias_max_anticipacion" required value=<%=request.getAttribute("dias_max_anticipacion") %> >
+      <input name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("dias_max_anticipacion") %> >
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>
@@ -126,7 +126,7 @@ case "baja":
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=baja')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=baja&urlcancelar=<%=request.getAttribute("urlcancelar") %>')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 
@@ -134,19 +134,19 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input name="cant_max_res_pen" type="text" class="form-control" id="inputcant_max_res_pen" required  value=<%=request.getAttribute("cant_max_res_pen") %> >
+      <input disabled name="cant_max_res_pen"  type="number" min="1"  class="form-control" id="inputcant_max_res_pen" required  value=<%=request.getAttribute("cant_max_res_pen") %> >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input name="limite_horas_res" type="text" class="form-control" id="inputlimite_horas_res"  required  value=<%=request.getAttribute("limite_horas_res") %> >
+      <input disabled name="limite_horas_res"  type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required  value=<%=request.getAttribute("limite_horas_res") %> >
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input name="dias_max_anticipacion" type="text" class="form-control" id="inputdias_max_anticipacion" required value=<%=request.getAttribute("dias_max_anticipacion") %> >
+      <input disabled name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value=<%=request.getAttribute("dias_max_anticipacion") %> >
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>
-	  <input name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados">Restringido a Encargados?</input>
+	  <input disabled name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados">Restringido a Encargados?</input>
 	</div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=baja')">Eliminar</button>		
