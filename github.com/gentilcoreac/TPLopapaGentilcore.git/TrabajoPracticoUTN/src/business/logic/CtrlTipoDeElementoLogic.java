@@ -21,13 +21,16 @@ public class CtrlTipoDeElementoLogic {
 		return getOne(tde);
 	}
 	
+
+	public TipoDeElemento getByName(TipoDeElemento tde) throws Exception{
+		return this.dataTdE.getByName(tde);
+
+	}	
+	
 	public TipoDeElemento getOne(TipoDeElemento tde) throws Exception{
 		return this.dataTdE.getOne(tde);
 	}
 	
-	public TipoDeElemento getByName(TipoDeElemento tde) throws Exception{
-		return this.dataTdE.getByName(tde);
-	}
 	
 	public ArrayList<TipoDeElemento> getAll() throws Exception{
 		return dataTdE.getAll();

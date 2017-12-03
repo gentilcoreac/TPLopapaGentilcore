@@ -63,21 +63,21 @@ public class Start extends HttpServlet {
 
 			Persona pers=ctrl.getLoggedUser(user,pass);			
 			
-			if(pers==null){		//en caso que no exista el que se ingres�
-				request.setAttribute("Error", "Usuario no encontrado");
+			if(pers==null){		//en caso que no exista el que se ingresó
 				request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);								
 			}
 			else{
 				
 			request.setAttribute("listaPersonas", ctrl.getAll());
 			request.getSession().setAttribute("user", pers);		//1 atributo: user es un atributo q yo creo
-																	//2 parametro: es un objeto java(debe ser serializable y javabin)
+																	//2 parametro: es un objeto java(debe ser serializable y javabean)
+			//este es de sesion :(     request.setAttribute("usrPar", pers);			
 
-		/*   *todo lo que tenga que durar en muchas paginas, lo guardo en el servidor. El usuario logueado , que debe durar durante toda la sesion, se lo asigno al servidor
-			 * Si guardo un listado de reservas en la sesion, cuando haya miles de usuarios a la vez, saturar� el servidor
-			 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas*/
 			request.getRequestDispatcher("WEB-INF/ListaUsuarios.jsp").forward(request, response);
+
 			}
+			//response.getWriter().append(user).append(" ").append(pass);
+
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}

@@ -12,40 +12,41 @@ public class DataElemento {
 	//id_elemento, nombre, tipo
 	
 
-//	public ArrayList<Elemento> getAll() throws SQLException, AppDataException{
-//		Statement stmt = null;
-//		ResultSet rs=null;
-//		ArrayList<Elemento> elems= new ArrayList<Elemento>(); 
-//		DataTipoDeElemento dtde = new DataTipoDeElemento();	
-//		
-//		try {
-//			stmt = FactoryConexion.getInstancia().getConn().createStatement();
-//			rs = stmt.executeQuery("select* from elemento");
-//			if(rs!=null){
-//				while(rs.next()){
-//					Elemento el = new Elemento();
-//					el.setNombre(rs.getString("nombre"));
-//					el.setId_elemento(rs.getInt("id_elemento"));
-//					int idTipEl = rs.getInt("id_tipodeelemento");
-//					el.setTipo(dtde.getOne(idTipEl));
-//					elems.add(el);				
-//				}
-//			}
-//		} catch (SQLException sqlex) {
-//			throw new AppDataException(sqlex, "Error al recuperar todos los elementos");
-//		}
-//		finally{
-//				try {
-//					if(rs!=null) rs.close();
-//					if(stmt!=null) stmt.close();
-//					FactoryConexion.getInstancia().releaseConn();
-//				} catch (SQLException sqlex) {
-//					throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement (Clase: DataElemento)");
-//				}		
-//		}
-//		return elems;	
-//	}
-//	
+	public ArrayList<Elemento> getAll() throws SQLException, AppDataException{
+		Statement stmt = null;
+		ResultSet rs=null;
+		ArrayList<Elemento> elems= new ArrayList<Elemento>(); 
+		DataTipoDeElemento dtde = new DataTipoDeElemento();	
+		
+		try {
+			stmt = FactoryConexion.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery("select* from elemento");
+			if(rs!=null){
+				while(rs.next()){
+					Elemento el = new Elemento();
+					el.setNombre(rs.getString("nombre"));
+					el.setId_elemento(rs.getInt("id_elemento"));
+					int idTipEl = rs.getInt("id_tipodeelemento");
+					el.setTipo(dtde.getOne(idTipEl));
+					elems.add(el);				
+				}
+			}
+		} catch (SQLException sqlex) {
+			throw new AppDataException(sqlex, "Error al recuperar todos los elementos");
+		}
+		finally{
+				try {
+					if(rs!=null) rs.close();
+					if(stmt!=null) stmt.close();
+					FactoryConexion.getInstancia().releaseConn();
+				} catch (SQLException sqlex) {
+					throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement (Clase: DataElemento)");
+				}		
+		}
+		return elems;	
+	}
+	
+	/*
 	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento elemento,int indice,int cantTraer)throws SQLException,AppDataException{
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
@@ -176,7 +177,7 @@ public class DataElemento {
 			}
 		}
 		return elementos;
-	}
+	}*/
 	
 	public ArrayList<Elemento> getSome(Elemento elemento,java.util.Date fechaDisp,int indice,int cantTraer)throws SQLException,AppDataException,Exception{
 		PreparedStatement pstmt=null;
@@ -420,7 +421,7 @@ public class DataElemento {
 	}
 	
 	
-	
+	/*
 	public int getCantidad(Campo.TipoBusquedaE tipob,Elemento ele)throws SQLException,AppDataException{
 		int cantidad=0;
 		PreparedStatement pstmt=null;
@@ -486,7 +487,7 @@ public class DataElemento {
 			}
 		}
 		return cantidad;
-	}
+	}*/
 	
 	public int getCantidad(Elemento elemento,java.util.Date fechaDisp)throws SQLException,AppDataException{
 		int cantidad=0;

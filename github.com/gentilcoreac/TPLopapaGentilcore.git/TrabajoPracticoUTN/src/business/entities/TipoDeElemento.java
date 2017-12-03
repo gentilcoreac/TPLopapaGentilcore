@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TipoDeElemento implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private int id_tipodeelemento;
 	private String nombre;
 	private int cant_max_res_pen; 
@@ -45,21 +41,20 @@ public class TipoDeElemento implements Serializable{
 	public void setDias_max_anticipacion(int dias_max_anticipacion) {
 		this.dias_max_anticipacion = dias_max_anticipacion;
 	}
-
 	public boolean isOnly_encargados() {
 		return only_encargados;
 	}
 	public void setOnly_encargados(boolean only_encargados) {
 		this.only_encargados = only_encargados;
 	}
+
 	public TipoDeElemento(int id, String nombre, int cant_max_res_pen, int limite_horas_res,
-			int dias_max_anticipacion,boolean solo_encargados) {
+			int dias_max_anticipacion) {
 		this.id_tipodeelemento = id;
 		this.nombre = nombre;
 		this.cant_max_res_pen = cant_max_res_pen;
 		this.limite_horas_res = limite_horas_res;
 		this.dias_max_anticipacion = dias_max_anticipacion;
-		this.only_encargados=solo_encargados;
 	}
 
 	public TipoDeElemento(){

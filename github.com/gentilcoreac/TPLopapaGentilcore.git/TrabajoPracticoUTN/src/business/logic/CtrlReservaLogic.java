@@ -39,6 +39,35 @@ public class CtrlReservaLogic {
 		reservas=new ArrayList<Reserva>();
 	}
 	
+	public ArrayList<Reserva> getAll()throws Exception{					////////////////////////////////////////////////////////////////////////////////////////////////////
+	//	if(persona.getCategoria().getDescripcion().equals("Administrador")){
+			return datRes.getAll();
+	//	}
+	//	else{
+	//		return datRes.getSome(persona, res);
+	//	}
+	}
+	
+	public ArrayList<Reserva> getSome(Persona persona, Reserva res,int indice,int cantidad)throws Exception{
+		if(persona.getCategoria().getDescripcion().equals("Administrador")){
+			return datRes.getSome(res);
+		}
+		else{
+			return datRes.getSome(persona, res);
+		}
+	}
+
+	public ArrayList<Reserva> getAll(Persona persona, Persona p_buscada)throws Exception{	////////////////////////////////////////////////////////////////////////
+
+		if(persona.getCategoria().getDescripcion().equals("Administrador")){
+			return datRes.getAll();
+		}
+		else{
+			return datRes.getAll(p_buscada);
+		}
+	}
+
+	/*
 	public ArrayList<Reserva> getSome(Persona persona,Campo.TipoBusquedaR tipob,Reserva res,int indice,int cantidad)throws Exception{
 		if(persona.getCategoria().getDescripcion().equals("Administrador")){
 			return datRes.getSome(tipob, res, indice, cantidad);
@@ -56,7 +85,7 @@ public class CtrlReservaLogic {
 			return datRes.getCantidad(persona,tipob, reserva);
 		}
 		
-	}
+	}*/
 	
 	public void add(Reserva r) throws SQLException, AppDataException{
 		/*Reserva res = new Reserva();
@@ -152,8 +181,8 @@ public class CtrlReservaLogic {
 	public Reserva getOne(Reserva r)throws Exception{
 		return datRes.getOne(r);
 	}	
-	
-	
+
+
 	
 }
 

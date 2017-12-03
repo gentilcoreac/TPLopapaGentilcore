@@ -57,6 +57,14 @@ public class CtrlPersonaLogic {
 		return dataPer.getLoggedUser(usuario, pass);
 	}
 	
+/*	public Persona getLoggedUser(Persona per)throws Exception{
+		return dataPer.getLoggedUser(per);
+	}	*/
+
+
+
+	
+	
 	public ArrayList<Categoria> getCategorias() throws Exception{
 		return dataCat.getAll();
 	}
