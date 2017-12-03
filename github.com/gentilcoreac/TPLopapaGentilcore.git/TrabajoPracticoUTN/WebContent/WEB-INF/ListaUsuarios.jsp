@@ -13,9 +13,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- Estilos personalizados - Botón que retorna a arriba -->
+    <link href="style/botonArriba.css" rel="stylesheet">
 </head>
 <body>
 
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Subir</button>
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -25,35 +29,38 @@
     <ul class="nav navbar-nav">
       <li><a href="WEB-INF/Inicio.jsp">Inicio</a></li>
       <li><a href="#">Reservar</a></li>
-      <li><a href="#">Elementos</a></li>
-     
-         
+      <li><a href="ServletListaElementos">Elementos</a></li> 
+      <li>
+               	<form action="ServletListaElementos" method="post" name="formElementos" id="formElementos">
+          		 <input class="dropdown-toggle" type="submit" value="Elemento">					
+				</form>
+      </li>
+      <li>
+               	<form action="ServletListaReservas" method="post" name="formReservas" id="formReservas">
+          		 <input class="dropdown-toggle" type="submit" value="Reserva">					
+				</form>
+      </li>      
+      
+      
         <li class="dropdown">
-          <a href="FormularioABMCPersona.html" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
                 aria-expanded="false">Usuarios <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li class="active"><a href="#">Ver listado</a></li>
             <li class="divider"></li>            
-            <li><a href="FormularioABMCPersona.html">Agregar usuario</a></li>
-            <li><a href="#">Editar usuario</a></li>
-            <li><a href="#">Borrar usuario</a></li>
+            <li><a href="#">...---...</a></li>
+            <li><a href="#">...---...</a></li>
+            
           </ul>
         </li>
-        
-    </ul>
-    <form class="navbar-form navbar-left">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
   </div>
 </nav>
+
+
+<input class="btn btn-danger pull-right" type="button" value="Crear Reserva">
+<!-- Abre modal -->
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Crear usuario</button>
 
 
 
@@ -62,81 +69,78 @@
 
 
 <div class="container">
-  <h2>Formulario de Persona</h2>
-  <p>Ingrese los datos y a continuación presione crear usuario:</p>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Crear usuario</h4>
+        </div>
+        <div class="modal-body">
+            <form name="signin" action="ServletABMCPersona" method="post"> 
   
-  <form name="signin" action="ServletABMCPersona" method="post"> 
-  
-    <div class="form-group">
-      <label for="inputusr">Usuario:</label>
-      <input name="usuario" type="text" class="form-control" id="inputusr">
+		    <div class="form-group">
+		      <label for="inputusr">Usuario:</label>
+		      <input name="usuario" type="text" class="form-control" id="inputusr" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputpwd">Contraseña:</label>
+		      <input name="contrasenia" type="password" class="form-control" id="inputpwd" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputCategoriaLista">Categoria</label>
+		      <select name="categoria" class="form-control" id="inputCategoriaLista">
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		      </select>
+		    </div>   
+		    <div class="form-group">
+		      <label for="inputapel">Apellido:</label>
+		      <input name="apellido" type="text" class="form-control" id="inputapel" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputnombre">Nombre:</label>
+		      <input name="nombre" type="text" class="form-control" id="inputnombre" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputdni">Dni:</label>
+		      <input name="dni" type="text" class="form-control" id="inputdni" required>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputemail">Email:</label>
+		      <input name="email" type="text" class="form-control" id="inputemail" required>
+		    </div>
+			<div class="checkbox">
+			  <label for="inputhabilitado">Habilitado:</label>
+			  <input name="habilitado" type="checkbox" id="inputhabilitado">
+			</div> 
+			<div>	 
+				<input name="opcion" type="hidden" id="opcionElegida" value="agregar">		
+			</div>	  
+		    <br> 
+			<h3>  faltaria corregir el habilitado </h3> 
+			<br> <br> 
+		       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
+			</form>
+		</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="password" class="form-control" id="inputpwd">
-    </div>
-    <div class="form-group">
-      <label for="inputCategoriaLista">Categoria</label>
-      <select name="categoria" class="form-control" id="inputCategoriaLista">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-      </select>
-    </div>   
-    <div class="form-group">
-      <label for="inputapel">Apellido:</label>
-      <input name="apellido" type="text" class="form-control" id="inputapel">
-    </div>
-    <div class="form-group">
-      <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre">
-    </div>
-    <div class="form-group">
-      <label for="inputdni">Dni:</label>
-      <input name="dni" type="text" class="form-control" id="inputdni">
-    </div>
-    <div class="form-group">
-      <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail">
-    </div>
-	<div class="checkbox">
-	  <label for="inputhabilitado">Habilitado:</label>
-	  <input name="habilitado" type="checkbox" value="1" id="inputhabilitado">
-	</div>   
-    <br> 
-    <br> 
-	<h3>  faltaria corregir el habilitado, Y validar q los campos esten completos y no mande vacios. Comprobar que el    </h3> 
-	<br> <br> 
-       <button class="btn btn-lg btn-primary btn-block" type="submit">Crear Usuario</button>		
-	</form>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <div class="container">
 
   <h2>Lista de usuarios</h2>
-  <p>Tipeá algo en el campo de entrada para buscar en la tabla para buscar por alguno de los campos:</p>  
-  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <p>Tipeá algo en el campo de entrada para buscar en la tabla:</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Buscar..">
   <br>
-  
-  <table class="table table-striped">
-  
-  
-  <!--.............................................  poner el formulario de ingreso de valores...............................-->
-  
+  <table class="table table-striped">  
       <thead>
       <tr>
         <th>ID</th>
@@ -166,18 +170,18 @@
 			<td><%=p.getEmail() %></td>	
 			<td><%=p.getCategoria().getId() %></td>																		
 			<td><%=p.getCategoria().getDescripcion() %></td>
-			<td><%=p.isHabilitado() %></td>											
+			<td><%=p.isHabilitado() %></td>					
 			<td>
-				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formB">
+				<form action="ServletABMCPersona" method="post" name="formOpcion" id="formB">
 					<input name="DNIeliminar" type="hidden" id="inputEliminar" value="<%=p.getDni()%>" >
 					<input name="opcion" type="hidden" id="opcionElegida" value="eliminar">					
-					<button class="btn" type="submit">Eliminar</button>					
+					<button class="btn" type="submit"><img alt="Icono de eliminar"  width="20px" height="20px" src="https://cdn2.iconfinder.com/data/icons/perfect-flat-icons-2/256/Delete_remove_close_exit_trash_cancel_cross.png"></button>					
 				</form>
 			</td>
 			<td>
-				<form action="ABMCPersonaEditar" method="post" name="formOpcion" id="formM">
-					<input name="DNIeditar" type="hidden" id="inputEditar" value="<%=p.getDni()%>" >
-					<input name="opcion" type="hidden" id="opcionElegida" value="editar">				<!-- esta es para  -->
+				<form action="ServletABMCPersona" method="post" name="formOpcion" id="formM">
+					<input name="DNIPeditar" type="hidden" id="inputEditar" value="<%=p.getDni()%>" >
+					<input name="opcion" type="hidden" id="opcionElegida" value="buscarPeditar">				<!-- esta es para  -->
 					<button class="btn" type="submit"><img alt="Icono de editar" width="20px" height="20px" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698873-icon-136-document-edit-512.png"></button>					
 				</form>
 			</td>
@@ -196,6 +200,15 @@
 
 
 
+
+
+<script>
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
 
 
 <!--  Como buena practica el script me parece que no va acá. Probé funcionalidades con esto-->
