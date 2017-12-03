@@ -13,6 +13,10 @@
 	
 }
 
+input[type="number"]{
+	width:6em;
+}
+
 h2 {
   margin-top:10px;
   text-align: center;
@@ -20,7 +24,7 @@ h2 {
 
 
 
-.form-per {
+.form {
 
   max-width: 60%;
   min-width:40%;
@@ -37,21 +41,14 @@ label{
 
 }
 
-.form-per .form-per-heading,
-
-.form-per .checkbox {
+.checkbox {
 
   margin-bottom: 10px;
-
-}
-
-.form-per .checkbox {
-
   font-weight: normal;
 
 }
 
-.form-per .form-control {
+.form-control {
 
   position: relative;
 
@@ -67,7 +64,7 @@ label{
 
 }
 
-.form-per .form-control:focus {
+.form-control:focus {
 
   z-index: 2;
 

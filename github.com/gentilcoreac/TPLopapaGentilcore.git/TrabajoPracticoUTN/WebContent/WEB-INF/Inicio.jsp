@@ -79,7 +79,7 @@ if(session.getAttribute("user")==null){
                 aria-expanded="false">Tipos de Elementos<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaTiposDeElementos">Listado</a></li>
             <li class="divider"></li>            
             <li><a href="#">Agregar Tipo de Elemento</a></li>
             <li><a href="#">Editar Tipo de Elemento</a></li>

@@ -8,6 +8,12 @@ body {
 
 }
 
+.btn{
+	margin-top:10px;
+}
+h2{
+	text-align:center;
+}
 
 
 .form-signin {
@@ -66,12 +72,3 @@ body {
 
 }
 
-.form-signin input[type="password"] {
-
-  margin-bottom: 10px;
-
-  border-top-left-radius: 0;
-
-  border-top-right-radius: 0;
-
-}
