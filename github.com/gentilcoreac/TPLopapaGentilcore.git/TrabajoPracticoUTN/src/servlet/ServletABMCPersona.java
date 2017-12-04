@@ -68,40 +68,47 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 
 	private void consulta(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			Persona per=new CtrlPersonaLogic().getByDni(request.getParameter("dni"));
-			if(per==null){
-				hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
-
-			}
-			else{
-				request.setAttribute("id", String.valueOf(per.getId()));
-				request.setAttribute("dni", per.getDni());
-				request.setAttribute("apellido", per.getApellido());
-				request.setAttribute("nombre", per.getNombre());
-				request.setAttribute("usuario", per.getUsuario());
-				request.setAttribute("contrasenia", per.getContrasenia());
-				request.setAttribute("email", per.getEmail());
-				request.setAttribute("categoria", per.getCategoria().getDescripcion());
-				request.setAttribute("habilitado", String.valueOf(per.isHabilitado()));
-				request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
-				request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion="+request.getParameter("fin")).forward(request, response);
-			}
-			
-			
-		} catch (Exception ex) {
 		
-			this.error(request, response, ex);
+		if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
+			try {			
+				Persona per=new CtrlPersonaLogic().getByDni(request.getParameter("dni"));
+				if(per==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
+	
+				}
+				else{
+					request.setAttribute("id", String.valueOf(per.getId()));
+					request.setAttribute("dni", per.getDni());
+					request.setAttribute("apellido", per.getApellido());
+					request.setAttribute("nombre", per.getNombre());
+					request.setAttribute("usuario", per.getUsuario());
+					request.setAttribute("contrasenia", per.getContrasenia());
+					request.setAttribute("email", per.getEmail());
+					request.setAttribute("categoria", per.getCategoria().getDescripcion());
+					request.setAttribute("habilitado", String.valueOf(per.isHabilitado()));
+					request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
+					request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion="+request.getParameter("fin")).forward(request, response);
+				}
+				
+				
+			} catch (Exception ex) {
+			
+				this.error(request, response, ex);
+			}
+		}
+		else{
+			hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
 		}
 		
 	}
 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
-		Persona per=new Persona();
-		per.setDni(request.getParameter("dni"));
-		if(Campo.Valida(per.getDni(), Campo.tipo.DNI)){
+		
+		if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
 			try{
+				Persona per=new Persona();
+				per.setDni(request.getParameter("dni"));
 				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
 				ctrl.delete(per);
 				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
@@ -120,20 +127,18 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 	private void modificacion(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			Persona per=new Persona();
-			//per.setId(Integer.parseInt(request.getParameter("id")));
-			per.setUsuario(request.getParameter("usuario"));
-			per.setContrasenia(request.getParameter("contrasenia"));
-			per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
-			per.setApellido(request.getParameter("apellido"));		
-			per.setNombre(request.getParameter("nombre"));
-			per.setDni(request.getParameter("dni"));
-			per.setHabilitado(request.getParameter("habilitado")==null?false:true);
-			per.setEmail(request.getParameter("email"));
-			
-			
-				
-			if(this.validaCampos(per.getDni(), per.getEmail())){
+		
+			if(this.validaCampos(request.getParameter("dni"), request.getParameter("email"))){
+				Persona per=new Persona();
+				//per.setId(Integer.parseInt(request.getParameter("id")));
+				per.setUsuario(request.getParameter("usuario"));
+				per.setContrasenia(request.getParameter("contrasenia"));
+				per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
+				per.setApellido(request.getParameter("apellido"));		
+				per.setNombre(request.getParameter("nombre"));
+				per.setDni(request.getParameter("dni"));
+				per.setHabilitado(request.getParameter("habilitado")==null?false:true);
+				per.setEmail(request.getParameter("email"));
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.update(per);
 				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente","ServletListaUsuarios");			
@@ -151,20 +156,18 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		
-		try {
-			Persona per=new Persona();
-			per.setUsuario(request.getParameter("usuario"));
-			per.setContrasenia(request.getParameter("contrasenia"));
-			per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
-			per.setApellido(request.getParameter("apellido"));		
-			per.setNombre(request.getParameter("nombre"));
-			per.setDni(request.getParameter("dni"));
-			per.setHabilitado(request.getParameter("habilitado")==null?false:true);
-			per.setEmail(request.getParameter("email"));
-			
-			
-			
-			if(this.validaCampos(per.getDni(), per.getEmail())){
+		try {	
+			if(this.validaCampos(request.getParameter("dni"), request.getParameter("email"))){
+				Persona per=new Persona();
+				per.setUsuario(request.getParameter("usuario"));
+				per.setContrasenia(request.getParameter("contrasenia"));
+				per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
+				per.setApellido(request.getParameter("apellido"));		
+				per.setNombre(request.getParameter("nombre"));
+				per.setDni(request.getParameter("dni"));
+				per.setHabilitado(request.getParameter("habilitado")==null?false:true);
+				per.setEmail(request.getParameter("email"));
+
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.add(per);
 				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente","ServletListaUsuarios");			

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/listado.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
-  <script src="scripts/buscatabla.js"></script>
+  <script src="scripts/listado.js"></script>
     <script type="text/javascript">
     	function submitForm(met,id) {
     		//document.myForm.action=met;
@@ -178,9 +178,9 @@
 					<input type="hidden" name="email" value=<%=p.getEmail() %> >		
 					<input type="hidden" name="categoria" value=<%=p.getCategoria() %> >		
 					<input type="hidden" name="habilitado" value=<%=p.isHabilitado() %> >		
-					<button class="btn eliminar" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)" >Eliminar</button>	
-					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)"><span class="glyphicon glyphicon-pencil"></span></button>	
-								
+					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
+					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>
+			
 				</form>
 		
 			</td>

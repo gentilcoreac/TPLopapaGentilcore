@@ -2,6 +2,10 @@ h2{
 	text-align:center;
 }
 .eliminar{
+	margin-left:10px;
+}
+
+.reservar{
 	margin-right:10px;
 }
 
@@ -10,12 +14,15 @@ tr,th{
 	
 }
 
+form{
+	text-align:right;
+}
 
 
 .nuevo{
-	float:right;
+	
 	padding:2px 12px 8px 8px;
-	margin-right:20px;
+	
 }
 
 #myInput{

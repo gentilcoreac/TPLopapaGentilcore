@@ -157,7 +157,7 @@ case "baja":
 <%	
 break;
 default:
-	response.sendRedirect("ServletListaUsuarios");
+	response.sendRedirect("ServletListaTiposDeElementos");
 	break;
 }
 

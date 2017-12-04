@@ -29,23 +29,15 @@ public class CtrlElementoLogic {
 	public int getMaxId()throws Exception{
 		return dataElem.getMaxId();
 	}
-	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento ele,Date fechaDisp,int indice,int cantidad)throws Exception{
+	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento ele,Date fechaDisp)throws Exception{
 
 		if(tipob==Campo.TipoBusquedaE.POR_TIPO_Y_FH){
-			return dataElem.getSome(ele, fechaDisp, indice, cantidad);
+			return dataElem.getSome(ele, fechaDisp);
 		}
-		return dataElem.getSome(tipob,ele,indice,cantidad);
+		return dataElem.getSome(tipob,ele);
 		
 	}
 	
-	public int getCantidad(Campo.TipoBusquedaE tipob,Elemento ele,Date fechaDisp)throws Exception{
-		
-		if(tipob==Campo.TipoBusquedaE.POR_TIPO_Y_FH){
-			return dataElem.getCantidad(ele,fechaDisp);
-		}
-		return dataElem.getCantidad(tipob,ele);
-		
-	}
 	
 	public void add(Elemento e) throws Exception{
 		dataElem.add(e);

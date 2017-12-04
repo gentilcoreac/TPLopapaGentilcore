@@ -104,15 +104,14 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 	private void modificacion(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			TipoDeElemento te=new TipoDeElemento();
-			te.setNombre(request.getParameter("nombre"));
-			te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
-			te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
-			te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
-			te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
-			
-				
-			if(this.validaCampos(String.valueOf(te.getCant_max_res_pen()),String.valueOf(te.getDias_max_anticipacion()),String.valueOf(te.getLimite_horas_res()))){
+	
+			if(this.validaCampos(request.getParameter("cant_max_res_pen"),request.getParameter("dias_max_anticipacion"),request.getParameter("limite_horas_res"))){
+				TipoDeElemento te=new TipoDeElemento();
+				te.setNombre(request.getParameter("nombre"));
+				te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
+				te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
+				te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
+				te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
 				CtrlTipoDeElementoLogic ctrl= new CtrlTipoDeElementoLogic();
 				ctrl.update(te);
 				hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Datos de Tipo de Elemento actualizados correctamente","ServletListaTiposDeElementos");			
@@ -131,16 +130,14 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			TipoDeElemento te=new TipoDeElemento();
-			te.setNombre(request.getParameter("nombre"));
-			te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
-			te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
-			te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
-			te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
-			
-			
-			
-			if(this.validaCampos(String.valueOf(te.getCant_max_res_pen()),String.valueOf(te.getDias_max_anticipacion()),String.valueOf(te.getLimite_horas_res()))){
+
+			if(this.validaCampos(request.getParameter("cant_max_res_pen"),request.getParameter("dias_max_anticipacion"),request.getParameter("limite_horas_res"))){
+				TipoDeElemento te=new TipoDeElemento();
+				te.setNombre(request.getParameter("nombre"));
+				te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
+				te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
+				te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
+				te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
 				CtrlTipoDeElementoLogic ctrl= new CtrlTipoDeElementoLogic();
 				ctrl.add(te);
 				hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Tipo de Elemento agregado correctamente","ServletListaTiposDeElementos");			

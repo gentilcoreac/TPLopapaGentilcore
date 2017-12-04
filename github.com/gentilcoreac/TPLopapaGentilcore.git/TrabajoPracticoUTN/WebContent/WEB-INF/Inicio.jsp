@@ -49,12 +49,12 @@ if(session.getAttribute("user")==null){
                 aria-expanded="false">Elementos<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaElementos">Listado</a></li>
             <%if(categoria.equals("Administrador")){ %>
             <li class="divider"></li>            
-            <li><a href="#">Agregar Elemento</a></li>
-            <li><a href="#">Editar Elemento</a></li>
-            <li><a href="#">Borrar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=alta">Agregar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=modificacion">Editar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=baja">Borrar Elemento</a></li>
             <%} %>
           </ul>
         </li>

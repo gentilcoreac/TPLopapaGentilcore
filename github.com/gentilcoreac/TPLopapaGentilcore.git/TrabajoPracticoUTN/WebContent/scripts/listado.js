@@ -1,4 +1,4 @@
-
+/* busca tabla*/
 $(document).ready(function(){
     $("#myBtn").click(function(){
         $("#myModal").modal();
@@ -17,3 +17,10 @@ $(document).ready(function(){
     });
   });
 });
+/* fin busca tabla*/
+
+/*habilita tooltips*/
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+/* fin tooltips*/
