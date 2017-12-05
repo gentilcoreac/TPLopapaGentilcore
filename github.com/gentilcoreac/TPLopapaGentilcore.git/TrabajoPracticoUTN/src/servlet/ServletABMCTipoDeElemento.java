@@ -69,7 +69,7 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 				request.setAttribute("limite_horas_res", String.valueOf(te.getLimite_horas_res()));
 				request.setAttribute("dias_max_anticipacion", String.valueOf(te.getDias_max_anticipacion()));
 				request.setAttribute("only_encargados", String.valueOf(te.isOnly_encargados()));
-				request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
+//				request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
 				request.getRequestDispatcher("WEB-INF/FormTipoDeElemento.jsp?accion="+request.getParameter("fin")).forward(request, response);
 
 			}

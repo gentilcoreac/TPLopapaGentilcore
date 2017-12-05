@@ -35,7 +35,12 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		try {
+			request.setAttribute("tipos", new CtrlTipoDeElementoLogic().getAll());
+		} catch (Exception e) {
+			error(request,response,e);
+		}
 		switch (request.getParameter("accion")) {
 		case "alta":
 			this.alta(request,response);
@@ -72,7 +77,6 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 					request.setAttribute("id", String.valueOf(ele.getId_elemento()));
 					request.setAttribute("nombre", ele.getNombre());
 					request.setAttribute("tipoelemento", ele.getTipo().getNombre());
-					request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
 					request.getRequestDispatcher("WEB-INF/FormElemento.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
 				
@@ -89,7 +93,7 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 	}
 
 
-private void baja(HttpServletRequest request, HttpServletResponse response) {
+	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
 		if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
 			try{

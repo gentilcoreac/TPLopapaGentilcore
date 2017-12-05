@@ -24,3 +24,9 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 /* fin tooltips*/
+
+window.addEventListener('resize', function(event){
+	
+    $("@media (min-width: 768px)").css("position", "fixed");
+
+});

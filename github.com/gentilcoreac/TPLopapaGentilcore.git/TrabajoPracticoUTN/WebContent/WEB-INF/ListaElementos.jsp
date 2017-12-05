@@ -24,10 +24,18 @@
     		document.getElementById(id).submit();
         }
     </script>
+    <style>
+	
+	</style>
+	<script>
+	
+	</script>
 </head>
-<body>
+<body >
 
-<nav class="navbar navbar-inverse">
+
+
+<nav class="navbar navbar-inverse"   >
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="Start">MyReserva</a>
@@ -121,7 +129,8 @@
 
 
 <div class="container">
-
+  <br>
+  <br>
   <h2>Lista de Elementos</h2>
   <br>
   <%if(categoria.equals("Administrador")){ %>
@@ -135,6 +144,8 @@
   <p>Busque por algun dato del Elemento:</p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
+ 
+
   
   <table class="table table-striped" >  
       <thead>

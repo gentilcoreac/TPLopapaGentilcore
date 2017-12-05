@@ -121,7 +121,8 @@
 </nav>
 
 <div class="container">
-
+  <br>
+  <br>
   <h2>Lista de Tipos de Elementos</h2>
   <br>
   <form method="post" action="ServletFormsTiposDeElementos?accion=alta">

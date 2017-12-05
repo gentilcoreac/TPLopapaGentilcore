@@ -52,7 +52,6 @@ public class ServletFormsTiposDeElementos extends HttpServletConFunciones {
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			this.setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/FormTipoDeElemento.jsp?accion=baja").forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -63,7 +62,6 @@ public class ServletFormsTiposDeElementos extends HttpServletConFunciones {
 
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			request.getRequestDispatcher("WEB-INF/FormTipoDeElemento.jsp?accion=alta").forward(request, response);
 		} catch (ServletException | IOException e) {
 			error(request,response,e);
@@ -73,7 +71,6 @@ public class ServletFormsTiposDeElementos extends HttpServletConFunciones {
 		
 		
 		try {
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/FormTipoDeElemento.jsp?accion=modificacion").forward(request, response);
 	

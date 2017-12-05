@@ -29,3 +29,12 @@ form{
 	margin-right:30px;
 }
 
+@media (min-width: 768px) {
+    .navbar {
+      position: fixed;
+      left: 0;
+	  right: 0;
+	  width: auto;
+	  z-index:99;
+     }
+} 

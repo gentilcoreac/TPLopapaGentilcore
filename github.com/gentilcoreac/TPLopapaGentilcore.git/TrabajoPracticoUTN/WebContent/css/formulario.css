@@ -71,5 +71,15 @@ label{
 }
 
 .form-group{
-	margin-bottom:8px;
+	margin-bottom:25px;
 }
+
+@media (min-width: 768px) {
+    .navbar {
+      position: fixed;
+      left: 0;
+	  right: 0;
+	  width: auto;
+	  z-index:99;
+     }
+} 

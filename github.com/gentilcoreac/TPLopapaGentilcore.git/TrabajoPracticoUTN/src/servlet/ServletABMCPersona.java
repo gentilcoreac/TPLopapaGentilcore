@@ -86,7 +86,6 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 					request.setAttribute("email", per.getEmail());
 					request.setAttribute("categoria", per.getCategoria().getDescripcion());
 					request.setAttribute("habilitado", String.valueOf(per.isHabilitado()));
-					request.setAttribute("urlcancelar", request.getParameter("urlcancelar"));
 					request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
 				

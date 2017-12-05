@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="business.entities.TipoDeElemento" %>
+<%@page import="business.entities.Persona" %>
 <!DOCTYPE html >
 <html>
 <head>
@@ -13,17 +14,103 @@
   <link rel="stylesheet" href="css/formulario.css" >
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
-  <script type="text/javascript">
-   	function submitForm(met) {
-		document.getElementById("myForm").action =met;
-   		document.getElementById("myForm").submit();
-       }
-
-  </script>
+  <script src="scripts/formulario.js"></script>
 <title>Formulario</title>
 </head>
 <body>
 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="Start">MyReserva</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Reservas<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="#">Hacer Reserva</a></li>
+            <%Persona per=((Persona)request.getSession().getAttribute("user"));
+           	  String categoria=per.getCategoria().getDescripcion();
+           	if(categoria.equals("Administrador")){
+              %>
+            <li><a href="#">Cerrar Reserva</a></li>
+            <% }%>
+            <li><a href="#">Borrar Reserva</a></li>
+          </ul>
+        </li>	
+      
+      	<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Elementos<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="ServletListaElementos">Listado</a></li>
+            <%if(categoria.equals("Administrador")){ %>
+            <li class="divider"></li>            
+            <li><a href="ServletFormsElementos?accion=alta">Agregar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=modificacion">Editar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=baja">Borrar Elemento</a></li>
+            <%} %>
+          </ul>
+        </li>
+        
+    <%	
+    	if(categoria.equals("Administrador")){ %>
+		<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Usuarios <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="ServletListaUsuarios">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="ServletFormsUsuarios?accion=alta">Agregar usuario</a></li>
+            <li><a href="ServletFormsUsuarios?accion=modificacion">Editar usuario</a></li>
+            <li><a href="ServletFormsUsuarios?accion=baja">Borrar usuario</a></li>
+          </ul>
+        </li>
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false">Tipos de Elementos<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="ServletListaTiposDeElementos">Listado</a></li>
+            <li class="divider"></li>            
+            <li><a href="ServletFormsTiposDeElementos?accion=alta">Agregar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=modificacion">Editar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=baja">Borrar Tipo de Elemento</a></li>
+          </ul>
+        </li>
+	<%}%>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-expanded="false"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+" "+per.getApellido()%></span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="Redireccionador?destino=WEB-INF/Perfil.jsp" >Perfil</a></li>
+            <li class="divider"></li>            
+            <li>
+	            <form name="myForm" action="Redireccionador" method="post">
+	            <input type="hidden" value="si" name="logout">
+	            <button  class="btn btn-info">Salir&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+	            </form>
+	      	<!--<a href="Redireccionador?destino=Logout.jsp&logout=si">Salir</a>  -->
+            </li>
+            	
+          </ul>
+        </li>
+    </ul>
+  </div>
+</nav>
+
+<br><br><br>
 <%
 switch(request.getParameter("accion")){
 case "alta":%>
@@ -35,7 +122,7 @@ case "alta":%>
   	
 
   	<div class="form-group">
-     ID:<%=request.getAttribute("proxid") %>
+     <label>ID:&nbsp<%=request.getAttribute("proxid") %></label>
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
@@ -51,7 +138,7 @@ case "alta":%>
     </div>   
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCElemento?accion=alta')">Agregar</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
 	</div>
 	</form>
 </div>
@@ -86,15 +173,15 @@ case "modificacion":
     </div>
     <div class="form-group">
       <label for="inputTipoLista">Categoria</label>
-      <select name="tipo" class="form-control" id="inputTipoLista" required  value=<%=request.getAttribute("tipoelemento") %> >
+      <select name="tipo" class="form-control" id="inputTipoLista" required   >
        <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tipos")){ %>  
-        <option><%=te.getNombre() %></option>
+        <option <%if(request.getAttribute("tipoelemento").equals(te.getNombre())){ %>selected<%} %>><%=te.getNombre() %></option>
       <%} %>
       </select>
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCElemento?accion=modificacion')">Guardar Cambios</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
 	</div>
 	</form>
 </div>
@@ -137,7 +224,7 @@ case "baja":
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCElemento?accion=baja')">Eliminar</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('<%=request.getAttribute("urlcancelar")%>')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
 	</div>
 	</form>
 </div>

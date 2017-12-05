@@ -55,7 +55,6 @@ public class ServletFormsElementos extends HttpServletConFunciones {
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			this.setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/FormElemento.jsp?accion=baja").forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -67,7 +66,6 @@ public class ServletFormsElementos extends HttpServletConFunciones {
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setAttribute("proxid", new CtrlElementoLogic().getMaxId()+1);
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			request.getRequestDispatcher("WEB-INF/FormElemento.jsp?accion=alta").forward(request, response);
 		} catch (Exception  e) {
 			error(request,response,e);
@@ -77,7 +75,6 @@ public class ServletFormsElementos extends HttpServletConFunciones {
 		
 		
 		try {
-			request.setAttribute("urlcancelar", request.getHeader("Referer"));
 			setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/FormElemento.jsp?accion=modificacion").forward(request, response);
 	

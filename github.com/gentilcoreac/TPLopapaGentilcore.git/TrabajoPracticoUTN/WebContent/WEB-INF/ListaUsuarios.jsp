@@ -124,7 +124,8 @@
 
 
 <div class="container">
-
+  <br>
+  <br>
   <h2>Lista de usuarios</h2>
   <br>
   <form method="post" action="ServletFormsUsuarios?accion=alta">
@@ -176,7 +177,7 @@
 					<input type="hidden" name="usuario" value=<%=p.getUsuario() %> >		
 					<input type="hidden" name="contrasenia" value=<%=p.getContrasenia() %> >		
 					<input type="hidden" name="email" value=<%=p.getEmail() %> >		
-					<input type="hidden" name="categoria" value=<%=p.getCategoria() %> >		
+					<input type="hidden" name="categoria" value=<%=p.getCategoria().getDescripcion() %> >		
 					<input type="hidden" name="habilitado" value=<%=p.isHabilitado() %> >		
 					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>
