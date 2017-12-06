@@ -29,4 +29,51 @@ window.addEventListener('resize', function(event){
 	
     $("@media (min-width: 768px)").css("position", "fixed");
 
-});
+});/*para que cuando modifique el tamaño de la ventana el navbar deje de estar fijo*/
+
+$(document).ready(function() {
+	
+   $.viewMap = {
+	    
+	    'porid' : $('#porid'),
+	    'pornombre' : $('#pornombre'),
+	    'portipo' : $('#portipo'),
+	    'pornombreytipo' : $('#pornombreytipo'),
+	    'portipoyfh' : $('#portipoyfh'),
+	    'traertodos' : $('#traertodos')
+	  };
+
+
+  $('#selbusqueda').change(function() {
+    // hide all
+    $.each($.viewMap, function() { this.hide(); });
+    // show current
+    $.viewMap[$(this).val()].show();
+    
+  });
+}); /*para hacer aparecer y desaparecer la busqueda avanzada man*/
+
+function submitForm(met,id) {
+		//document.myForm.action=met;
+		document.getElementById(id).action =met;
+		document.getElementById(id).submit();
+  }/*para usar varios botones en un form*/
+
+$(document).ready(function() {
+	$('#datetimepicker1').datetimepicker({
+
+		defaultDate: new Date($.now()+5*60*1000),
+	    format: 'DD/MM/YYYY HH:mm:ss ',
+	    sideBySide: true
+	    
+	    
+	});
+});/*para que ande el datetimepicker y tenga el formato que necesitamos*/
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});/*para los tooltips*/
+
+$(function(){
+	$('#selbusqueda').val("porid");
+});/*para seleccionar id en busqueda avanzada cada vez que se cargue la pagina*/

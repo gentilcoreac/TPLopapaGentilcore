@@ -15,18 +15,7 @@
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/listado.js"></script>
-    <script type="text/javascript">
-    	function submitForm(met,id) {
-    		//document.myForm.action=met;
-    		document.getElementById(id).action =met;
-    		document.getElementById(id).submit();
-        }
-    </script>
-    <script>
-		$(document).ready(function(){
-		    $('[data-toggle="tooltip"]').tooltip();   
-		});
-	</script>
+
 <body>
 
 <nav class="navbar navbar-inverse">
@@ -170,7 +159,7 @@
 					<input type="hidden" name="limite_horas_res" value=<%=te.getLimite_horas_res() %> >		
 					<input type="hidden" name="dias_max_anticipacion" value=<%=te.getDias_max_anticipacion() %> >		
 					<input type="hidden" name="only_encargados" value=<%=te.isOnly_encargados() %> >				
-					<button  class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsTiposDeElementos?accion=modificacion',<%=te.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
+					<button  class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsTiposDeElementos?accion=modificacion',<%=te.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=baja',<%=te.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	
 			
 				</form>

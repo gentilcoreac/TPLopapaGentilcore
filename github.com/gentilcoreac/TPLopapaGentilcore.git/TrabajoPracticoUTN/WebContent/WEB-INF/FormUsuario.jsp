@@ -277,9 +277,9 @@ case "baja":
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
       <select disabled name="categoria" class="form-control" id="inputCategoriaLista" required=""  value=<%=request.getAttribute("categoria") %> >
-        <option>Administrador</option>
-        <option>Encargado</option>
-        <option>Usuario</option>
+        <option <%if(request.getAttribute("categoria").equals("Administrador")){ %>selected<%} %>>Administrador</option>
+        <option <%if(request.getAttribute("categoria").equals("Encargado")){ %>selected<%} %>>Encargado</option>
+        <option <%if(request.getAttribute("categoria").equals("Usuario")){ %>selected<%} %>>Usuario</option>
       </select>
     </div>   
 	<div class="checkbox">

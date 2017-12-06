@@ -6,7 +6,24 @@ h2{
 }
 
 .reservar{
-	margin-right:10px;
+	margin-left:10px;
+}
+
+.editar{
+	margin-left:10px;
+}
+
+.contenedor{
+	width:250px;
+}
+
+label{
+ margin-bottom:0px; 	
+ margin-top:8px;
+}
+
+#selbusqueda{
+	margin-top:8px;
 }
 
 tr,th{

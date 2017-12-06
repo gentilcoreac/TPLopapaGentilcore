@@ -16,57 +16,12 @@
   <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjI1IDAgMCAtMS4yNSAwIDQ1KSI+Cgk8Zz4KCQk8Zz4KCQkJPHBhdGggc3R5bGU9ImZpbGw6IzNCODhDMzsiIGQ9Ik00MDkuNi0zMjguMDg5YzAtMjUuMTM0LTIwLjM3OC00NS41MTEtNDUuNTExLTQ1LjUxMUg0NS41MTFDMjAuMzc4LTM3My42LDAtMzUzLjIyMiwwLTMyOC4wODkgICAgIFYtOS41MTFDMCwxNS42MjIsMjAuMzc4LDM2LDQ1LjUxMSwzNmgzMTguNTc4QzM4OS4yMjIsMzYsNDA5LjYsMTUuNjIyLDQwOS42LTkuNTExVi0zMjguMDg5eiIvPgoJCQk8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTE3NS41MzYtMTUzLjg5NWgzNi4zMjljMTkuMzk5LDAsMzIuODI1LDExLjYzOSwzMi44MjUsMzEuMzkxICAgICBjMCwyMC4xMDUtMTMuNDI2LDMxLjA1LTMyLjgyNSwzMS4wNWgtMzYuMzI5Vi0xNTMuODk1eiBNMTIyLjYxOC03MC4yOTFjMCwxNi45Myw5LjUyMywyNy41MjMsMjcuMTU5LDI3LjUyM2g2Mi4wODkgICAgIGM1NC4zMjksMCw4Ny44NDgtMjQuMzQ4LDg3Ljg0OC03OS43MzVjMC0zOC43OTgtMjkuMjg2LTYxLjAzLTY1LjI3NC02Ni42NzRsNTkuOTg0LTY0LjIwNSAgICAgYzQuOTI3LTUuMjkxLDcuMDQzLTEwLjU4MSw3LjA0My0xNS41MTljMC0xMy43NTYtMTAuOTM0LTI3LjE1OS0yNi40NDItMjcuMTU5Yy02LjM2LDAtMTQuODI1LDIuNDY5LTIwLjQ2OSw5LjE3bC03OC4zMjUsOTQuODkxICAgICBoLTAuNjk0di03Ni41NWMwLTE3LjY0Ny0xMS4yODctMjcuNTExLTI2LjQ2NS0yNy41MTFjLTE1LjE2NywwLTI2LjQ1Myw5Ljg2NS0yNi40NTMsMjcuNTExICAgICBDMTIyLjYxOC0yNjguNTQ5LDEyMi42MTgtNzAuMjkxLDEyMi42MTgtNzAuMjkxeiIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/listado.css">
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/listado.js"></script>
-  <script type="text/javascript">
-  	function submitForm(met,id) {
-  		//document.myForm.action=met;
-  		document.getElementById(id).action =met;
-  		document.getElementById(id).submit();
-      }
-  </script>
-  <script>
-	$(document).ready(function() {
-		$.viewMap = {
-			    
-			    'porid' : $('#porid'),
-			    'pornombre' : $('#pornombre'),
-			    'portipo' : $('#portipo'),
-			    'pornombreytipo' : $('#pornombreytipo'),
-			    'portipoyfh' : $('#portipoyfh'),
-			    'traertodos' : $('#traertodos')
-			  };
-	
-	  $('#selbusqueda').change(function() {
-	    // hide all
-	    $.each($.viewMap, function() { this.hide(); });
-	    // show current
-	    $.viewMap[$(this).val()].show();
-	  });
-	});
-  </script>
-
-
-
-<script src="scripts/moment.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-<script src="scripts/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript">
-
-$(document).ready(function() {
-	$('#datetimepicker1').datetimepicker({
-
-		defaultDate: new Date(),
-	    format: 'DD/MM/YYYY HH:mm:ss ',
-	    sideBySide: true
-	    
-	    
-	});
-});
-</script>
-	
-	
+  <script src="scripts/moment.min.js"></script>
+  <script src="scripts/bootstrap-datetimepicker.min.js"></script>	
 </head>
 <body >
 
@@ -180,8 +135,8 @@ $(document).ready(function() {
   <br>
   
   <button data-toggle="collapse" data-target="#busquedaavanzada">Busqueda Avanzada</button>
-    <div id="busquedaavanzada" class="collapse" style="background-color:rgb(188, 220, 244);width:300px;">
-    	
+    <div id="busquedaavanzada" class="collapse" >
+    	<div id="contenedor" class="contenedor">
       	 <table>
        	  <tr>
        	  <td>
@@ -189,7 +144,7 @@ $(document).ready(function() {
 		    <%-- <%for(Campo.TipoBusquedaE tbe:Campo.TipoBusquedaE.values()){ %>
 		    <option value=<%=tbe.toString() %>><%= tbe %></option>
 		    <%} %> --%>
-		    <option value="porid">Por Id</option>
+		    <option selected value="porid">Por Id</option>
 		    <option value="pornombre">Por Nombre</option>
 		    <option value="portipo">Por Tipo</option>
 		    <option value="pornombreytipo">Por Nombre y Tipo</option>
@@ -206,7 +161,7 @@ $(document).ready(function() {
 		  </tr>
          </table>
          <br>    
-         <div id="porid"  class="collapse">
+         <div id="porid"  >
           <label for="inputbporid">ID:</label>
 		  <input name="bporid" type="text" class="form-control" id="inputbporid" >
 		 </div>
@@ -225,7 +180,6 @@ $(document).ready(function() {
 		 <div id="pornombreytipo"  class="collapse">
 		  <label for="inputbpornombreytipo">Nombre:</label>
 		  <input name="bpornombreytipo" type="text" class="form-control" id="inputbpornombreytipo" >
-		  <br>
 		  <label for="inputbspornombreytipo">Tipo:</label>
 		  <select class="form-control" name="bspornombreytipo" id="inputbspornombreytipo">
 		  <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
@@ -233,23 +187,30 @@ $(document).ready(function() {
 		    <%} %>
 		  </select>
 		 </div>
-		 <div id="portipoyfh"  class="collapse">            
+		 
+		 <div id="portipoyfh"  class="collapse">    
+		   <label for="inputbdtportipoyfh">Fecha y Hora:</label>        
            <div class='input-group date' id='datetimepicker1'>
-               <input type='text' class="form-control"/>
+               <input type='text' class="form-control" name="bdtportipoyfh" id="inputbdtportipoyfh"/>
                <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                </span>
            </div>
+           <label for="inputbsportipoyfh">Tipo:</label>
+		   <select class="form-control" name="bsportipoyfh" id="inputbsportipoyfh">
+		   <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
+		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <%} %>
+		  </select>
 		 </div>
 		 <div id="traertodos"  class="collapse">
 		 </div>
-	<br>
-         
-		
+	 </div><!-- fin contenedor -->
+   
+	<hr />
 	</div><!-- fin busqueda avanzada -->
-
-  <br> 
-  <br>
+  
+  <br><br>
   <p>Busque por algun dato del Elemento:</p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
@@ -281,7 +242,7 @@ $(document).ready(function() {
 					<input type="hidden" name="tipoelemento" value=<%=e.getTipo().getNombre()%> >			
 					<button class="btn btn-primary reservar btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsReservas?accion=alta',<%=e.getId_elemento()%>)" data-toggle="tooltip" title="reservar elemento"><span class="glyphicon glyphicon-calendar"></span></button>	
 					<%if(categoria.equals("Administrador")){ %>
-					<button class="btn btn-info btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsElementos?accion=modificacion',<%=e.getId_elemento()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
+					<button class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsElementos?accion=modificacion',<%=e.getId_elemento()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCElemento?accion=baja',<%=e.getId_elemento()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	
 					<%} %>
 								

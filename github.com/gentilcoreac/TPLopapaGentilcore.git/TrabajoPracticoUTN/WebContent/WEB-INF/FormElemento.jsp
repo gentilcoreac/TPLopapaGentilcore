@@ -218,7 +218,7 @@ case "baja":
       <label for="inputTipoLista">Categoria</label>
       <select disabled  name="tipo" class="form-control" id="inputTipoLista" required  value=<%=request.getAttribute("tipoelemento") %> >
        <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tipos")){ %>  
-        <option><%=te.getNombre() %></option>
+        <option <%if(request.getAttribute("tipoelemento").equals(te.getNombre())){ %>selected<%} %>><%=te.getNombre() %></option>
       <%} %>
       </select>
     </div>
