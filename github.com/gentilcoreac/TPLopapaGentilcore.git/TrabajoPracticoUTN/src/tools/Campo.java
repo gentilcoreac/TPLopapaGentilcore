@@ -23,18 +23,22 @@ public class Campo {
     public static enum TipoBusquedaR{ POR_IDRESERVA("Por Id de la Reserva"),POR_IDELEMENTO("Por Id del elemento"),
 		POR_IDPERSONA("Por Id de la Persona"),PENDIENTES("Pendientes"),VENCIDAS("Vencidas"),TRAER_TODAS("Traer Todas");
     	private final String texto;
-    	private TipoBusquedaR(final String texto){this.texto=texto;}}
+    	private TipoBusquedaR(final String texto){this.texto=texto;}
+    	@Override
+    	public String toString(){return texto;}}
     	
         public static enum TipoBusquedaE{ POR_ID("Por Id"),POR_NOMBRE("Por Nombre"),
 		     POR_TIPO("Por Tipo"),POR_NOMBRE_Y_TIPO("Por Nombre y Tipo"),
 		     POR_TIPO_Y_FH("Por Tipo y FH Disponible"),TRAER_TODOS("Traer Todos");
 				private final String texto;
-				private TipoBusquedaE(final String texto){this.texto=texto;}}
+				private TipoBusquedaE(final String texto){this.texto=texto;}
+				@Override
+		    	public String toString(){return texto;}}
 	
 	public static boolean Valida(String campo,tipo tipoCampo){
 		if(campo.isEmpty() || campo==null){
 			//JOptionPane.showMessageDialog(null,"Complete todos los campos por favor", "", JOptionPane.INFORMATION_MESSAGE);
-			Mensaje="Complete todos los campos por favor";
+			Mensaje="Complete todos los campos requeridos por favor";
 			return false;
 			}
 		

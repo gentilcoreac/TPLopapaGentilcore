@@ -1,6 +1,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="business.entities.Elemento"%>
 <%@page import="business.entities.Persona"%>
+<%@page import="business.entities.TipoDeElemento"%>
+<%@page import="tools.Campo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 
     pageEncoding="UTF-8"%>
@@ -17,19 +19,54 @@
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/listado.js"></script>
-    <script type="text/javascript">
-    	function submitForm(met,id) {
-    		//document.myForm.action=met;
-    		document.getElementById(id).action =met;
-    		document.getElementById(id).submit();
-        }
-    </script>
-    <style>
+  <script type="text/javascript">
+  	function submitForm(met,id) {
+  		//document.myForm.action=met;
+  		document.getElementById(id).action =met;
+  		document.getElementById(id).submit();
+      }
+  </script>
+  <script>
+	$(document).ready(function() {
+		$.viewMap = {
+			    
+			    'porid' : $('#porid'),
+			    'pornombre' : $('#pornombre'),
+			    'portipo' : $('#portipo'),
+			    'pornombreytipo' : $('#pornombreytipo'),
+			    'portipoyfh' : $('#portipoyfh'),
+			    'traertodos' : $('#traertodos')
+			  };
 	
-	</style>
-	<script>
+	  $('#selbusqueda').change(function() {
+	    // hide all
+	    $.each($.viewMap, function() { this.hide(); });
+	    // show current
+	    $.viewMap[$(this).val()].show();
+	  });
+	});
+  </script>
+
+
+
+<script src="scripts/moment.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+<script src="scripts/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$('#datetimepicker1').datetimepicker({
+
+		defaultDate: new Date(),
+	    format: 'DD/MM/YYYY HH:mm:ss ',
+	    sideBySide: true
+	    
+	    
+	});
+});
+</script>
 	
-	</script>
+	
 </head>
 <body >
 
@@ -140,6 +177,78 @@
   	</button>
   </form>
   <%} %>
+  <br>
+  
+  <button data-toggle="collapse" data-target="#busquedaavanzada">Busqueda Avanzada</button>
+    <div id="busquedaavanzada" class="collapse" style="background-color:rgb(188, 220, 244);width:300px;">
+    	
+      	 <table>
+       	  <tr>
+       	  <td>
+	       <select class="form-control" id="selbusqueda" >
+		    <%-- <%for(Campo.TipoBusquedaE tbe:Campo.TipoBusquedaE.values()){ %>
+		    <option value=<%=tbe.toString() %>><%= tbe %></option>
+		    <%} %> --%>
+		    <option value="porid">Por Id</option>
+		    <option value="pornombre">Por Nombre</option>
+		    <option value="portipo">Por Tipo</option>
+		    <option value="pornombreytipo">Por Nombre y Tipo</option>
+		    <option value="portipoyfh">Por Tipo y Fecha Hora</option>
+		    <option value="traertodos">Traer Todos</option>
+		   </select>      
+	      </td>
+	   	  <td align="center" valign="bottom">
+	   	   &nbsp
+	       <button formnovalidate type="submit" class="btn btn-default btn-md">
+	       <span class="glyphicon glyphicon-search"></span>
+	       </button>
+	      </td>
+		  </tr>
+         </table>
+         <br>    
+         <div id="porid"  class="collapse">
+          <label for="inputbporid">ID:</label>
+		  <input name="bporid" type="text" class="form-control" id="inputbporid" >
+		 </div>
+		 <div id="pornombre"  class="collapse">
+		  <label for="inputbpornombre">Nombre:</label>
+		  <input name="bpornombre" type="text" class="form-control" id="inputbpornombre" >
+		 </div>
+		 <div id="portipo"  class="collapse">
+		 <label for="inputbportipo">Tipo:</label>
+		  <select class="form-control" name="bportipo" id="inputbportipo">
+		  <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
+		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <%} %>
+		  </select>
+		 </div>
+		 <div id="pornombreytipo"  class="collapse">
+		  <label for="inputbpornombreytipo">Nombre:</label>
+		  <input name="bpornombreytipo" type="text" class="form-control" id="inputbpornombreytipo" >
+		  <br>
+		  <label for="inputbspornombreytipo">Tipo:</label>
+		  <select class="form-control" name="bspornombreytipo" id="inputbspornombreytipo">
+		  <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
+		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <%} %>
+		  </select>
+		 </div>
+		 <div id="portipoyfh"  class="collapse">            
+           <div class='input-group date' id='datetimepicker1'>
+               <input type='text' class="form-control"/>
+               <span class="input-group-addon">
+                   <span class="glyphicon glyphicon-calendar"></span>
+               </span>
+           </div>
+		 </div>
+		 <div id="traertodos"  class="collapse">
+		 </div>
+	<br>
+         
+		
+	</div><!-- fin busqueda avanzada -->
+
+  <br> 
   <br>
   <p>Busque por algun dato del Elemento:</p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">

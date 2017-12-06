@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import business.logic.CtrlElementoLogic;
+import business.logic.CtrlTipoDeElementoLogic;
 import tools.Campo;
 
 
@@ -29,6 +30,7 @@ public class ServletListaElementos extends HttpServletConFunciones {
 		try{
 			CtrlElementoLogic ctrl=new CtrlElementoLogic();
 			request.setAttribute("listaElementos", ctrl.getSome(Campo.TipoBusquedaE.TRAER_TODOS, null, null));
+			request.setAttribute("tiposelementos", new CtrlTipoDeElementoLogic().getAll());
 			request.getRequestDispatcher("WEB-INF/ListaElementos.jsp").forward(request, response);
 		}
 		catch(Exception ex){
