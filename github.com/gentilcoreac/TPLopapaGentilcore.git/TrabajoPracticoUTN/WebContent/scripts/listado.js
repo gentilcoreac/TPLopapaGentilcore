@@ -35,12 +35,18 @@ $(document).ready(function() {
 	
    $.viewMap = {
 	    
-	    'porid' : $('#porid'),
-	    'pornombre' : $('#pornombre'),
-	    'portipo' : $('#portipo'),
-	    'pornombreytipo' : $('#pornombreytipo'),
-	    'portipoyfh' : $('#portipoyfh'),
-	    'traertodos' : $('#traertodos')
+	    'POR_ID' : $('#porid'),
+	    'POR_NOMBRE' : $('#pornombre'),
+	    'POR_TIPO' : $('#portipo'),
+	    'POR_NOMBRE_Y_TIPO' : $('#pornombreytipo'),
+	    'POR_TIPO_Y_FH' : $('#portipoyfh'),
+	    'TRAER_TODOS' : $('#traertodos')
+//	    'porid' : $('#porid'),
+//	    'pornombre' : $('#pornombre'),
+//	    'portipo' : $('#portipo'),
+//	    'pornombreytipo' : $('#pornombreytipo'),
+//	    'portipoyfh' : $('#portipoyfh'),
+//	    'traertodos' : $('#traertodos')
 	  };
 
 
@@ -75,5 +81,5 @@ $(document).ready(function(){
 });/*para los tooltips*/
 
 $(function(){
-	$('#selbusqueda').val("porid");
+	$('#selbusqueda').val("POR_ID");
 });/*para seleccionar id en busqueda avanzada cada vez que se cargue la pagina*/

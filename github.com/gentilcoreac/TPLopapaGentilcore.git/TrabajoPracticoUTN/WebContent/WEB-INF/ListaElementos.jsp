@@ -137,24 +137,25 @@
   <button data-toggle="collapse" data-target="#busquedaavanzada">Busqueda Avanzada</button>
     <div id="busquedaavanzada" class="collapse" >
     	<div id="contenedor" class="contenedor">
+    	<form name="formba" id="formba" method="post" action="" class="form">
       	 <table>
        	  <tr>
        	  <td>
-	       <select class="form-control" id="selbusqueda" >
-		    <%-- <%for(Campo.TipoBusquedaE tbe:Campo.TipoBusquedaE.values()){ %>
-		    <option value=<%=tbe.toString() %>><%= tbe %></option>
-		    <%} %> --%>
-		    <option selected value="porid">Por Id</option>
+	       <select class="form-control" id="selbusqueda" name="selbusqueda">
+	       <%for(Campo.TipoBusquedaE tb:Campo.TipoBusquedaE.values()){ %>
+		    <option value="<%=tb.name() %>"><%= tb %></option>
+		    <%} %>
+		    <!-- <option selected value="porid">Por Id</option>
 		    <option value="pornombre">Por Nombre</option>
 		    <option value="portipo">Por Tipo</option>
 		    <option value="pornombreytipo">Por Nombre y Tipo</option>
 		    <option value="portipoyfh">Por Tipo y Fecha Hora</option>
-		    <option value="traertodos">Traer Todos</option>
+		    <option value="traertodos">Traer Todos</option> -->
 		   </select>      
 	      </td>
 	   	  <td align="center" valign="bottom">
 	   	   &nbsp
-	       <button formnovalidate type="submit" class="btn btn-default btn-md">
+	       <button formnovalidate type="submit" class="btn btn-default btn-md" onclick="javascript: submitForm('ServletListaElementos?accion=consulta','formba')">
 	       <span class="glyphicon glyphicon-search"></span>
 	       </button>
 	      </td>
@@ -163,7 +164,7 @@
          <br>    
          <div id="porid"  >
           <label for="inputbporid">ID:</label>
-		  <input name="bporid" type="text" class="form-control" id="inputbporid" >
+		  <input name="bporid" type="text" class="form-control" id="inputbporid" pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" >
 		 </div>
 		 <div id="pornombre"  class="collapse">
 		  <label for="inputbpornombre">Nombre:</label>
@@ -189,7 +190,7 @@
 		 </div>
 		 
 		 <div id="portipoyfh"  class="collapse">    
-		   <label for="inputbdtportipoyfh">Fecha y Hora:</label>        
+		   <label for="inputbdtportipoyfh">Fecha y Hora:</label>       
            <div class='input-group date' id='datetimepicker1'>
                <input type='text' class="form-control" name="bdtportipoyfh" id="inputbdtportipoyfh"/>
                <span class="input-group-addon">
@@ -205,6 +206,7 @@
 		 </div>
 		 <div id="traertodos"  class="collapse">
 		 </div>
+     </form><!-- fin form -->
 	 </div><!-- fin contenedor -->
    
 	<hr />

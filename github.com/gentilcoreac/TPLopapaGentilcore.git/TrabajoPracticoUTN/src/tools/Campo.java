@@ -2,6 +2,7 @@ package tools;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +19,7 @@ public class Campo {
 		Mensaje = mensaje;
 	}
 
-	public enum tipo{EMAIL,DNI,INDICE,ID,FECHA,HORA,MAXRESPEN,DIASANT,LIMHOR,OTRO}
+	public enum tipo{EMAIL,DNI,INDICE,ID,FECHA,HORA,MAXRESPEN,DIASANT,LIMHOR,FECHAHORA,OTRO}
 	
     public static enum TipoBusquedaR{ POR_IDRESERVA("Por Id de la Reserva"),POR_IDELEMENTO("Por Id del elemento"),
 		POR_IDPERSONA("Por Id de la Persona"),PENDIENTES("Pendientes"),VENCIDAS("Vencidas"),TRAER_TODAS("Traer Todas");
@@ -49,10 +50,29 @@ public class Campo {
 		case ID:return validaId(campo);
 		case FECHA:return validaFecha(campo);
 		case HORA:return validaHora(campo);
+		case FECHAHORA:return validaFechaHora(campo);
 		case MAXRESPEN:return validaMaxResPen(campo);
 		case DIASANT:return validaDiasAnt(campo);
 		case LIMHOR:return validaLimHor(campo);
 		default:break;
+		}
+		return true;
+	}
+	
+	public static Date parseaFecha(String fecha) throws ParseException{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		formatter.setLenient(false);
+		return formatter.parse(fecha);
+	}
+	
+	private static boolean validaFechaHora(String fechahora){
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		try{
+		formatter.setLenient(false);
+		formatter.parse(fechahora);}
+		catch(ParseException pe){
+			Mensaje="Fecha-Hora invalida";
+			return false;
 		}
 		return true;
 	}
@@ -65,7 +85,7 @@ public class Campo {
 		}
 		catch(ParseException pe){
 			//JOptionPane.showMessageDialog(null,"hora invalida\n"+hora, "",JOptionPane.INFORMATION_MESSAGE);
-			Mensaje="hora invalida\n"+hora;
+			Mensaje="Hora invalida\n"+hora;
 			return false;
 		}
 		return true;
@@ -78,7 +98,7 @@ public class Campo {
 		}
 		catch(ParseException pe){
 			//JOptionPane.showMessageDialog(null,"fecha invalida\n"+fecha, "",JOptionPane.INFORMATION_MESSAGE);
-			Mensaje="fecha invalida\n"+fecha;
+			Mensaje="Fecha invalida\n"+fecha;
 			return false;
 		}
 		return true;

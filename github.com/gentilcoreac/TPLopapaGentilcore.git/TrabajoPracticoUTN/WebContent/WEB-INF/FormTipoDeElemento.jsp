@@ -166,7 +166,7 @@ case "modificacion":
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=modificacion&urlcancelar=<%=request.getAttribute("urlcancelar") %>')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=modificacion')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 
@@ -213,7 +213,7 @@ case "baja":
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=baja&urlcancelar=<%=request.getAttribute("urlcancelar") %>')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=consulta&fin=baja')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 

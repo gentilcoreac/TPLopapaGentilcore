@@ -16,11 +16,16 @@ h2{
 .contenedor{
 	width:250px;
 }
-
-label{
+form{
+	text-align:right;
+}
+form label{
  margin-bottom:0px; 	
  margin-top:8px;
+ display: block;
+ text-align:left;
 }
+
 
 #selbusqueda{
 	margin-top:8px;
@@ -31,9 +36,7 @@ tr,th{
 	
 }
 
-form{
-	text-align:right;
-}
+
 
 
 .nuevo{
