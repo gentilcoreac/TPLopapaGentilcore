@@ -39,15 +39,14 @@ public class ServletListaElementos extends HttpServletConFunciones {
 				Elemento ele=mapearDatos(request, response);
 				Date fecha=request.getParameter("bdtportipoyfh")==null?null:Campo.parseaFecha(request.getParameter("bdtportipoyfh"));
 				request.setAttribute("listaElementos", ctrl.getSome(Campo.TipoBusquedaE.valueOf(request.getParameter("selbusqueda")), ele,fecha ));
-
 			}
 			else{
 				
 				request.setAttribute("listaElementos", ctrl.getSome(Campo.TipoBusquedaE.TRAER_TODOS, null, null));
 			}
 			request.setAttribute("tiposelementos", new CtrlTipoDeElementoLogic().getAll());
+			this.setearAtributos(request);
 			request.getRequestDispatcher("WEB-INF/ListaElementos.jsp").forward(request, response);
-		
 		}
 		catch(Exception ex){
 			error(request,response,ex);
@@ -116,4 +115,16 @@ public class ServletListaElementos extends HttpServletConFunciones {
 		}
 		return ele;
 	}
+	
+	private void setearAtributos(HttpServletRequest request) {
+		request.setAttribute("bporid", request.getParameter("bporid")==null?"":request.getParameter("bporid"));
+		request.setAttribute("bpornombre", request.getParameter("bpornombre")==null?"":request.getParameter("bpornombre"));
+		request.setAttribute("bportipo", request.getParameter("bportipo")==null?"":request.getParameter("bportipo"));
+		request.setAttribute("bpornombreytipo", request.getParameter("bpornombreytipo")==null?"":request.getParameter("bpornombreytipo"));
+		request.setAttribute("bspornombreytipo", request.getParameter("bspornombreytipo")==null?"":request.getParameter("bspornombreytipo"));
+		request.setAttribute("bdtportipoyfh", request.getParameter("bdtportipoyfh")==null?null:request.getParameter("bdtportipoyfh"));
+		request.setAttribute("bsportipoyfh", request.getParameter("bsportipoyfh")==null?"":request.getParameter("bsportipoyfh"));
+		request.setAttribute("selbusqueda", request.getParameter("selbusqueda")==null?"ocultar":request.getParameter("selbusqueda"));
+	}
+	
 }

@@ -31,33 +31,7 @@ window.addEventListener('resize', function(event){
 
 });/*para que cuando modifique el tamaño de la ventana el navbar deje de estar fijo*/
 
-$(document).ready(function() {
-	
-   $.viewMap = {
-	    
-	    'POR_ID' : $('#porid'),
-	    'POR_NOMBRE' : $('#pornombre'),
-	    'POR_TIPO' : $('#portipo'),
-	    'POR_NOMBRE_Y_TIPO' : $('#pornombreytipo'),
-	    'POR_TIPO_Y_FH' : $('#portipoyfh'),
-	    'TRAER_TODOS' : $('#traertodos')
-//	    'porid' : $('#porid'),
-//	    'pornombre' : $('#pornombre'),
-//	    'portipo' : $('#portipo'),
-//	    'pornombreytipo' : $('#pornombreytipo'),
-//	    'portipoyfh' : $('#portipoyfh'),
-//	    'traertodos' : $('#traertodos')
-	  };
 
-
-  $('#selbusqueda').change(function() {
-    // hide all
-    $.each($.viewMap, function() { this.hide(); });
-    // show current
-    $.viewMap[$(this).val()].show();
-    
-  });
-}); /*para hacer aparecer y desaparecer la busqueda avanzada man*/
 
 function submitForm(met,id) {
 		//document.myForm.action=met;
@@ -80,6 +54,6 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });/*para los tooltips*/
 
-$(function(){
-	$('#selbusqueda').val("POR_ID");
-});/*para seleccionar id en busqueda avanzada cada vez que se cargue la pagina*/
+//$(function(){
+//	$('#selbusqueda').val("POR_ID");
+//});/*para seleccionar id en busqueda avanzada cada vez que se cargue la pagina*/

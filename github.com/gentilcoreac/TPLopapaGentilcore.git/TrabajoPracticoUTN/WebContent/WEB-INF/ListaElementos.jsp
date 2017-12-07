@@ -22,6 +22,52 @@
   <script src="scripts/listado.js"></script>
   <script src="scripts/moment.min.js"></script>
   <script src="scripts/bootstrap-datetimepicker.min.js"></script>	
+  <script>
+  <%if(!request.getAttribute("selbusqueda").equals("ocultar")){ %>
+  $(document).ready(function(){
+
+	  /* $('#busquedaavanzada').collapse({'toggle': hide}); */  
+
+	  $('#selbusqueda').val('<%=request.getAttribute("selbusqueda")%>');
+	  $.viewMap = {
+			    'POR_ID' : $('#porid'),
+			    'POR_NOMBRE' : $('#pornombre'),
+			    'POR_TIPO' : $('#portipo'),
+			    'POR_NOMBRE_Y_TIPO' : $('#pornombreytipo'),
+			    'POR_TIPO_Y_FH' : $('#portipoyfh'),
+			    'TRAER_TODOS' : $('#traertodos')
+			  };
+	  
+	  $.viewMap[$("#selbusqueda").val()].show();
+	});
+  <%}
+  else{%>
+  $(document).ready(function(){
+	  $('#selbusqueda').val('POR_ID');
+	  $('#porid').show();
+  });
+  <%}%>
+  </script>
+  <script>
+  $(document).ready(function() {
+	   $.viewMap = {
+		    'POR_ID' : $('#porid'),
+		    'POR_NOMBRE' : $('#pornombre'),
+		    'POR_TIPO' : $('#portipo'),
+		    'POR_NOMBRE_Y_TIPO' : $('#pornombreytipo'),
+		    'POR_TIPO_Y_FH' : $('#portipoyfh'),
+		    'TRAER_TODOS' : $('#traertodos')
+		  };
+
+	  $('#selbusqueda').change(function() {
+	    // hide all
+	    $.each($.viewMap, function() { this.hide(); });
+	    // show current
+	    $.viewMap[$(this).val()].show();
+	    
+	  });
+	}); /*para hacer aparecer y desaparecer la busqueda avanzada */
+  </script>
 </head>
 <body >
 
@@ -134,7 +180,7 @@
   <%} %>
   <br>
   
-  <button data-toggle="collapse" data-target="#busquedaavanzada">Busqueda Avanzada</button>
+  <button id="btnbusquedaavanzada" data-toggle="collapse" data-target="#busquedaavanzada">Busqueda Avanzada</button>
     <div id="busquedaavanzada" class="collapse" >
     	<div id="contenedor" class="contenedor">
     	<form name="formba" id="formba" method="post" action="" class="form">
@@ -143,7 +189,7 @@
        	  <td>
 	       <select class="form-control" id="selbusqueda" name="selbusqueda">
 	       <%for(Campo.TipoBusquedaE tb:Campo.TipoBusquedaE.values()){ %>
-		    <option value="<%=tb.name() %>"><%= tb %></option>
+		    <option value="<%=tb.name() %>" ><%= tb %></option>
 		    <%} %>
 		    <!-- <option selected value="porid">Por Id</option>
 		    <option value="pornombre">Por Nombre</option>
@@ -162,29 +208,29 @@
 		  </tr>
          </table>
          <br>    
-         <div id="porid"  >
+         <div id="porid" class="collapse">
           <label for="inputbporid">ID:</label>
-		  <input name="bporid" type="text" class="form-control" id="inputbporid" pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" >
+		  <input name="bporid" type="text" class="form-control" id="inputbporid" value="<%=request.getAttribute("bporid")%>" pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" >
 		 </div>
 		 <div id="pornombre"  class="collapse">
 		  <label for="inputbpornombre">Nombre:</label>
-		  <input name="bpornombre" type="text" class="form-control" id="inputbpornombre" >
+		  <input name="bpornombre" type="text" class="form-control" id="inputbpornombre" value=<%=request.getAttribute("bpornombre") %> >
 		 </div>
 		 <div id="portipo"  class="collapse">
 		 <label for="inputbportipo">Tipo:</label>
 		  <select class="form-control" name="bportipo" id="inputbportipo">
 		  <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
-		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <option value=<%=te.getNombre() %> <%if(request.getAttribute("bportipo").equals(te.getNombre())){ %>selected<%} %>><%= te.getNombre() %></option>
 		    <%} %>
 		  </select>
 		 </div>
 		 <div id="pornombreytipo"  class="collapse">
 		  <label for="inputbpornombreytipo">Nombre:</label>
-		  <input name="bpornombreytipo" type="text" class="form-control" id="inputbpornombreytipo" >
+		  <input name="bpornombreytipo" type="text" class="form-control" id="inputbpornombreytipo" value=<%=request.getAttribute("bpornombreytipo") %>>
 		  <label for="inputbspornombreytipo">Tipo:</label>
 		  <select class="form-control" name="bspornombreytipo" id="inputbspornombreytipo">
 		  <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
-		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <option value=<%=te.getNombre() %> <%if(request.getAttribute("bspornombreytipo").equals(te.getNombre())){ %>selected<%} %>><%= te.getNombre() %></option>
 		    <%} %>
 		  </select>
 		 </div>
@@ -192,7 +238,7 @@
 		 <div id="portipoyfh"  class="collapse">    
 		   <label for="inputbdtportipoyfh">Fecha y Hora:</label>       
            <div class='input-group date' id='datetimepicker1'>
-               <input type='text' class="form-control" name="bdtportipoyfh" id="inputbdtportipoyfh"/>
+               <input type='text' class="form-control" name="bdtportipoyfh" id="inputbdtportipoyfh" <%if(request.getAttribute("bdtportipoyfh")!=null){ %>value="<%=request.getAttribute("bdtportipoyfh")%>"<%} %>/>
                <span class="input-group-addon">
                    <span class="glyphicon glyphicon-calendar"></span>
                </span>
@@ -200,7 +246,7 @@
            <label for="inputbsportipoyfh">Tipo:</label>
 		   <select class="form-control" name="bsportipoyfh" id="inputbsportipoyfh">
 		   <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tiposelementos")){ %>
-		    <option value=<%=te.getNombre() %>><%= te.getNombre() %></option>
+		    <option value=<%=te.getNombre() %> <%if(request.getAttribute("bsportipoyfh").equals(te.getNombre())){ %>selected<%} %>><%= te.getNombre() %></option>
 		    <%} %>
 		  </select>
 		 </div>
