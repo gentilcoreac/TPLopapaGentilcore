@@ -69,7 +69,16 @@ public class ServletABMCElemento extends HttpServlet {
 				request.setAttribute("error", e);
 				request.getRequestDispatcher("WEB-INF/Informes.jsp");
 			}
-			break;			
+			break;	
+			
+		case "buscarPCrear":
+			try {
+				this.consultaParaReserva(request,response);
+			} catch (Exception e) {
+				request.setAttribute("error", e);
+				request.getRequestDispatcher("WEB-INF/Informes.jsp");
+			}
+			break;				
 
 		case "editar":
 			try {
@@ -112,6 +121,16 @@ public class ServletABMCElemento extends HttpServlet {
 		
 		//CtrlElementoLogic ctrl= new CtrlElementoLogic();		
 			Elemento e = ctrl.getOne(Integer.parseInt(request.getParameter("IDPEditar")));
+			request.setAttribute("ele_ret", e);
+			request.getRequestDispatcher("WEB-INF/EditarElemento.jsp").forward(request, response);		
+		
+	}
+	
+	private void consultaParaReserva(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, Exception {
+		response.getWriter().append("Consulta, requested action: ").append(request.getPathInfo()).append(" through post");
+		
+		//CtrlElementoLogic ctrl= new CtrlElementoLogic();		
+			Elemento e = ctrl.getOne(Integer.parseInt(request.getParameter("IDPCrear")));
 			request.setAttribute("ele_ret", e);
 			request.getRequestDispatcher("WEB-INF/EditarElemento.jsp").forward(request, response);		
 		

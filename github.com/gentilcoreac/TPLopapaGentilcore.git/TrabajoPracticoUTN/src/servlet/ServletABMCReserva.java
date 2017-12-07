@@ -94,6 +94,14 @@ public class ServletABMCReserva extends HttpServlet {
 				break;
 				//Persona pers=ctrl.getLoggedUser(user,pass); este se podria usar solo para obtener el usuario y si es admin puede ingresar. Pienso al aire				
 */
+			case"buscarPCrear"://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				try {this.alta(request,response);
+					
+				}catch (Exception e) {
+					request.setAttribute("error", e);
+					request.getRequestDispatcher("WEB-INF/Informes.jsp").forward(request, response);		
+					}
+				break;
 			default:
 				this.error(request,response);
 				break;
@@ -166,6 +174,7 @@ public class ServletABMCReserva extends HttpServlet {
 			Reserva res=new Reserva();
 			res.setId_reserva(Integer.parseInt(request.getParameter("id_reserva")));
 			res.setDetalle(request.getParameter("detalle"));
+			
 	/*		res.setFecha_hora_desde_solicitada(request.getParameter("desde"));
 			res.setFecha_hora_hasta_solicitada(request.getParameter("hasta"));
 			res.setFecha_hora_reserva_hecha(request.getParameter("reshecho"));
@@ -175,7 +184,7 @@ public class ServletABMCReserva extends HttpServlet {
 			per.setId(Integer.parseInt(request.getParameter("persona")));
 			
 			Elemento ele = new Elemento();
-			ele.setId_elemento(Integer.parseInt(request.getParameter("elemento")));
+			ele.setId_elemento(Integer.parseInt(request.getParameter("id_elemento")));
 
 				ctrl.add(res);		
 		}
