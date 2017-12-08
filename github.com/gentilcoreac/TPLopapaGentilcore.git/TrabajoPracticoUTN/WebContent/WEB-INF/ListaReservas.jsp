@@ -1,5 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="business.entities.Reserva"%>
+<%@page import="business.entities.Persona"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -38,22 +40,18 @@
         </div>
         <div class="modal-body">
 			<form name="signin" action="ServletABMCReserva" method="post"> 
-			
+			<% Persona usr = (Persona)request.getSession().getAttribute("user"); %>
 			    <div class="form-group">
 			      <label for="inputidreserva">ID de la Reserva:</label>
-			      <input name="id_reserva" type="text" class="form-control" id="inputidreserva" required>
+			      <input name="id_reserva" type="text" class="form-control" id="inputidreserva" placeholder="no ingresar, es autonumerico" required>
 			    </div>
 			    <div class="form-group">
 			      <label for="inputpersona">Persona:</label>
-			      <input name="persona" type="text" class="form-control" id="inputpersona" required>
+			      <input name="persona" type="text" class="form-control" id="inputpersona" required value="<%= usr.getId()%>">
 			    </div>
 			    <div class="form-group">
 			      <label for="inputidelemento">ID Elemento:</label>
 			      <input name="id_elemento" type="text" class="form-control" id="inputidelemento" required >
-			    </div>
-			    <div class="form-group">
-			      <label for="inputelemento">Elemento:</label>
-			      <input name="elemento" type="text" class="form-control" id="inputelemento" required >
 			    </div>
 			    <div class="form-group">
 			      <label for="inputreshecho">Fecha y hora de la reserva hecha:</label>
@@ -65,7 +63,7 @@
             <legend>Test</legend>
             <div class="form-group">
                 <label for="dtp_input1" class="col-md-2 control-label">Desde</label>
-                <div class="input-group date form_datetime col-md-5" data-date="2017-10-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:ii p" data-link-field="dtp_input1">
+                <div class="input-group date form_datetime col-md-5" data-date="2017-10-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:mm:ss" data-link-field="dtp_input1">
                     <input class="form-control" size="16" type="text" value="">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -78,7 +76,7 @@
             <legend>Test</legend>
             <div class="form-group">
                 <label for="dtp_input1" class="col-md-2 control-label">Hasta</label>
-                <div class="input-group date form_datetime col-md-5" data-date="2017-10-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:ii p" data-link-field="dtp_input1">
+                <div class="input-group date form_datetime col-md-5" data-date="2017-10-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:mm:ss" data-link-field="dtp_input1">
                     <input class="form-control" size="16" type="text" value="">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
