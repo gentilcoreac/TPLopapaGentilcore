@@ -178,7 +178,7 @@ case "modificacion":
       <table>
        <tr><td>
       	  <label for="inputdni">Dni:</label>
-      	  <input name="dni" type="text" class="form-control" id="inputdni"  required pattern="[0-9]+" oninvalid="setCustomValidity('Dni invalido')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("dni")%> >
+      	  <input name="dni" type="text" class="form-control" id="inputdni"  required pattern="[0-9]+" oninvalid="setCustomValidity('Dni invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("dni")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -193,23 +193,23 @@ case "modificacion":
   	</div> --%>
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
-      <input name="apellido" type="text" class="form-control" id="inputapel" required  value=<%=request.getAttribute("apellido") %> >
+      <input name="apellido" type="text" class="form-control" id="inputapel" required  value="<%=request.getAttribute("apellido") %>" >
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre"  required  value=<%=request.getAttribute("nombre") %> >
+      <input name="nombre" type="text" class="form-control" id="inputnombre"  required  value="<%=request.getAttribute("nombre") %>" >
     </div>
     <div class="form-group">
       <label for="inputusr">Usuario:</label>
-      <input name="usuario" type="text" class="form-control" id="inputusr" required value=<%=request.getAttribute("usuario") %> >
+      <input name="usuario" type="text" class="form-control" id="inputusr" required value="<%=request.getAttribute("usuario") %>" >
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input name="contrasenia" type="text" class="form-control" id="inputpwd" required  value=<%=request.getAttribute("contrasenia") %> >
+      <input name="contrasenia" type="text" class="form-control" id="inputpwd" required  value="<%=request.getAttribute("contrasenia") %>" >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail"  required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Formato de email invalido')" onchange="try{setCustomValidity('')}catch(e){}"  value=<%=request.getAttribute("email") %> >
+      <input name="email" type="text" class="form-control" id="inputemail"  required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Formato de email invalido')" onchange="try{setCustomValidity('')}catch(e){}"  value="<%=request.getAttribute("email") %>" >
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
@@ -244,7 +244,7 @@ case "baja":
       <table>
        <tr><td>
       	  <label for="inputdni">Dni:</label>
-      	  <input name="dni" type="text" class="form-control" id="inputdni"  required pattern="[0-9]+" oninvalid="setCustomValidity('Dni invalido')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("dni")%> >
+      	  <input name="dni" type="text" class="form-control" id="inputdni"  required pattern="[0-9]+" oninvalid="setCustomValidity('Dni invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("dni")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -256,27 +256,27 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
-      <input disabled name="apellido" type="text" class="form-control" id="inputapel" required=""  value=<%=request.getAttribute("apellido") %> >
+      <input disabled name="apellido" type="text" class="form-control" id="inputapel" required=""  value="<%=request.getAttribute("apellido") %>" >
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required=""  value=<%=request.getAttribute("nombre") %> >
+      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required=""  value="<%=request.getAttribute("nombre") %>" >
     </div>
     <div class="form-group">
       <label for="inputusr">Usuario:</label>
-      <input disabled name="usuario" type="text" class="form-control" id="inputusr" required="" value=<%=request.getAttribute("usuario") %> >
+      <input disabled name="usuario" type="text" class="form-control" id="inputusr" required="" value="<%=request.getAttribute("usuario") %>" >
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input disabled name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value=<%=request.getAttribute("contrasenia") %> >
+      <input disabled name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value="<%=request.getAttribute("contrasenia") %>" >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input disabled name="email" type="text" class="form-control" id="inputemail"  required=""  value=<%=request.getAttribute("email") %> >
+      <input disabled name="email" type="text" class="form-control" id="inputemail"  required=""  value="<%=request.getAttribute("email") %>" >
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
-      <select disabled name="categoria" class="form-control" id="inputCategoriaLista" required=""  value=<%=request.getAttribute("categoria") %> >
+      <select disabled name="categoria" class="form-control" id="inputCategoriaLista" required=""  >
         <option <%if(request.getAttribute("categoria").equals("Administrador")){ %>selected<%} %>>Administrador</option>
         <option <%if(request.getAttribute("categoria").equals("Encargado")){ %>selected<%} %>>Encargado</option>
         <option <%if(request.getAttribute("categoria").equals("Usuario")){ %>selected<%} %>>Usuario</option>

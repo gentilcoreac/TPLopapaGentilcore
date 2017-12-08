@@ -153,12 +153,12 @@
 			<td>
 			
 				<form  id=<%=te.getId()%> name="myForm" action="" method="post">
-					<input type="hidden" name="id" value=<%=te.getId() %> >
-					<input type="hidden" name="nombre" value=<%=te.getNombre()%> >		
-					<input type="hidden" name="cant_max_res_pen" value=<%=te.getCant_max_res_pen() %> >		
-					<input type="hidden" name="limite_horas_res" value=<%=te.getLimite_horas_res() %> >		
-					<input type="hidden" name="dias_max_anticipacion" value=<%=te.getDias_max_anticipacion() %> >		
-					<input type="hidden" name="only_encargados" value=<%=te.isOnly_encargados() %> >				
+					<input type="hidden" name="id" value="<%=te.getId() %>" >
+					<input type="hidden" name="nombre" value="<%=te.getNombre()%>" >		
+					<input type="hidden" name="cant_max_res_pen" value="<%=te.getCant_max_res_pen() %>" >		
+					<input type="hidden" name="limite_horas_res" value="<%=te.getLimite_horas_res() %>" >		
+					<input type="hidden" name="dias_max_anticipacion" value="<%=te.getDias_max_anticipacion() %>" >		
+					<input type="hidden" name="only_encargados" value="<%=te.isOnly_encargados() %>" >				
 					<button  class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsTiposDeElementos?accion=modificacion',<%=te.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=baja',<%=te.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	
 			
@@ -172,6 +172,9 @@
 		
     </tbody>
   </table>
+  <br><br>
+  <button class="btn btn-warning btn-circle btn-md" onclick="topFunction()" id="btngototop" title="Volver Arriba"><span class="glyphicon glyphicon-arrow-up"></span></button> 
+  
 </div>
 
 </body>

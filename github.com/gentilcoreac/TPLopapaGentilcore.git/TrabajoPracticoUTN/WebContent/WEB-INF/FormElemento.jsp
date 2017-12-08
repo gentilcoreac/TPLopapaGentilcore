@@ -157,7 +157,7 @@ case "modificacion":
       <table>
        <tr><td>
       	  <label for="inputid">ID:</label>
-      	  <input name="id" type="text" class="form-control" id="inputid"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("id")%> >
+      	  <input name="id" type="text" class="form-control" id="inputid"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("id")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -169,7 +169,7 @@ case "modificacion":
     </div>
         <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input name="nombre" type="text" class="form-control" id="inputnombre"  required value=<%=request.getAttribute("nombre") %>  >
+      <input name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre") %>"  >
     </div>
     <div class="form-group">
       <label for="inputTipoLista">Categoria</label>
@@ -200,7 +200,7 @@ case "baja":
       <table>
        <tr><td>
       	  <label for="inputid">ID:</label>
-      	  <input name="id" type="text" class="form-control" id="inputid"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("id")%> >
+      	  <input name="id" type="text" class="form-control" id="inputid"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("id")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -212,11 +212,11 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required value=<%=request.getAttribute("nombre") %>  >
+      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre") %>"  >
     </div>
     <div class="form-group">
       <label for="inputTipoLista">Categoria</label>
-      <select disabled  name="tipo" class="form-control" id="inputTipoLista" required  value=<%=request.getAttribute("tipoelemento") %> >
+      <select disabled  name="tipo" class="form-control" id="inputTipoLista" required  value="<%=request.getAttribute("tipoelemento") %>" >
        <%for(TipoDeElemento te:(ArrayList<TipoDeElemento>)request.getAttribute("tipos")){ %>  
         <option <%if(request.getAttribute("tipoelemento").equals(te.getNombre())){ %>selected<%} %>><%=te.getNombre() %></option>
       <%} %>

@@ -13,6 +13,10 @@ h2{
 	margin-left:10px;
 }
 
+.cerrar{
+	margin-left:10px;
+}
+
 .contenedor{
 	width:250px;
 }
@@ -27,7 +31,7 @@ form label{
 }
 
 
-#selbusqueda{
+#eselbusqueda{
 	margin-top:8px;
 }
 
@@ -58,3 +62,32 @@ tr,th{
 	  z-index:99;
      }
 } 
+
+#btngototop {
+	width: 50px;
+	height: 50px;
+	padding: 10px 16px;
+	font-size: 18px;
+	line-height: 1.33;
+	border-radius: 25px;
+	
+	
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 2px; /* Place the button at the bottom of the page */
+	left:50%;
+	margin-left:-25px;
+
+    z-index: 99; /* Make sure it does not overlap */
+    border: none;  /* Remove borders */
+    outline: none; /* Remove outline */
+    /* background-color: #0000ff; Set a background color
+    color: white; Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    
+    
+}
+
+#btngototop:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}

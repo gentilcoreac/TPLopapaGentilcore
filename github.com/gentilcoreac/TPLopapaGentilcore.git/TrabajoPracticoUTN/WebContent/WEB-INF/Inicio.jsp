@@ -31,7 +31,7 @@ if(session.getAttribute("user")==null){
                 aria-expanded="false">Reservas<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaReservas">Listado</a></li>
             <li class="divider"></li>            
             <li><a href="#">Hacer Reserva</a></li>
             <%Persona per=((Persona)request.getSession().getAttribute("user"));

@@ -164,15 +164,15 @@
 			<td>
 			
 				<form  id=<%=p.getId()%> name="myForm" action="" method="post">
-					<input type="hidden" name="id" value=<%=p.getId() %> >
-					<input type="hidden" name="dni" value=<%=p.getDni()%> >		
-					<input type="hidden" name="apellido" value=<%=p.getApellido() %> >		
-					<input type="hidden" name="nombre" value=<%=p.getNombre() %> >		
-					<input type="hidden" name="usuario" value=<%=p.getUsuario() %> >		
-					<input type="hidden" name="contrasenia" value=<%=p.getContrasenia() %> >		
-					<input type="hidden" name="email" value=<%=p.getEmail() %> >		
-					<input type="hidden" name="categoria" value=<%=p.getCategoria().getDescripcion() %> >		
-					<input type="hidden" name="habilitado" value=<%=p.isHabilitado() %> >		
+					<input type="hidden" name="id" value="<%=p.getId() %>" >
+					<input type="hidden" name="dni" value="<%=p.getDni()%>" >		
+					<input type="hidden" name="apellido" value="<%=p.getApellido() %>" >		
+					<input type="hidden" name="nombre" value="<%=p.getNombre() %>" >		
+					<input type="hidden" name="usuario" value="<%=p.getUsuario() %>" >		
+					<input type="hidden" name="contrasenia" value="<%=p.getContrasenia() %>" >		
+					<input type="hidden" name="email" value="<%=p.getEmail() %>" >		
+					<input type="hidden" name="categoria" value="<%=p.getCategoria().getDescripcion() %>" >		
+					<input type="hidden" name="habilitado" value="<%=p.isHabilitado() %>" >		
 					<button  class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsUsuarios?accion=modificacion',<%=p.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCPersona?accion=baja',<%=p.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>
 			
@@ -186,6 +186,9 @@
 		
     </tbody>
   </table>
+  <br><br>
+  <button class="btn btn-warning btn-circle btn-md" onclick="topFunction()" id="btngototop" title="Volver Arriba"><span class="glyphicon glyphicon-arrow-up"></span></button> 
+  
 </div>
 
 

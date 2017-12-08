@@ -162,7 +162,7 @@ case "modificacion":
       <table>
        <tr><td>
       	  <label for="inputnombre">Nombre:</label>
-      	  <input name="nombre" type="text" class="form-control" id="inputnombre"  required value=<%=request.getAttribute("nombre")%> >
+      	  <input name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -174,15 +174,15 @@ case "modificacion":
     </div>
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input name="cant_max_res_pen"  type="number" min="1" class="form-control" id="inputcant_max_res_pen" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value=<%=request.getAttribute("cant_max_res_pen") %> >
+      <input name="cant_max_res_pen"  type="number" min="1" class="form-control" id="inputcant_max_res_pen" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value="<%=request.getAttribute("cant_max_res_pen") %>" >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input name="limite_horas_res" type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value=<%=request.getAttribute("limite_horas_res") %> >
+      <input name="limite_horas_res" type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}"  value="<%=request.getAttribute("limite_horas_res") %>" >
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}" value=<%=request.getAttribute("dias_max_anticipacion") %> >
+      <input name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("dias_max_anticipacion") %>" >
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>
@@ -209,7 +209,7 @@ case "baja":
       <table>
        <tr><td>
       	  <label for="inputnombre">Nombre:</label>
-      	  <input name="nombre" type="text" class="form-control" id="inputnombre"  required value=<%=request.getAttribute("nombre")%> >
+      	  <input name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -221,15 +221,15 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input disabled name="cant_max_res_pen"  type="number" min="1"  class="form-control" id="inputcant_max_res_pen" required  value=<%=request.getAttribute("cant_max_res_pen") %> >
+      <input disabled name="cant_max_res_pen"  type="number" min="1"  class="form-control" id="inputcant_max_res_pen" required  value="<%=request.getAttribute("cant_max_res_pen") %>" >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input disabled name="limite_horas_res"  type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required  value=<%=request.getAttribute("limite_horas_res") %> >
+      <input disabled name="limite_horas_res"  type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required  value="<%=request.getAttribute("limite_horas_res") %>" >
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input disabled name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value=<%=request.getAttribute("dias_max_anticipacion") %> >
+      <input disabled name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value="<%=request.getAttribute("dias_max_anticipacion") %>" >
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>

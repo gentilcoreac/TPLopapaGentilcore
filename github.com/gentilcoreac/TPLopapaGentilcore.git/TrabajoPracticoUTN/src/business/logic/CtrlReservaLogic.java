@@ -26,8 +26,6 @@ import tools.Campo;
 
 public class CtrlReservaLogic {
 	private DataReserva datRes;
-	private DataPersona datPer;
-	private DataElemento datElem;
 	public ArrayList<Reserva> reservas; 
 
 	
@@ -39,33 +37,18 @@ public class CtrlReservaLogic {
 		reservas=new ArrayList<Reserva>();
 	}
 	
-	public ArrayList<Reserva> getSome(Persona persona,Campo.TipoBusquedaR tipob,Reserva res,int indice,int cantidad)throws Exception{
+	public ArrayList<Reserva> getSome(Persona persona,Campo.TipoBusquedaR tipob,Reserva res)throws Exception{
 		if(persona.getCategoria().getDescripcion().equals("Administrador")){
-			return datRes.getSome(tipob, res, indice, cantidad);
+			return datRes.getSome(tipob, res);
 		}
 		else{
-			return datRes.getSome(persona,tipob, res, indice, cantidad);
+			return datRes.getSome(persona,tipob, res);
 		}
 	}
 	
-	public int getCantidad(Persona persona,Campo.TipoBusquedaR tipob,Reserva reserva)throws Exception{
-		
-		if(persona.getCategoria().getDescripcion().equals("Administrador")){
-			return datRes.getCantidad(tipob, reserva);
-		}else{
-			return datRes.getCantidad(persona,tipob, reserva);
-		}
-		
-	}
+	
 	
 	public void add(Reserva r) throws SQLException, AppDataException{
-		/*Reserva res = new Reserva();
-		try {
-			res=datRes.getOne(r);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 
 		datRes.add(r);
 	}
