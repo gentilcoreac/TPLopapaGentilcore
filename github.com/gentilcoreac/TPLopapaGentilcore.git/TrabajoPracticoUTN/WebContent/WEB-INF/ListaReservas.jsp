@@ -4,6 +4,7 @@
 <%@page import="business.entities.TipoDeElemento"%>
 <%@page import="business.entities.Reserva"%>
 <%@page import="tools.Campo"%>
+<%@page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 
     pageEncoding="UTF-8"%>
@@ -289,10 +290,11 @@
 					<input type="hidden" name="idreserva" value="<%=r.getId_reserva() %>" >
 					<input type="hidden" name="idpersona" value="<%=r.getPersona().getId()%>" >		
 					<input type="hidden" name="idelemento" value="<%=r.getElemento().getId_elemento()%>" >
-					<input type="hidden" name="fechareservahecha" value="<%=String.valueOf(r.getFecha_hora_reserva_hecha()) %>" >
-					<input type="hidden" name="fechareservadesde" value="<%=String.valueOf(r.getFecha_hora_desde_solicitada())%>" >		
-					<input type="hidden" name="fechareservahasta" value="<%=String.valueOf(r.getFecha_hora_hasta_solicitada())%>" >			
-					<input type="hidden" name="fechareservaentrega" value="<%=String.valueOf(r.getFecha_hora_entregado())%>" >		
+					<%SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); %>
+					<input type="hidden" name="fechareservahecha" value="<%=r.getFecha_hora_reserva_hecha()==null?null:formatter.format(r.getFecha_hora_reserva_hecha()) %>" >
+					<input type="hidden" name="fechareservadesde" value="<%=r.getFecha_hora_desde_solicitada()==null?null:formatter.format(r.getFecha_hora_desde_solicitada())%>" >		
+					<input type="hidden" name="fechareservahasta" value="<%=r.getFecha_hora_hasta_solicitada()==null?null:formatter.format(r.getFecha_hora_hasta_solicitada())%>" >			
+					<input type="hidden" name="fechareservaentrega" value="<%=r.getFecha_hora_entregado()==null?null:formatter.format(r.getFecha_hora_entregado())%>" >		
 					<input type="hidden" name="detalle" value="<%=r.getDetalle()%>" >			
 					<%if(categoria.equals("Administrador")){ %>
 					<button class="btn btn-info btn-md cerrar" type="submit"  onclick="javascript: submitForm('ServletFormsReservas?accion=cerrar',<%=r.getId_reserva()%>)" data-toggle="tooltip" title="cerrar"><span class="glyphicon glyphicon-folder-open"></span></button>	

@@ -33,14 +33,14 @@ if(session.getAttribute("user")==null){
           <ul class="dropdown-menu" role="menu">
             <li><a href="ServletListaReservas">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Hacer Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=alta">Hacer Reserva</a></li>
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
            	if(categoria.equals("Administrador")){
               %>
-            <li><a href="#">Cerrar Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=cerrar">Cerrar Reserva</a></li>
             <% }%>
-            <li><a href="#">Borrar Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=baja">Borrar Reserva</a></li>
           </ul>
         </li>	
       
