@@ -203,8 +203,8 @@ case "cerrar":
   	<div class="form-group">
       <table>
        <tr><td>
-      	  <label for="inputidpersona">ID Reserva:</label>
-      	  <input name="idpersona" type="text" class="form-control" id="inputidpersona"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idpersona")%>" >
+      	  <label for="inputidreserva">ID Reserva:</label>
+      	  <input name="idreserva" type="text" class="form-control" id="inputidreserva"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idreserva")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
@@ -213,6 +213,7 @@ case "cerrar":
 	      </button>
 	   </td></tr> 
       </table>
+    </div>  
     <div class="form-group">
       <label for="inputfechareservaentrega">Fecha-Hora Cierre:</label>       
       <div class='input-group date' id='datetimepickercierre'>
@@ -226,15 +227,15 @@ case "cerrar":
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=cerrar')">Cerrar Reserva</button>		
 		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
 	</div>
-   </div>
+   
    </form>
-</div>
+  </div>
 <% 
 break;
 case "baja":
 %>
 <div class="container-form">
-  <h2>Eliminar Elemento</h2>
+  <h2>Eliminar Reserva</h2>
 
   
   <form name="myForm" id="myForm" class="form" action="" method="post"> 
@@ -243,24 +244,53 @@ case "baja":
   	<div class="form-group">
       <table>
        <tr><td>
-      	  <label for="inputid">ID:</label>
-      	  <input name="id" type="text" class="form-control" id="inputid"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("id")%>" >
+      	  <label for="inputidreserva">ID Reserva:</label>
+      	  <input name="idreserva" type="text" class="form-control" id="inputidreserva"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idreserva")%>" >
 		  </td>
 	   	  <td align="center" valign="bottom">
 	   	  &nbsp
-	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCElemento?accion=consulta&fin=baja')" type="submit" class="btn btn-default btn-lg">
+	   	  <button formnovalidate onclick="javascript: submitForm('ServletABMCReserva?accion=consulta&fin=baja')" type="submit" class="btn btn-default btn-lg">
 	      	<span class="glyphicon glyphicon-search"></span>
 	      </button>
 	   </td></tr> 
       </table>
     </div>
+    <%if(per.getCategoria().getDescripcion().equals("Administrador")){ %>
     <div class="form-group">
-      <label for="inputnombre">Nombre:</label>
-      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre") %>"  >
+      <label for="inputidpersona">ID Persona:</label>
+      <input disabled name="idpersona" type="text" class="form-control" id="inputidpersona"   value="<%=request.getAttribute("idpersona")%>" >    
     </div>
-    
+    <%}else{ %>
+	  <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
+    <%} %>
+    <div class="form-group">
+      <label for="inputidelemento">ID Elemento:</label>
+      <input disabled name="idelemento" type="text" class="form-control" id="inputidelemento"   value="<%=request.getAttribute("idelemento") %>" >    
+    </div>
+    <div class="form-group">
+      <label for="inputfechareservadesde">Fecha-Hora Desde:</label>       
+      <div class='input-group date' id='dtpdesde'>
+          <input disabled  type='text' class="form-control" name="fechareservadesde" id="inputfechareservadesde" <%if(request.getAttribute("fechareservadesde")!=null){ %>value="<%=request.getAttribute("fechareservadesde")%>"<%}%>/>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+    </div>  
+    <div class="form-group">
+      <label for="inputfechareservahasta">Fecha-Hora Hasta:</label>       
+      <div class='input-group date' id='datetimepickerhasta'>
+          <input disabled  type='text' class="form-control" name="fechareservahasta" id="inputfechareservahasta" <%if(request.getAttribute("fechareservahasta")!=null){ %>value="<%=request.getAttribute("fechareservahasta")%>"<%} %> />
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
+    </div> 
+    <div class="form-group">
+      <label for="inputdetalle">Detalle:</label>
+      <textarea disabled name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  value="<%=request.getAttribute("detalle") %>" ></textarea>		 
+    </div>
 	<div class="botones">
-    	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCElemento?accion=baja')">Eliminar</button>		
+    	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=baja')">Eliminar</button>		
 		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
 	</div>
 	</form>
