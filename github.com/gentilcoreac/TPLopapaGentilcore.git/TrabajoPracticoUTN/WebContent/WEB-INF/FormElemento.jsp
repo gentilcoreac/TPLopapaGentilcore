@@ -212,7 +212,7 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre") %>"  >
+      <input readonly name="nombre" type="text" class="form-control" id="inputnombre"  required value="<%=request.getAttribute("nombre") %>"  >
     </div>
     <div class="form-group">
       <label for="inputTipoLista">Categoria</label>

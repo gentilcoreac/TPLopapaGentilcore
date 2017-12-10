@@ -40,7 +40,7 @@
 			});
 			$('#dtpdesdeformeliminar').datetimepicker({
 				
-				defaultDate: new Date(), 
+				/* defaultDate: new Date(),  */
 			    format: 'DD/MM/YYYY HH:mm:ss ',
 			    sideBySide: true
 			});
@@ -187,7 +187,7 @@ case "alta":%>
     </div>
     <div class="form-group">
       <label for="inputdetalle">Detalle:</label>
-      <textarea name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  required ></textarea>		 
+      <textarea name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  ></textarea>		 
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=alta')">Reservar</button>		
@@ -264,19 +264,19 @@ case "baja":
     <%if(per.getCategoria().getDescripcion().equals("Administrador")){ %>
     <div class="form-group">
       <label for="inputidpersona">ID Persona:</label>
-      <input disabled name="idpersona" type="text" class="form-control" id="inputidpersona"   value="<%=request.getAttribute("idpersona")%>" >    
+      <input readonly name="idpersona" type="text" class="form-control" id="inputidpersona"   value="<%=request.getAttribute("idpersona")%>" >    
     </div>
     <%}else{ %>
 	  <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
     <%} %>
     <div class="form-group">
       <label for="inputidelemento">ID Elemento:</label>
-      <input disabled name="idelemento" type="text" class="form-control" id="inputidelemento"   value="<%=request.getAttribute("idelemento") %>" >    
+      <input readonly name="idelemento" type="text" class="form-control" id="inputidelemento"   value="<%=request.getAttribute("idelemento") %>" >    
     </div>
     <div class="form-group">
       <label for="inputfechareservadesde">Fecha-Hora Desde:</label>       
       <div class='input-group date' id='dtpdesdeformeliminar'>
-          <input disabled  type='text' class="form-control" name="fechareservadesde" id="inputfechareservadesde" <%if(request.getAttribute("fechareservadesde")!=null){ %>value="<%=request.getAttribute("fechareservadesde")%>"<%}%>/>
+          <input readonly  type='text' class="form-control" name="fechareservadesde" id="inputfechareservadesde" <%if(request.getAttribute("fechareservadesde")!=null){ %>value="<%=request.getAttribute("fechareservadesde")%>"<%}%>/>
           <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -285,7 +285,7 @@ case "baja":
     <div class="form-group">
       <label for="inputfechareservahasta">Fecha-Hora Hasta:</label>       
       <div class='input-group date' id='datetimepickerhasta'>
-          <input disabled  type='text' class="form-control" name="fechareservahasta" id="inputfechareservahasta" <%if(request.getAttribute("fechareservahasta")!=null){ %>value="<%=request.getAttribute("fechareservahasta")%>"<%} %> />
+          <input readonly  type='text' class="form-control" name="fechareservahasta" id="inputfechareservahasta" <%if(request.getAttribute("fechareservahasta")!=null){ %>value="<%=request.getAttribute("fechareservahasta")%>"<%} %> />
           <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -293,7 +293,7 @@ case "baja":
     </div> 
     <div class="form-group">
       <label for="inputdetalle">Detalle:</label>
-      <textarea disabled name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  ><%=request.getAttribute("detalle") %></textarea>		 
+      <textarea readonly name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  ><%=request.getAttribute("detalle") %></textarea>		 
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=baja')">Eliminar</button>		

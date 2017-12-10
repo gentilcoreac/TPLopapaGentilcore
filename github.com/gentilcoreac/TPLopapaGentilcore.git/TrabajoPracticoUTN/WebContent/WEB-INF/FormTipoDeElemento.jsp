@@ -221,15 +221,15 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputcant_max_res_pen">Max Reservas Pendientes:</label>
-      <input disabled name="cant_max_res_pen"  type="number" min="1"  class="form-control" id="inputcant_max_res_pen" required  value="<%=request.getAttribute("cant_max_res_pen") %>" >
+      <input readonly name="cant_max_res_pen"  type="number" min="1"  class="form-control" id="inputcant_max_res_pen" required  value="<%=request.getAttribute("cant_max_res_pen") %>" >
     </div>
     <div class="form-group">
       <label for="inputlimite_horas_res">Max Horas de Reserva:</label>
-      <input disabled name="limite_horas_res"  type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required  value="<%=request.getAttribute("limite_horas_res") %>" >
+      <input readonly name="limite_horas_res"  type="number" min="1"  class="form-control" id="inputlimite_horas_res"  required  value="<%=request.getAttribute("limite_horas_res") %>" >
     </div>
     <div class="form-group">
       <label for="inputdias_max_anticipacion">Max Dias de Anticipacion:</label>
-      <input disabled name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value="<%=request.getAttribute("dias_max_anticipacion") %>" >
+      <input readonly name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value="<%=request.getAttribute("dias_max_anticipacion") %>" >
     </div>
 	<div class="checkbox">
 	  <label for="inputonly_encargados"></label>

@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import business.entities.Persona;
 import business.entities.Reserva;
 import business.entities.TipoDeElemento;
 import business.logic.CtrlElementoLogic;
+import business.logic.CtrlPersonaLogic;
 import business.logic.CtrlReservaLogic;
 import business.logic.CtrlTipoDeElementoLogic;
 import tools.Campo;
@@ -63,7 +66,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 		if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
 			try {
-				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")));
+				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
 				if(res==null){
 					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
 	
@@ -96,11 +99,10 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(validaCampos(request.getParameter("idreserva"),request.getParameter("idpersona"),
-		   request.getParameter("idelemento"),request.getParameter("fechareservadesde"),request.getParameter("fechareservahasta"))){
+		if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
 			try{
 				CtrlReservaLogic ctrl =new CtrlReservaLogic();
-				Reserva res=ctrl.getOne(Integer.parseInt(request.getParameter("idreserva")));
+				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
 				if(res==null){
 					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
 	
@@ -154,16 +156,56 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {	
-				Elemento ele=new Elemento();
-				//ele.setId_elemento(Integer.parseInt(request.getParameter("id")));
-				ele.setNombre(request.getParameter("nombre"));
-				TipoDeElemento te=new TipoDeElemento();
-				te.setNombre(request.getParameter("tipo"));
-				ele.setTipo(new CtrlTipoDeElementoLogic().getByName(te));
-				CtrlElementoLogic ctrl= new CtrlElementoLogic();
-				ctrl.add(ele);
-				hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Elemento agregado correctamente","ServletListaElementos");			
-			
+				if(validaCampos(request.getParameter("idpersona"),request.getParameter("idelemento"),
+						       request.getParameter("fechareservadesde"),request.getParameter("fechareservahasta"))){
+					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
+					CtrlReservaLogic ctrl=new CtrlReservaLogic();
+					if(null!=elemento){
+						Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
+						if(null!=persona){
+							Date fd=Campo.parseaFecha(request.getParameter("fechareservadesde"));
+							Date fh=Campo.parseaFecha(request.getParameter("fechareservahasta"));
+							String errores=ctrl.retornaErroresFechas(fd,fh,elemento);  
+							if(errores==null){
+										Reserva res=new Reserva();
+										res.setPersona(persona);
+										res.setElemento(elemento);
+										res.setFecha_hora_desde_solicitada(fd);
+										res.setFecha_hora_hasta_solicitada(fh);
+										SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+										res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
+										res.setDetalle(request.getParameter("detalle"));
+										if(ctrl.sePuedeCrear(persona, res)){
+											if(!ctrl.hayLimtResPen(persona, res)){
+												ctrl.add(res);
+												hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
+											}
+											else{
+												hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No se pueden reservar mas elementos de este tipo\n"
+														                                                   + "Limite de reservas pendientes alcanzadas para el tipo:"
+														                                                   + res.getElemento().getTipo().getNombre());			
+											}
+										}
+										else{
+											hacerInforme(request, response, TipoInforme.INFO , "Reserva", "Solo los encargados pueden reservar este tipo de elemento");			
+										}
+
+									}
+							  else{
+									hacerInforme(request, response, TipoInforme.INFO , "Reserva", errores);			
+							  }
+							}
+						else{
+							hacerInforme(request, response, TipoInforme.INFO , "Reserva", "La persona no existe");			
+						}
+					}
+					else{
+						hacerInforme(request, response, TipoInforme.INFO , "Reserva", "El elemento no existe");			
+					}
+				}
+				else{
+					hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
+				}
 		} catch (Exception ex) {
 		
 			this.error(request, response, ex);
@@ -171,10 +213,9 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 	}
 	
-	private boolean validaCampos(String idRes,String idPer,String idEle,String fhD,String fhH){
-		return (Campo.Valida(idRes, Campo.tipo.ID) && Campo.Valida(idPer, Campo.tipo.ID)
-				&& Campo.Valida(idEle, Campo.tipo.ID) && Campo.Valida(fhD,Campo.tipo.FECHAHORA)
-				&& Campo.Valida(fhH,Campo.tipo.FECHAHORA));
+	private boolean validaCampos(String idPer,String idEle,String fhD,String fhH){
+		return (Campo.Valida(idPer, Campo.tipo.ID)&& Campo.Valida(idEle, Campo.tipo.ID) 
+				&& Campo.Valida(fhD,Campo.tipo.FECHAHORA) && Campo.Valida(fhH,Campo.tipo.FECHAHORA));
 	}
 
 

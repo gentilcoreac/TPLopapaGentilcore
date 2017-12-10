@@ -256,23 +256,23 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
-      <input disabled name="apellido" type="text" class="form-control" id="inputapel" required=""  value="<%=request.getAttribute("apellido") %>" >
+      <input readonly name="apellido" type="text" class="form-control" id="inputapel" required=""  value="<%=request.getAttribute("apellido") %>" >
     </div>
     <div class="form-group">
       <label for="inputnombre">Nombre:</label>
-      <input disabled name="nombre" type="text" class="form-control" id="inputnombre"  required=""  value="<%=request.getAttribute("nombre") %>" >
+      <input readonly name="nombre" type="text" class="form-control" id="inputnombre"  required=""  value="<%=request.getAttribute("nombre") %>" >
     </div>
     <div class="form-group">
       <label for="inputusr">Usuario:</label>
-      <input disabled name="usuario" type="text" class="form-control" id="inputusr" required="" value="<%=request.getAttribute("usuario") %>" >
+      <input readonly name="usuario" type="text" class="form-control" id="inputusr" required="" value="<%=request.getAttribute("usuario") %>" >
     </div>
     <div class="form-group">
       <label for="inputpwd">Contraseña:</label>
-      <input disabled name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value="<%=request.getAttribute("contrasenia") %>" >
+      <input readonly name="contrasenia" type="text" class="form-control" id="inputpwd" required=""  value="<%=request.getAttribute("contrasenia") %>" >
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input disabled name="email" type="text" class="form-control" id="inputemail"  required=""  value="<%=request.getAttribute("email") %>" >
+      <input readonly name="email" type="text" class="form-control" id="inputemail"  required=""  value="<%=request.getAttribute("email") %>" >
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>

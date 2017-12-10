@@ -142,5 +142,41 @@ public class CtrlReservaLogic {
 		return datRes.getOne(res);
 	}
 	
+	public Reserva getOne(int idr,Persona p)throws Exception{
+		if(p.getCategoria().getDescripcion().equals("Administrador")){
+			return getOne(idr);
+		}
+		return datRes.getOne(idr, p);
+	}
+	
+	public String retornaErroresFechas(Date fd,Date fh,Elemento ele)throws Exception{
+		if(!noEsFechaPasada(fd)){
+			return "Fecha incorrecta: no puede reservar con una fecha-hora pasada";
+		}
+		if(!isFHastaMayorQFDesde(fd, fh)){
+			return "La fecha-hora hasta debe ser posterior a la fecha-hora desde";
+		}
+		java.util.Date hoy=Calendar.getInstance().getTime();
+		int diasMaxAnt=ele.getTipo().getDias_max_anticipacion();
+		float diasEntre=getDaysBetween(fd,hoy);
+		if(diasEntre >diasMaxAnt){
+			Calendar calendario=Calendar.getInstance();
+			calendario.setTime(hoy);
+			calendario.add(Calendar.DATE,diasMaxAnt);
+			return "No puede reservar este elemento luego del "
+					+new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(calendario.getTime());
+			}
+		int horasMaxRes=ele.getTipo().getLimite_horas_res();
+		float horasEntre=getHoursBetween(fh, fd);
+		if(horasEntre>horasMaxRes){
+			return "La reserva no puede durar mas de "+String.valueOf(horasMaxRes)+" horas";
+		}
+		if(getReservasEnIntervalo(ele.getId_elemento(), fd, fh)>0){
+			return "No se puede reservar en ese intervalo,otra reserva interfiere."
+					+ "Consulte las reservas del elemento";
+		}
+		return null;
+		
+	}
 }
 
