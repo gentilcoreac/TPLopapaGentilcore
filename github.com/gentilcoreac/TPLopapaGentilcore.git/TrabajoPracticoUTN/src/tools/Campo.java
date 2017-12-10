@@ -37,7 +37,7 @@ public class Campo {
 		    	public String toString(){return texto;}}
 	
 	public static boolean Valida(String campo,tipo tipoCampo){
-		if(campo.isEmpty() || campo==null){
+		if(campo==null || campo.isEmpty()  ){
 			//JOptionPane.showMessageDialog(null,"Complete todos los campos por favor", "", JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="Complete todos los campos requeridos por favor";
 			return false;

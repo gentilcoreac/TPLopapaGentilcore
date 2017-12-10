@@ -97,12 +97,16 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 		
 		if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
 			try{
-				Elemento ele=new Elemento();
-				ele.setId_elemento(Integer.parseInt(request.getParameter("id")));
 				CtrlElementoLogic ctrl =new CtrlElementoLogic();
-				ctrl.delete(ele);
-				hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Elemento eliminado correctamente","ServletListaElementos");			
-
+				Elemento ele=ctrl.getOne(Integer.parseInt(request.getParameter("id")));
+				if(ele==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Elemento", "No existe ningun elemento con el id "+request.getParameter("id"));			
+	
+				}
+				else{
+					ctrl.delete(ele);
+					hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Elemento eliminado correctamente","ServletListaElementos");			
+				}
 			}
 			catch(Exception ex){
 				this.error(request, response,ex);
@@ -119,16 +123,18 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 		try {
 		
 			if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
-				Elemento ele=new Elemento();
-				ele.setId_elemento(Integer.parseInt(request.getParameter("id")));
-				ele.setNombre(request.getParameter("nombre"));
-				TipoDeElemento te=new TipoDeElemento();
-				te.setNombre(request.getParameter("tipo"));
-				ele.setTipo(new CtrlTipoDeElementoLogic().getByName(te));
-				CtrlElementoLogic ctrl= new CtrlElementoLogic();
-				ctrl.update(ele);
-				hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Datos de elemento actualizados correctamente","ServletListaElementos");			
-
+				CtrlElementoLogic ctrl =new CtrlElementoLogic();
+				Elemento ele=ctrl.getOne(Integer.parseInt(request.getParameter("id")));
+				if(ele==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Elemento", "No existe ningun elemento con el id "+request.getParameter("id"));			
+	
+				}
+				else{
+					ele.setNombre(request.getParameter("nombre"));
+					ele.setTipo(new CtrlTipoDeElementoLogic().getByName(request.getParameter("tipo")));
+					ctrl.update(ele);
+					hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Datos de elemento actualizados correctamente","ServletListaElementos");			
+				}
 			}
 			else{
 				hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());			

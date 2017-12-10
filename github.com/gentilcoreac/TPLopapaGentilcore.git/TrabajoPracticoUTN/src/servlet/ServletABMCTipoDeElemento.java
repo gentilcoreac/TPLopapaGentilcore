@@ -55,9 +55,7 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 
 	private void consulta(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			TipoDeElemento t=new TipoDeElemento();
-			t.setNombre(request.getParameter("nombre"));
-			TipoDeElemento te=new CtrlTipoDeElementoLogic().getByName(t);
+			TipoDeElemento te=new CtrlTipoDeElementoLogic().getByName(request.getParameter("nombre"));
 			if(te==null){
 				hacerInforme(request, response, TipoInforme.INFO , "Tipo de Elemento", "No existe ningun tipo de elemento con el nombre "+request.getParameter("nombre"));			
 
@@ -86,12 +84,16 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
 			try{
-				TipoDeElemento te=new TipoDeElemento();
-				te.setNombre(request.getParameter("nombre"));
 				CtrlTipoDeElementoLogic ctrl =new CtrlTipoDeElementoLogic();
-				ctrl.delete(te);
-				hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Tipo de Elemento eliminado correctamente","ServletListaTiposDeElementos");			
+				TipoDeElemento te=ctrl.getByName(request.getParameter("nombre"));
+				if(te==null){
+						hacerInforme(request, response, TipoInforme.INFO , "Tipo de Elemento", "No existe ningun tipo de elemento con el nombre "+request.getParameter("nombre"));			
 
+				}
+				else{
+					ctrl.delete(te);
+					hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Tipo de Elemento eliminado correctamente","ServletListaTiposDeElementos");			
+				}
 			}
 			catch(Exception ex){
 				this.error(request, response,ex);
@@ -104,25 +106,31 @@ public class ServletABMCTipoDeElemento extends HttpServletConFunciones {
 	private void modificacion(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
+				CtrlTipoDeElementoLogic ctrl =new CtrlTipoDeElementoLogic();
+				TipoDeElemento te=ctrl.getByName(request.getParameter("nombre"));
+				if(te==null){
+						hacerInforme(request, response, TipoInforme.INFO , "Tipo de Elemento", "No existe ningun tipo de elemento con el nombre "+request.getParameter("nombre"));			
 	
-			if(this.validaCampos(request.getParameter("cant_max_res_pen"),request.getParameter("dias_max_anticipacion"),request.getParameter("limite_horas_res"))){
-				TipoDeElemento te=new TipoDeElemento();
-				te.setNombre(request.getParameter("nombre"));
-				te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
-				te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
-				te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
-				te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
-				CtrlTipoDeElementoLogic ctrl= new CtrlTipoDeElementoLogic();
-				ctrl.update(te);
-				hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Datos de Tipo de Elemento actualizados correctamente","ServletListaTiposDeElementos");			
-
-			}
-			else{
-				hacerInforme(request, response, TipoInforme.INFO , "Tipo de Elemento", Campo.getMensaje());			
-			}
+				}
+				else{
+					if(this.validaCampos(request.getParameter("cant_max_res_pen"),request.getParameter("dias_max_anticipacion"),request.getParameter("limite_horas_res"))){
+						
+						te.setNombre(request.getParameter("nombre"));
+						te.setCant_max_res_pen(Integer.parseInt(request.getParameter("cant_max_res_pen")));
+						te.setDias_max_anticipacion(Integer.parseInt(request.getParameter("dias_max_anticipacion")));
+						te.setLimite_horas_res(Integer.parseInt(request.getParameter("limite_horas_res")));
+						te.setOnly_encargados(request.getParameter("only_encargados")==null?false:true);
+						ctrl.update(te);
+						hacerInforme(request, response, TipoInforme.EXITO , "Tipo de Elemento", "Datos de Tipo de Elemento actualizados correctamente","ServletListaTiposDeElementos");			
+		
+					}
+					else{
+						hacerInforme(request, response, TipoInforme.INFO , "Tipo de Elemento", Campo.getMensaje());			
+					}
+				}
 		} catch (Exception ex) {
 		
-			this.error(request, response, ex);
+				this.error(request, response, ex);
 		}
 	}
 

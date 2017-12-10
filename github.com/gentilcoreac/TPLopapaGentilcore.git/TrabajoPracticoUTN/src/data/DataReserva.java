@@ -370,14 +370,14 @@ public class DataReserva {
 		ResultSet rs=null;
 		try{
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "select * from reserva where id_reserva=?;");
+					+ "select * from reserva r where r.id_reserva=?;");
 			pstmt.setInt(1, r.getId_reserva());
 			rs=pstmt.executeQuery();
 			if(rs.next() && rs!=null){
 				reserva=new Reserva();
-				reserva.setId_reserva(rs.getInt("id_reserva"));
-				reserva.setPersona(new DataPersona().getOne(rs.getInt("id_persona")));
-				reserva.setElemento(new DataElemento().getOne(rs.getInt("id_elemento")));
+				reserva.setId_reserva(rs.getInt("r.id_reserva"));
+				reserva.setPersona(new DataPersona().getOne(rs.getInt("r.id_persona")));
+				reserva.setElemento(new DataElemento().getOne(rs.getInt("r.id_elemento")));
 				java.text.SimpleDateFormat formatter=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				reserva.setFecha_hora_reserva_hecha(rs.getString("r.fecha_hora_reserva_hecha")!=null?formatter.parse(rs.getString("r.fecha_hora_reserva_hecha")):null);
 				reserva.setFecha_hora_desde_solicitada(rs.getString("r.fecha_hora_desde_solicitada")!=null?formatter.parse(rs.getString("r.fecha_hora_desde_solicitada")):null);

@@ -136,7 +136,11 @@ public class CtrlReservaLogic {
 		return datRes.getOne(r);
 	}	
 	
-	
+	public Reserva getOne(int id)throws Exception{
+		Reserva res=new Reserva();
+		res.setId_reserva(id);
+		return datRes.getOne(res);
+	}
 	
 }
 

@@ -106,12 +106,17 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 		
 		if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
 			try{
-				Persona per=new Persona();
-				per.setDni(request.getParameter("dni"));
-				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
-				ctrl.delete(per);
-				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
 
+				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
+				Persona per=ctrl.getByDni(request.getParameter("dni"));
+				if(per==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
+	
+				}
+				else{
+					ctrl.delete(per);
+					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
+				}
 			}
 			catch(Exception ex){
 				this.error(request, response,ex);
@@ -128,20 +133,25 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 		try {
 		
 			if(this.validaCampos(request.getParameter("dni"), request.getParameter("email"))){
-				Persona per=new Persona();
-				//per.setId(Integer.parseInt(request.getParameter("id")));
-				per.setUsuario(request.getParameter("usuario"));
-				per.setContrasenia(request.getParameter("contrasenia"));
-				per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
-				per.setApellido(request.getParameter("apellido"));		
-				per.setNombre(request.getParameter("nombre"));
-				per.setDni(request.getParameter("dni"));
-				per.setHabilitado(request.getParameter("habilitado")==null?false:true);
-				per.setEmail(request.getParameter("email"));
-				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
-				ctrl.update(per);
-				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente","ServletListaUsuarios");			
-
+				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
+				Persona per=ctrl.getByDni(request.getParameter("dni"));
+				if(per==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
+	
+				}
+				else{
+					//per.setId(Integer.parseInt(request.getParameter("id")));
+					per.setUsuario(request.getParameter("usuario"));
+					per.setContrasenia(request.getParameter("contrasenia"));
+					per.setCategoria(new CtrlCategoriaLogic().getOne(request.getParameter("categoria")));
+					per.setApellido(request.getParameter("apellido"));		
+					per.setNombre(request.getParameter("nombre"));
+					per.setDni(request.getParameter("dni"));
+					per.setHabilitado(request.getParameter("habilitado")==null?false:true);
+					per.setEmail(request.getParameter("email"));
+					ctrl.update(per);
+					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente","ServletListaUsuarios");			
+				}
 			}
 			else{
 				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			

@@ -28,6 +28,11 @@ public class CtrlTipoDeElementoLogic {
 	public TipoDeElemento getByName(TipoDeElemento tde) throws Exception{
 		return this.dataTdE.getByName(tde);
 	}
+	public TipoDeElemento getByName(String nombre) throws Exception{
+		TipoDeElemento te=new TipoDeElemento();
+		te.setNombre(nombre);
+		return this.dataTdE.getByName(te);
+	}
 	
 	public ArrayList<TipoDeElemento> getAll() throws Exception{
 		return dataTdE.getAll();

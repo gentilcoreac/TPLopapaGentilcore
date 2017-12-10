@@ -38,6 +38,12 @@
 			    format: 'DD/MM/YYYY HH:mm:ss ',
 			    sideBySide: true
 			});
+			$('#dtpdesdeformeliminar').datetimepicker({
+				
+				defaultDate: new Date(), 
+			    format: 'DD/MM/YYYY HH:mm:ss ',
+			    sideBySide: true
+			});
 		});
   </script>
 <title>Formulario</title>
@@ -269,7 +275,7 @@ case "baja":
     </div>
     <div class="form-group">
       <label for="inputfechareservadesde">Fecha-Hora Desde:</label>       
-      <div class='input-group date' id='dtpdesde'>
+      <div class='input-group date' id='dtpdesdeformeliminar'>
           <input disabled  type='text' class="form-control" name="fechareservadesde" id="inputfechareservadesde" <%if(request.getAttribute("fechareservadesde")!=null){ %>value="<%=request.getAttribute("fechareservadesde")%>"<%}%>/>
           <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
@@ -287,7 +293,7 @@ case "baja":
     </div> 
     <div class="form-group">
       <label for="inputdetalle">Detalle:</label>
-      <textarea disabled name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  value="<%=request.getAttribute("detalle") %>" ></textarea>		 
+      <textarea disabled name="detalle"  maxlength="140" rows="2" class="form-control" id="inputdetalle"  ><%=request.getAttribute("detalle") %></textarea>		 
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=baja')">Eliminar</button>		
