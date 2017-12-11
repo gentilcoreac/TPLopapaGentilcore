@@ -95,14 +95,9 @@ if(session.getAttribute("user")==null){
                 aria-expanded="false"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+" "+per.getApellido()%></span><span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="Redireccionador?destino=WEB-INF/Perfil.jsp" >Perfil</a></li>
+            <li><a href="ServletPerfil" >Perfil</a></li>
             <li class="divider"></li>            
-            <li>
-	            <form name="myForm" action="Redireccionador" method="post">
-	            <input type="hidden" value="si" name="logout">
-	            <button  class="btn btn-info">Salir&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
-	            </form>
-	      	<!--<a href="Redireccionador?destino=Logout.jsp&logout=si">Salir</a>  -->
+            <li><a href="ServletLogout">Salir</a>  
             </li>
             	
           </ul>

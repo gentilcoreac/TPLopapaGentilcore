@@ -27,7 +27,8 @@ public class Start extends HttpServletConFunciones {
      */
 
     public Start() {
-    	logger = LogManager.getLogger(getClass());
+//    	logger = LogManager.getLogger(getClass());
+    	super();
     }
 
 	/**
@@ -61,7 +62,7 @@ public class Start extends HttpServletConFunciones {
 						 * En cambio los datos que se van a usar en la proxima pagina lo seteo como atributo. Ahorro memoria, y no tengo inconvenientes. Obviamente , solo se usa en la pagina siguiente nada mas.
 						 * 
 					*/
-						logger.log(Level.INFO,"log in "+usu.getDni());
+//						logger.log(Level.INFO,"log in "+usu.getDni());
 						request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
 					}else{
 						 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");

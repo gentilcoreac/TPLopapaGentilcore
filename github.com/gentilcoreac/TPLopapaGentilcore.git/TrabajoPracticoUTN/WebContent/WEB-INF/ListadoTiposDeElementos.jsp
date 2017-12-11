@@ -18,6 +18,11 @@
 
 <body>
 
+<%
+if(session.getAttribute("user")==null){
+	response.sendRedirect("Login.html");
+}
+%>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -29,16 +34,16 @@
                 aria-expanded="false">Reservas<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaReservas">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Hacer Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=alta">Hacer Reserva</a></li>
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
            	if(categoria.equals("Administrador")){
               %>
-            <li><a href="#">Cerrar Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=cerrar">Cerrar Reserva</a></li>
             <% }%>
-            <li><a href="#">Borrar Reserva</a></li>
+            <li><a href="ServletFormsReservas?accion=baja">Borrar Reserva</a></li>
           </ul>
         </li>	
       
@@ -47,12 +52,12 @@
                 aria-expanded="false">Elementos<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaElementos">Listado</a></li>
             <%if(categoria.equals("Administrador")){ %>
             <li class="divider"></li>            
-            <li><a href="#">Agregar Elemento</a></li>
-            <li><a href="#">Editar Elemento</a></li>
-            <li><a href="#">Borrar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=alta">Agregar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=modificacion">Editar Elemento</a></li>
+            <li><a href="ServletFormsElementos?accion=baja">Borrar Elemento</a></li>
             <%} %>
           </ul>
         </li>
@@ -77,11 +82,11 @@
                 aria-expanded="false">Tipos de Elementos<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Listado</a></li>
+            <li><a href="ServletListaTiposDeElementos">Listado</a></li>
             <li class="divider"></li>            
-            <li><a href="#">Agregar Tipo de Elemento</a></li>
-            <li><a href="#">Editar Tipo de Elemento</a></li>
-            <li><a href="#">Borrar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=alta">Agregar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=modificacion">Editar Tipo de Elemento</a></li>
+            <li><a href="ServletFormsTiposDeElementos?accion=baja">Borrar Tipo de Elemento</a></li>
           </ul>
         </li>
 	<%}%>
@@ -90,17 +95,12 @@
     <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+","+per.getApellido()%></span><span class="caret"></span>
+                aria-expanded="false"><span class="glyphicon glyphicon-user"><%=" "+per.getNombre()+" "+per.getApellido()%></span><span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="Redireccionador?destino=WEB-INF/Perfil.jsp" >Perfil</a></li>
+            <li><a href="ServletPerfil" >Perfil</a></li>
             <li class="divider"></li>            
-            <li>
-	            <form name="myForm" action="Redireccionador" method="post">
-	            <input type="hidden" value="si" name="logout">
-	            <button  class="btn btn-info">Salir&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
-	            </form>
-	      	<!--<a href="Redireccionador?destino=Logout.jsp&logout=si">Salir</a>  -->
+            <li><a href="ServletLogout">Salir</a>  
             </li>
             	
           </ul>

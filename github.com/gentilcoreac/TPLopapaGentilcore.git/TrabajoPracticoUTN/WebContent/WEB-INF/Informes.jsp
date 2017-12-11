@@ -19,6 +19,9 @@
   </head>
 <body>
 	<%
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("Login.html");
+	}
 	switch(request.getParameter("tipo").toLowerCase()){
 		case "info":
 		%>

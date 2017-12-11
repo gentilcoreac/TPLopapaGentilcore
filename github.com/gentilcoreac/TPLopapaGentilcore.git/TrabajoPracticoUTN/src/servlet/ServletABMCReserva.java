@@ -131,20 +131,33 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 		try {
 		
-			if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
-				Elemento ele=new Elemento();
-				ele.setId_elemento(Integer.parseInt(request.getParameter("id")));
-				ele.setNombre(request.getParameter("nombre"));
-				TipoDeElemento te=new TipoDeElemento();
-				te.setNombre(request.getParameter("tipo"));
-				ele.setTipo(new CtrlTipoDeElementoLogic().getByName(te));
-				CtrlElementoLogic ctrl= new CtrlElementoLogic();
-				ctrl.update(ele);
-				hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Datos de elemento actualizados correctamente","ServletListaElementos");			
-
+			if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)&&
+			   Campo.Valida(request.getParameter("fechareservaentrega"), Campo.tipo.FECHAHORA)){
+				CtrlReservaLogic ctrl =new CtrlReservaLogic();
+				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
+				if(res==null){
+					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
+	
+				}
+				else{
+					Date fc=Campo.parseaFecha(request.getParameter("fechareservaentrega"));
+					if(ctrl.isFCierreMayorQFDesde(fc,res.getFecha_hora_desde_solicitada())){
+						if(ctrl.sePuedeCerrar(res)){
+							res.setFecha_hora_entregado(fc);
+							ctrl.updateParaCerrarRes(res);
+							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva cerrada correctamente","ServletListaReservas");			
+						}
+						else{
+							hacerInforme(request,response,TipoInforme.INFO,"Reserva","No se puede cerrar la reserva:aun no ha iniciado.");
+						}
+					}
+					else{
+						hacerInforme(request,response,TipoInforme.INFO,"Reserva","La fecha de cierre debe ser posterior al inicio de la reserva");
+					}
+				}
 			}
 			else{
-				hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());			
+				hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
 			}
 		} catch (Exception ex) {
 		
