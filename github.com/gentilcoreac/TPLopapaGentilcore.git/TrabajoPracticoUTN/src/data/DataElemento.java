@@ -170,19 +170,17 @@ public class DataElemento {
 					+ "on ele.id_elemento=res.id_elemento "
 					+ "inner join tipodeelemento te "
 					+ "on te.id_tipodeelemento=ele.id_tipodeelemento "
-					+ "where te.nombre=? and  "
-					+ "(res.fecha_hora_desde_solicitada is null or  "
-					+ "	( "
-					+ "	(res.fecha_hora_desde_solicitada >? and res.fecha_hora_hasta_solicitada>?) "
-					+ "		or "
-					+ "	(res.fecha_hora_desde_solicitada<? and res.fecha_hora_hasta_solicitada<?) "
-					+ "	) "
-					+ ") ");
+					+ "where te.nombre=? and ele.id_elemento not in( "
+							+ "select  r.id_elemento "
+							+ "from reserva r "
+							+ "inner join elemento e "
+							+ "on r.id_elemento = e.id_elemento "
+							+ "where r.fecha_hora_desde_solicitada <= ? "
+							+ "and r.fecha_hora_hasta_solicitada >= ?); "
+					);
 			pstmt.setString(1, elemento.getTipo().getNombre());
 			pstmt.setString(2, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaDisp));
 			pstmt.setString(3, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaDisp));
-			pstmt.setString(4, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaDisp));
-			pstmt.setString(5, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaDisp));
 			res=pstmt.executeQuery();
 			if(res!=null){
 				while(res.next()){
