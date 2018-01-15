@@ -10,7 +10,7 @@ public class FactoryConexion {
 	private String host="localhost";
 	private String port="3306";
 	private String user="root";			////////COMPLETAR///////
-	private String password="1618314";		////////COMPLETAR///////
+	private String password="root";		////////COMPLETAR///////
 	private String db="BaseReservas";			////////COMPLETAR///////
 	
 	private static FactoryConexion instancia;
