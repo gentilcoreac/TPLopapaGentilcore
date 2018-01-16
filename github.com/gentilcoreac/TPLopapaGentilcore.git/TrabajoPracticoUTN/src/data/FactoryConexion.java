@@ -1,8 +1,6 @@
 package data;
 import java.sql.*;
 
-import javax.swing.JOptionPane;
-
 import tools.AppDataException;
 
 public class FactoryConexion {
@@ -15,15 +13,15 @@ public class FactoryConexion {
 	
 	private static FactoryConexion instancia;
 	
-	public FactoryConexion(){
+	public FactoryConexion()throws AppDataException{
 		try {
 			Class.forName(driver);
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			throw new AppDataException(e,"error al registras el driver de conexion para la base de datos");
 		}
 	}
 	
-	public static FactoryConexion getInstancia()throws SQLException{
+	public static FactoryConexion getInstancia()throws SQLException,AppDataException{
 		if(FactoryConexion.instancia == null){
 			FactoryConexion.instancia=new FactoryConexion();
 		}

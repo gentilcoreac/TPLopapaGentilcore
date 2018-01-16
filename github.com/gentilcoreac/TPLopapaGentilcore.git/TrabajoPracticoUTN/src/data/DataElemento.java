@@ -46,7 +46,7 @@ public class DataElemento {
 //		return elems;	
 //	}
 //	
-	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento elemento)throws SQLException,AppDataException{
+	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento elemento)throws Exception,SQLException,AppDataException{
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
 		ArrayList<Elemento> elementos=new ArrayList<Elemento>();
