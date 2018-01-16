@@ -2,6 +2,7 @@
     <wb-module deploy-name="TrabajoPracticoUTNGL">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resources"/>
         <property name="java-output-path" value="/TrabajoPracticoUTNGL/build/classes"/>
         <property name="context-root" value="TrabajoPracticoUTNGL"/>
     </wb-module>
