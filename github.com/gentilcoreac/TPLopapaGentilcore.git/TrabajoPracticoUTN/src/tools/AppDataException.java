@@ -33,7 +33,7 @@ public class AppDataException extends Exception{
 
 	public AppDataException(Throwable e,String message){
 		this.setInnerException(e);
-		this.setMessage(message+":\n"+e.getMessage());
+		this.setMessage(message+":\nAppDataException\n"+e.getMessage());
 	}
 	
 }

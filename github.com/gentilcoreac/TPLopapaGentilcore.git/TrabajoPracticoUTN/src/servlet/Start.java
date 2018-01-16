@@ -53,7 +53,7 @@ public class Start extends HttpServletConFunciones {
 				CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
 				Persona usu=ctrl.getLoggedUser(user, pass);
 				if(usu!=null){
-					if(usu.isHabilitado()==true){
+					if(usu.isHabilitado()){
 						request.getSession().setAttribute("user", usu);		//1 atributo: user es un atributo q yo creo
 																				//2 parametro: es un objeto java(debe ser serializable y javabin)
 	
@@ -65,10 +65,12 @@ public class Start extends HttpServletConFunciones {
 //						logger.log(Level.INFO,"log in "+usu.getDni());
 						request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
 					}else{
+						 request.setAttribute("loginError", "usuarioinhabilitado");
 						 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
 						 }
 				}
 				else{
+					request.setAttribute("loginError", "usuarionulo");
 					this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
 					}
 			}

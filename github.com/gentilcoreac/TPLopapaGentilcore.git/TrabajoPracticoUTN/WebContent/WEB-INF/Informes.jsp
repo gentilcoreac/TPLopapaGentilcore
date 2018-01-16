@@ -19,14 +19,14 @@
   </head>
 <body>
 	<%
-	if(session.getAttribute("user")==null){
+	 if(session.getAttribute("user")==null && request.getAttribute("loginError")==null){
 		response.sendRedirect("Login.html");
-	}
+	} 
 	switch(request.getParameter("tipo").toLowerCase()){
 		case "info":
 		%>
 		<div class="alert alert-info">
-		 	 <%=request.getAttribute("Mensaje")%>
+		 	 <pre><%=request.getAttribute("Mensaje")%></pre>
 		</div>
 		<br>
 		<form action="javascript:window.history.back();" method="post">

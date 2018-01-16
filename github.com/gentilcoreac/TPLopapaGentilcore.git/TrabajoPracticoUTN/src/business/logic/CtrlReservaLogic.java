@@ -19,6 +19,7 @@ import data.DataPersona;
 import data.DataReserva;
 import data.DataTipoDeElemento;
 import tools.AppDataException;
+import tools.BookingException;
 import tools.Campo;
 
 
@@ -149,12 +150,13 @@ public class CtrlReservaLogic {
 		return datRes.getOne(idr, p);
 	}
 	
-	public String retornaErroresFechas(Date fd,Date fh,Elemento ele)throws Exception{
+	public void retornaErroresFechas(Date fd,Date fh,Elemento ele)throws BookingException,Exception{
+		Exception ex=new Exception("");
 		if(!noEsFechaPasada(fd)){
-			return "Fecha incorrecta: no puede reservar con una fecha-hora pasada";
+			throw new BookingException(ex,"Fecha incorrecta: no puede reservar con una fecha-hora pasada");
 		}
 		if(!isFHastaMayorQFDesde(fd, fh)){
-			return "La fecha-hora hasta debe ser posterior a la fecha-hora desde";
+			throw new BookingException(ex, "La fecha-hora hasta debe ser posterior a la fecha-hora desde");
 		}
 		java.util.Date hoy=Calendar.getInstance().getTime();
 		int diasMaxAnt=ele.getTipo().getDias_max_anticipacion();
@@ -163,20 +165,40 @@ public class CtrlReservaLogic {
 			Calendar calendario=Calendar.getInstance();
 			calendario.setTime(hoy);
 			calendario.add(Calendar.DATE,diasMaxAnt);
-			return "No puede reservar este elemento luego del "
-					+new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(calendario.getTime());
+			throw new BookingException(ex, "No puede reservar este elemento luego del "
+					+new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(calendario.getTime()));
 			}
 		int horasMaxRes=ele.getTipo().getLimite_horas_res();
 		float horasEntre=getHoursBetween(fh, fd);
 		if(horasEntre>horasMaxRes){
-			return "La reserva no puede durar mas de "+String.valueOf(horasMaxRes)+" horas";
+			throw new BookingException(ex,"La reserva no puede durar mas de "+String.valueOf(horasMaxRes)+" horas");
 		}
 		if(getReservasEnIntervalo(ele.getId_elemento(), fd, fh)>0){
-			return "No se puede reservar en ese intervalo,otra reserva interfiere."
-					+ "Consulte las reservas del elemento";
+			throw new BookingException(ex, "No se puede reservar en ese intervalo,otra reserva interfiere."
+					+ "Consulte las reservas del elemento");
 		}
-		return null;
 		
+	}
+	
+	public void validaAlta(Reserva res)throws BookingException,Exception{
+		Persona persona=res.getPersona();
+		Elemento elemento=res.getElemento();
+		Exception ex=new Exception("");
+		if(null==elemento){
+			throw new BookingException(ex,"El elemento no existe");
+		}
+		if(null==persona){
+			throw new BookingException(ex,"La Persona no existe");
+		}
+		retornaErroresFechas(res.getFecha_hora_desde_solicitada(),res.getFecha_hora_hasta_solicitada(),elemento);
+		if(!sePuedeCrear(persona, res)){
+			throw new BookingException(ex,"Solo los encargados pueden reservar este tipo de elemento");
+		}
+		if(hayLimtResPen(persona, res)){
+			throw new BookingException(ex,"No se pueden reservar mas elementos de este tipo\n"
+                    + "Limite de reservas pendientes alcanzadas para el tipo:"
+                    + res.getElemento().getTipo().getNombre());
+		}
 	}
 }
 

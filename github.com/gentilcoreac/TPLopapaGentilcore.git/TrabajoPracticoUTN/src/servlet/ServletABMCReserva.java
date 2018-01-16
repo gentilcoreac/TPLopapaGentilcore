@@ -18,6 +18,7 @@ import business.logic.CtrlElementoLogic;
 import business.logic.CtrlPersonaLogic;
 import business.logic.CtrlReservaLogic;
 import business.logic.CtrlTipoDeElementoLogic;
+import tools.BookingException;
 import tools.Campo;
 
 
@@ -171,55 +172,76 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		try {	
 				if(validaCampos(request.getParameter("idpersona"),request.getParameter("idelemento"),
 						       request.getParameter("fechareservadesde"),request.getParameter("fechareservahasta"))){
-					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
 					CtrlReservaLogic ctrl=new CtrlReservaLogic();
-					if(null!=elemento){
-						Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
-						if(null!=persona){
-							Date fd=Campo.parseaFecha(request.getParameter("fechareservadesde"));
-							Date fh=Campo.parseaFecha(request.getParameter("fechareservahasta"));
-							String errores=ctrl.retornaErroresFechas(fd,fh,elemento);  
-							if(errores==null){
-										Reserva res=new Reserva();
-										res.setPersona(persona);
-										res.setElemento(elemento);
-										res.setFecha_hora_desde_solicitada(fd);
-										res.setFecha_hora_hasta_solicitada(fh);
-										SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-										res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
-										res.setDetalle(request.getParameter("detalle"));
-										if(ctrl.sePuedeCrear(persona, res)){//para saber si es encargado
-											if(!ctrl.hayLimtResPen(persona, res)){
-												ctrl.add(res);
-												hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
-											}
-											else{
-												hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No se pueden reservar mas elementos de este tipo\n"
-														                                                   + "Limite de reservas pendientes alcanzadas para el tipo:"
-														                                                   + res.getElemento().getTipo().getNombre());			
-											}
-										}
-										else{
-											hacerInforme(request, response, TipoInforme.INFO , "Reserva", "Solo los encargados pueden reservar este tipo de elemento");			
-										}
-
-									}
-							  else{
-									hacerInforme(request, response, TipoInforme.INFO , "Reserva", errores);			
-							  }
-							}
-						else{
-							hacerInforme(request, response, TipoInforme.INFO , "Reserva", "La persona no existe");			
-						}
-					}
-					else{
-						hacerInforme(request, response, TipoInforme.INFO , "Reserva", "El elemento no existe");			
-					}
+					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
+					Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
+					Date fd=Campo.parseaFecha(request.getParameter("fechareservadesde"));
+					Date fh=Campo.parseaFecha(request.getParameter("fechareservahasta"));
+					Reserva res=new Reserva();
+					res.setPersona(persona);
+					res.setElemento(elemento);
+					res.setFecha_hora_desde_solicitada(fd);
+					res.setFecha_hora_hasta_solicitada(fh);
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+					res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
+					res.setDetalle(request.getParameter("detalle"));
+					ctrl.validaAlta(res);
+					ctrl.add(res);
+					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
+				
 				}
-				else{
-					hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
-				}
-		} catch (Exception ex) {
+//					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
+//					CtrlReservaLogic ctrl=new CtrlReservaLogic();
+//					if(null!=elemento){
+//						Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
+//						if(null!=persona){
+//							Date fd=Campo.parseaFecha(request.getParameter("fechareservadesde"));
+//							Date fh=Campo.parseaFecha(request.getParameter("fechareservahasta"));
+//							String errores=ctrl.retornaErroresFechas(fd,fh,elemento);  
+//							if(errores==null){
+//										Reserva res=new Reserva();
+//										res.setPersona(persona);
+//										res.setElemento(elemento);
+//										res.setFecha_hora_desde_solicitada(fd);
+//										res.setFecha_hora_hasta_solicitada(fh);
+//										SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//										res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
+//										res.setDetalle(request.getParameter("detalle"));
+//										if(ctrl.sePuedeCrear(persona, res)){//para saber si es encargado
+//											if(!ctrl.hayLimtResPen(persona, res)){
+//												ctrl.add(res);
+//												hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
+//											}
+//											else{
+//												hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No se pueden reservar mas elementos de este tipo\n"
+//														                                                   + "Limite de reservas pendientes alcanzadas para el tipo:"
+//														                                                   + res.getElemento().getTipo().getNombre());			
+//											}
+//										}
+//										else{
+//											hacerInforme(request, response, TipoInforme.INFO , "Reserva", "Solo los encargados pueden reservar este tipo de elemento");			
+//										}
+//
+//									}
+//							  else{
+//									hacerInforme(request, response, TipoInforme.INFO , "Reserva", errores);			
+//							  }
+//							}
+//						else{
+//							hacerInforme(request, response, TipoInforme.INFO , "Reserva", "La persona no existe");			
+//						}
+//					}
+//					else{
+//						hacerInforme(request, response, TipoInforme.INFO , "Reserva", "El elemento no existe");			
+//					}
+//				}
+//				else{
+//					hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
+//				}
+		}catch(BookingException bex){
+			hacerInforme(request, response, TipoInforme.INFO , "Reserva", bex.getMessage());
+		} 
+		catch (Exception ex) {
 		
 			this.error(request, response, ex);
 		}
