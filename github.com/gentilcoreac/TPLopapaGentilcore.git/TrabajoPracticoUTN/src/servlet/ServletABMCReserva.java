@@ -188,7 +188,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 										SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 										res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
 										res.setDetalle(request.getParameter("detalle"));
-										if(ctrl.sePuedeCrear(persona, res)){
+										if(ctrl.sePuedeCrear(persona, res)){//para saber si es encargado
 											if(!ctrl.hayLimtResPen(persona, res)){
 												ctrl.add(res);
 												hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
@@ -225,6 +225,9 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		}
 		
 	}
+	
+	//usar try catch
+	//throws booking exception
 	
 	private boolean validaCampos(String idPer,String idEle,String fhD,String fhH){
 		return (Campo.Valida(idPer, Campo.tipo.ID)&& Campo.Valida(idEle, Campo.tipo.ID) 
