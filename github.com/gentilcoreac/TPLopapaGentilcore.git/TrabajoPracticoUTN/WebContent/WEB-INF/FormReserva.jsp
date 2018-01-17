@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/formulario.css" >
   <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-  <link rel="stylesheet" href="css/estiloagregado.css">
+  <link rel="stylesheet" href="css/listado.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/formulario.js"></script>
