@@ -85,14 +85,10 @@ if(session.getAttribute("user")==null){
 
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
-           	if(categoria.equals("Administrador")){
               %>
-              	<li >
-		          <a href="ServletListaReservas">Reservas</a>
-		        </li>  
-            <% }%>
-    
-
+        <li >
+		    <a href="ServletListaReservas">Reservas</a>
+		</li>    
         <li >
           <a href="ServletListaElementos">Elementos</a>
         </li>
