@@ -12,7 +12,120 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
-
+  <style>
+  body {
+      font: 400 15px Lato, sans-serif;
+      line-height: 1.8;
+      color: #818181;
+  }
+  h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #303030;
+      font-weight: 600;
+      margin-bottom: 30px;
+  }
+  h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      color: #303030;
+      font-weight: 400;
+      margin-bottom: 30px;
+  }  
+  .jumbotron {
+      background-color: #f4511e;
+      color: #fff;
+      padding: 100px 25px;
+      font-family: Montserrat, sans-serif;
+  }
+  .bg-grey {
+      background-color: #f6f6f6;
+  }
+  .carousel-control.right, .carousel-control.left {
+      background-image: none;
+      color: #f4511e;
+  }
+  .carousel-indicators li {
+      border-color: #f4511e;
+  }
+  .carousel-indicators li.active {
+      background-color: #f4511e;
+  }
+  .item h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      font-weight: 400;
+      font-style: italic;
+      margin: 70px 0;
+  }
+  .item span {
+      font-style: normal;
+  }
+  .panel {
+      border: 1px solid #f4511e; 
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+      border: 1px solid #f4511e;
+      background-color: #fff !important;
+      color: #f4511e;
+  }
+  .panel-heading {
+      color: #fff !important;
+      background-color: #f4511e !important;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+      background-color: white !important;
+  }
+  .panel-footer h3 {
+      font-size: 32px;
+  }
+  .panel-footer h4 {
+      color: #aaa;
+      font-size: 14px;
+  }
+  .panel-footer .btn {
+      margin: 15px 0;
+      background-color: #f4511e;
+      color: #fff;
+  }
+  .navbar {
+      margin-bottom: 0;
+      background-color: #f4511e;
+      z-index: 9999;
+      border: 0;
+      font-size: 12px !important;
+      line-height: 1.42857143 !important;
+      letter-spacing: 4px;
+      border-radius: 0;
+      font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+      color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+      color: #f4511e !important;
+      background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+      color: #fff !important;
+  }
+  footer .glyphicon {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #f4511e;
+  }
+  </style>
 </head>
 <body>
 <%
@@ -20,72 +133,36 @@ if(session.getAttribute("user")==null){
 	response.sendRedirect("Login.html");
 }
 %>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="Start">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Reservas<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaReservas">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsReservas?accion=alta">Hacer Reserva</a></li>
+
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
            	if(categoria.equals("Administrador")){
               %>
-            <li><a href="ServletFormsReservas?accion=cerrar">Cerrar Reserva</a></li>
+              	<li >
+		          <a href="ServletListaReservas">Reservas</a>
+		        </li>  
             <% }%>
-            <li><a href="ServletFormsReservas?accion=baja">Borrar Reserva</a></li>
-          </ul>
-        </li>	
-      
-      	<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Elementos<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaElementos">Listado</a></li>
-            <%if(categoria.equals("Administrador")){ %>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsElementos?accion=alta">Agregar Elemento</a></li>
-            <li><a href="ServletFormsElementos?accion=modificacion">Editar Elemento</a></li>
-            <li><a href="ServletFormsElementos?accion=baja">Borrar Elemento</a></li>
-            <%} %>
-          </ul>
+    
+
+        <li >
+          <a href="ServletListaElementos">Elementos</a>
         </li>
-        
     <%	
     	if(categoria.equals("Administrador")){ %>
-		<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Usuarios <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaUsuarios">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsUsuarios?accion=alta">Agregar usuario</a></li>
-            <li><a href="ServletFormsUsuarios?accion=modificacion">Editar usuario</a></li>
-            <li><a href="ServletFormsUsuarios?accion=baja">Borrar usuario</a></li>
-          </ul>
+		<li >
+          <a href="ServletListaUsuarios">Usuarios</a>
         </li>
         
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Tipos de Elementos<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaTiposDeElementos">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsTiposDeElementos?accion=alta">Agregar Tipo de Elemento</a></li>
-            <li><a href="ServletFormsTiposDeElementos?accion=modificacion">Editar Tipo de Elemento</a></li>
-            <li><a href="ServletFormsTiposDeElementos?accion=baja">Borrar Tipo de Elemento</a></li>
-          </ul>
+        <li >
+          <a href="ServletListaTiposDeElementos">Tipos de Elementos</a>
         </li>
+        
 	<%}%>
     </ul>
 

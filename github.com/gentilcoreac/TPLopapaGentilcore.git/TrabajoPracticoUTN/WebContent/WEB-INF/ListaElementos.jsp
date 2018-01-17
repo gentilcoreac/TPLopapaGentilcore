@@ -76,72 +76,36 @@ if(session.getAttribute("user")==null){
 	response.sendRedirect("Login.html");
 }
 %>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="Start">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Reservas<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaReservas">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsReservas?accion=alta">Hacer Reserva</a></li>
+
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
            	if(categoria.equals("Administrador")){
               %>
-            <li><a href="ServletFormsReservas?accion=cerrar">Cerrar Reserva</a></li>
+              	<li >
+		          <a href="ServletListaReservas">Reservas</a>
+		        </li>  
             <% }%>
-            <li><a href="ServletFormsReservas?accion=baja">Borrar Reserva</a></li>
-          </ul>
-        </li>	
-      
-      	<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Elementos<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaElementos">Listado</a></li>
-            <%if(categoria.equals("Administrador")){ %>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsElementos?accion=alta">Agregar Elemento</a></li>
-            <li><a href="ServletFormsElementos?accion=modificacion">Editar Elemento</a></li>
-            <li><a href="ServletFormsElementos?accion=baja">Borrar Elemento</a></li>
-            <%} %>
-          </ul>
+    
+
+        <li >
+          <a href="ServletListaElementos">Elementos</a>
         </li>
-        
     <%	
     	if(categoria.equals("Administrador")){ %>
-		<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Usuarios <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaUsuarios">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsUsuarios?accion=alta">Agregar usuario</a></li>
-            <li><a href="ServletFormsUsuarios?accion=modificacion">Editar usuario</a></li>
-            <li><a href="ServletFormsUsuarios?accion=baja">Borrar usuario</a></li>
-          </ul>
+		<li >
+          <a href="ServletListaUsuarios">Usuarios</a>
         </li>
         
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-                aria-expanded="false">Tipos de Elementos<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="ServletListaTiposDeElementos">Listado</a></li>
-            <li class="divider"></li>            
-            <li><a href="ServletFormsTiposDeElementos?accion=alta">Agregar Tipo de Elemento</a></li>
-            <li><a href="ServletFormsTiposDeElementos?accion=modificacion">Editar Tipo de Elemento</a></li>
-            <li><a href="ServletFormsTiposDeElementos?accion=baja">Borrar Tipo de Elemento</a></li>
-          </ul>
+        <li >
+          <a href="ServletListaTiposDeElementos">Tipos de Elementos</a>
         </li>
+        
 	<%}%>
     </ul>
 
