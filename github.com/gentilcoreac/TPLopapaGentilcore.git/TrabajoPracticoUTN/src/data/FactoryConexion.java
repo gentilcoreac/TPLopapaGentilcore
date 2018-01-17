@@ -8,7 +8,7 @@ public class FactoryConexion {
 	private String host="localhost";
 	private String port="3306";
 	private String user="root";			////////COMPLETAR///////
-	private String password="root";		////////COMPLETAR///////
+	private String password="1618314";		////////COMPLETAR///////
 	private String db="BaseReservas";			////////COMPLETAR///////
 	
 	private static FactoryConexion instancia;
@@ -17,7 +17,7 @@ public class FactoryConexion {
 		try {
 			Class.forName(driver);
 		} catch (Exception e) {
-			throw new AppDataException(e,"error al registras el driver de conexion para la base de datos");
+			throw new AppDataException(e,"error al registrar el driver de conexion para la base de datos");
 		}
 	}
 	
