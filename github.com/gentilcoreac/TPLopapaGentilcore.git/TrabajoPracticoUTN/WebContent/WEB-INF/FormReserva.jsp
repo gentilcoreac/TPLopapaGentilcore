@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/formulario.css" >
   <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="css/estiloagregado.css">
   <script src="scripts/jquery.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/formulario.js"></script>
@@ -64,14 +65,10 @@ if(session.getAttribute("user")==null){
 
             <%Persona per=((Persona)request.getSession().getAttribute("user"));
            	  String categoria=per.getCategoria().getDescripcion();
-           	if(categoria.equals("Administrador")){
               %>
-              	<li >
-		          <a href="ServletListaReservas">Reservas</a>
-		        </li> 
-            <% }%>
-     
-
+        <li >
+		    <a href="ServletListaReservas">Reservas</a>
+		</li>    
         <li >
           <a href="ServletListaElementos">Elementos</a>
         </li>

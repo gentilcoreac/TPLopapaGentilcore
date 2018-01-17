@@ -29,20 +29,14 @@ if(session.getAttribute("user")==null){
     </div>
     <ul class="nav navbar-nav">
 
-            <%Persona per=((Persona)request.getSession().getAttribute("user"));
-           	  String categoria=per.getCategoria().getDescripcion();
-           	if(categoria.equals("Administrador")){
-              %>
-              	<li >
-		          <a href="ServletListaReservas">Reservas</a>
-		        </li>  
-            <% }%>
-    
-
+        <li >
+		    <a href="ServletListaReservas">Reservas</a>
+		</li>    
         <li >
           <a href="ServletListaElementos">Elementos</a>
         </li>
-    <%	
+    <%	Persona per=((Persona)request.getSession().getAttribute("user"));
+ 		  String categoria=per.getCategoria().getDescripcion();
     	if(categoria.equals("Administrador")){ %>
 		<li >
           <a href="ServletListaUsuarios">Usuarios</a>
