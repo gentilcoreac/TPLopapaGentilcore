@@ -102,7 +102,7 @@ public class Reserva implements Serializable{
 		
 	@Override
 	public String toString(){
-		String fd=new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(getFecha_hora_desde_solicitada());
+		String fd=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getFecha_hora_desde_solicitada());
 		return "\nReservaId:"+String.valueOf(getId_reserva())
 		      +"\nIdElemento:"+String.valueOf(getElemento().getId_elemento())
 		      +"\nNombre del Elemento:"+getElemento().getNombre()

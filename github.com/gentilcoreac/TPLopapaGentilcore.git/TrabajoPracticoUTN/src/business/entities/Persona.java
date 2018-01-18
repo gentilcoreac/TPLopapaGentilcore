@@ -91,6 +91,16 @@ public class Persona implements Serializable{
 	public boolean equals(Object p){
 		return(p instanceof Persona) && (((Persona)p).getDni().equals(this.getDni()));
 				}
-	
+	@Override
+	public String toString(){
+		return "\nId: "+String.valueOf(getId())
+		      +"\nDni: "+getDni()
+		      +"\nNombre: "+getNombre()
+		      +"\nApellido: "+getApellido()
+		      +"\nUsuario: "+getUsuario()
+		      +"\nContrasenia: "+getContrasenia()
+		      +"\nCategoria: "+getCategoria().getDescripcion()
+		      +"\nEstado: "+(isHabilitado()?"Habilitado":"Inhabilitado");
+	}
 	
 }

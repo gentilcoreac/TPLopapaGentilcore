@@ -15,6 +15,7 @@ import business.entities.Persona;
 import business.logic.CtrlCategoriaLogic;
 import business.logic.CtrlPersonaLogic;
 import tools.Campo;
+import tools.Emailer;
 
 /**
  * Servlet implementation class ABMCPersona
@@ -115,6 +116,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 				}
 				else{
 					ctrl.delete(per);
+					Emailer.getInstance().send(per.getEmail(), "MyReserva-Su usuario ha sido eliminado", "Datos del usuario eliminado"+per.toString());
 					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
 				}
 			}
@@ -179,6 +181,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.add(per);
+				Emailer.getInstance().send(per.getEmail(), "Bienvenido a MyReserva", "Usted ya forma parte del mejor sistema del universo\n\n"+per.toString());
 				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente","ServletListaUsuarios");			
 			}
 			else{
