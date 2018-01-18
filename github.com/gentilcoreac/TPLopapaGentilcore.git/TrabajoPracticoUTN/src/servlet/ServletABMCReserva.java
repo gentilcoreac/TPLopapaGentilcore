@@ -20,6 +20,7 @@ import business.logic.CtrlReservaLogic;
 import business.logic.CtrlTipoDeElementoLogic;
 import tools.BookingException;
 import tools.Campo;
+import tools.Emailer;
 
 
 @WebServlet({"/ServletABMCReserva","/SERVLETABMCRESERVA","/servletabmcreserva"})
@@ -187,8 +188,9 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					res.setDetalle(request.getParameter("detalle"));
 					ctrl.validaAlta(res);
 					ctrl.add(res);
+					Emailer.getInstance().send(persona.getEmail(), "Reserva creada correctamente", "ACA IRIA LA TABLA");
 					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
-				
+					
 				}
 //					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
 //					CtrlReservaLogic ctrl=new CtrlReservaLogic();

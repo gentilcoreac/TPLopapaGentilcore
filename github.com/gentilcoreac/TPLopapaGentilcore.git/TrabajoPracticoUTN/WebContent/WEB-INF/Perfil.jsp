@@ -68,6 +68,17 @@ if(session.getAttribute("user")==null){
   <br>
   <h2>Datos del Perfil</h2>
   <br>
+   <div class="card text-center">
+	  <img src="imagenes/img_avatar.png" alt="Avatar" style="width:25%">
+	  <div class="container">
+	    <h4>
+	    	<b><%=((Persona)session.getAttribute("user")).getApellido() %>, 
+	    		<%=((Persona)session.getAttribute("user")).getNombre() %>
+	    	</b>
+	    </h4> 
+	    <p><%=((Persona)session.getAttribute("user")).getCategoria().getDescripcion() %></p> 
+	  </div>
+  </div> 
   <table class="table table-striped table-responsive">
     <tbody>
       <tr>

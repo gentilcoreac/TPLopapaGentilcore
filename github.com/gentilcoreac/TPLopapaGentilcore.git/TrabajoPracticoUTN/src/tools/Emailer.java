@@ -62,7 +62,7 @@ public class Emailer {
 			//de direcciones de internet o una sola,en el InternetAddress.parse(to) los convierte en un arraylist de internetaddress
 			//despues le digo que tipo de recipient es, en este caso To (o sra drstinatario)
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(to)); //"adrianmeca@gmail.com"
+			InternetAddress.parse(to)); //"adrianmeca@gmail.com"
 			message.setSubject(subject); //"Testing Subject"
 			//subject es el tema,el asunto de arriba
 			message.setText(body); //"Dear Mail Crawler,\n\n No spam to my email, please!"
