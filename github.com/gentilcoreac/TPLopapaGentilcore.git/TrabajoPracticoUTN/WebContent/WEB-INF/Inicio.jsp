@@ -63,6 +63,12 @@ if(session.getAttribute("user")==null){
   </div>
 </nav>
 
+
+
+<br> 
+<br>
+
+
 <div class="container" style="width:80%;text-align:center">
   <h2>Novedades</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">

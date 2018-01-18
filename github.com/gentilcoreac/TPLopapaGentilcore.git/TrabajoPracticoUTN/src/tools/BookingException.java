@@ -22,7 +22,7 @@ public class BookingException extends Exception{
 	
 	public BookingException(Throwable e,String message){
 		this.setBookingException(e);
-		this.setMessage(message+":\n"+e.getMessage());
+		this.setMessage(message+"\n  "+e.getMessage());
 	}
 	
 }

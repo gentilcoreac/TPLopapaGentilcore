@@ -112,6 +112,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 				else{
 						if(ctrl.sePuedeEliminar((Persona)request.getSession().getAttribute("user"), res)){
 							ctrl.delete(res);
+							Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
 							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");			
 						}
 						else{
@@ -147,6 +148,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 						if(ctrl.sePuedeCerrar(res)){
 							res.setFecha_hora_entregado(fc);
 							ctrl.updateParaCerrarRes(res);
+							Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Cerrada", "La siguiente reserva ha sido cerrada"+res.toString());
 							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva cerrada correctamente","ServletListaReservas");			
 						}
 						else{
@@ -190,7 +192,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					ctrl.add(res);
 					Emailer.getInstance().send(persona.getEmail(), "MyReserva-Reserva efectuada correctamente", "Nueva Reserva realizada"+res.toString());
 					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
-				
+					
 				}
 //					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
 //					CtrlReservaLogic ctrl=new CtrlReservaLogic();
