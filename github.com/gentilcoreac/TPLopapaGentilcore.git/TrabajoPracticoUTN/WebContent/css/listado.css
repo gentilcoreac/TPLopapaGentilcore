@@ -1,5 +1,5 @@
 body {
-      font: 400 13px/1.8 Lato, sans-serif;
+      font: sans-serif;
       color: #777;
   }  
   h2{
@@ -85,7 +85,7 @@ form label{
 
 tr,th{
 	text-align:center;
-	
+	vertical-align: middle;
 }
 
 

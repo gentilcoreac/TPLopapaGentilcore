@@ -27,7 +27,7 @@
 		case "info":
 		%>
 		<div class="alert alert-info">
-		 	 <pre><%=request.getAttribute("Mensaje")%></pre>
+		 	 <%=request.getAttribute("Mensaje")%>
 		</div>
 		<br>
 		<form action="javascript:window.history.back();" method="post">
