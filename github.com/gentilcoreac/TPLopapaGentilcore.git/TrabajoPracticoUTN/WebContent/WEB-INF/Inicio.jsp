@@ -69,17 +69,17 @@ if(session.getAttribute("user")==null){
 <br>
 
 
-<div class="container" style="width:80%;text-align:center">
+<!-- <div class="container" style="width:80%;text-align:center">
   <h2>Novedades</h2>
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
+    Indicators
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
 
-    <!-- Wrapper for slides -->
+    Wrapper for slides
     <div class="carousel-inner">
 
       <div class="item active">
@@ -108,7 +108,7 @@ if(session.getAttribute("user")==null){
   
     </div>
 
-    <!-- Left and right controls -->
+    Left and right controls
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
       <span class="sr-only">Previous</span>
@@ -118,6 +118,6 @@ if(session.getAttribute("user")==null){
       <span class="sr-only">Next</span>
     </a>
   </div>
-</div>
+</div> -->
 </body>
 </html>

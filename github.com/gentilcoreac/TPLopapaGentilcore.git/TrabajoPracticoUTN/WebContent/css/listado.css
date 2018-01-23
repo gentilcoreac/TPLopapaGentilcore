@@ -1,10 +1,14 @@
 body {
 
       font:sans-serif;
-      color: #777;
+      color: #000000;
+      background-image: url("../imagenes/compu.jpg");
+      background-size:100% 100%;
+      background-attachment: fixed;
   }  
   h2{
 	text-align:center;
+	
 }
 
   .nav-tabs li a {
@@ -14,11 +18,12 @@ body {
   .navbar {
       font-family: Montserrat, sans-serif;
       margin-bottom: 0;
-      background-color: #2d2d30;
+      background-color: #000000;
       border: 0;
       font-size: 11px !important;
       letter-spacing: 4px;
       opacity: 0.9;
+
   }
   .navbar li a, .navbar .navbar-brand { 
       color: #d5d5d5 !important;
@@ -50,6 +55,7 @@ body {
       resize: none;
   } 
 
+
 .eliminar{
 	margin-left:10px;
 }
@@ -80,15 +86,25 @@ form label{
 }
 
 
+
 #eselbusqueda{
 	margin-top:8px;
 }
+
+.table-striped{
+background-color:white;	
+opacity: 0.9;
+}
+
 
 tr,th{
 	text-align:center;
 	vertical-align: middle;
 }
 
+table a{
+	color:black;
+}
 
 
 
@@ -98,8 +114,25 @@ tr,th{
 	
 }
 
+.modal{
+	margin-top:55px;
+}
+.modal-backdrop {
+
+  z-index: -1;
+}
+.modal-content{
+	z-index: -1;
+}
+
 #myInput{
 	margin-right:30px;
+}
+
+.checkbox {
+	text-align:left;
+	margin-left:20px;
+	margin-top:10px;
 }
 
 @media (min-width: 768px) {

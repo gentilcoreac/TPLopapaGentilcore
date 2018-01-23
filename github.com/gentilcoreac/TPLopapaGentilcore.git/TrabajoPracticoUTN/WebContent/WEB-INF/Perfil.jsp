@@ -76,7 +76,7 @@ if(session.getAttribute("user")==null){
 	    		<%=((Persona)session.getAttribute("user")).getNombre() %>
 	    	</b>
 	    </h4> 
-	    <p><%=((Persona)session.getAttribute("user")).getCategoria().getDescripcion() %></p> 
+	    <p><b><%=((Persona)session.getAttribute("user")).getCategoria().getDescripcion() %></b></p> 
 	  </div>
   </div> 
   <table class="table table-striped table-responsive">

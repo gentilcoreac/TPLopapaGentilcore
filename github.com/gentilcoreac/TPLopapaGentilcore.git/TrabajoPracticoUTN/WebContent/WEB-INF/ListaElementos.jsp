@@ -217,7 +217,7 @@ if(session.getAttribute("user")==null){
 	</div><!-- fin busqueda avanzada -->
   
   <br><br>
-  <p>Busque por algun dato del Elemento:</p>  
+  <p><b>Busque por algun dato del Elemento:</b></p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
  

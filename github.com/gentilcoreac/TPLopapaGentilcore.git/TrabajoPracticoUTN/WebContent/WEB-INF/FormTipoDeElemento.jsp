@@ -96,8 +96,7 @@ case "alta":%>
       <input name="dias_max_anticipacion" type="number" min="1" value="1" class="form-control" id="inputdias_max_anticipacion" required   oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}">
     </div>
 	<div class="checkbox">
-	  <label for="inputonly_encargados"></label>
-	  <input name="only_encargados" type="checkbox"  id="inputonly_encargados">Restringido a Encargados?</input>
+	  <input name="only_encargados" type="checkbox"  id="inputonly_encargados"><b>Restringido a Encargados?</b></input>
 	</div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=alta')">Agregar</button>		
@@ -143,8 +142,7 @@ case "modificacion":
       <input name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required oninvalid="setCustomValidity('Debe Ingresar un numero mayor a 0')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("dias_max_anticipacion") %>" >
     </div>
 	<div class="checkbox">
-	  <label for="inputonly_encargados"></label>
-	  <input name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados">Restringido a Encargados?</input>
+	  <input name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados"><b>Restringido a Encargados?</b></input>
 	</div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=modificacion')">Guardar Cambios</button>		
@@ -190,8 +188,7 @@ case "baja":
       <input readonly name="dias_max_anticipacion"  type="number" min="1"  class="form-control" id="inputdias_max_anticipacion" required value="<%=request.getAttribute("dias_max_anticipacion") %>" >
     </div>
 	<div class="checkbox">
-	  <label for="inputonly_encargados"></label>
-	  <input disabled name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados">Restringido a Encargados?</input>
+	  <input disabled name="only_encargados" type="checkbox" value=<%=request.getAttribute("only_encargados") %> <%if(request.getAttribute("only_encargados").equals("true")){ %>checked<%} %> id="inputonly_encargados"><b>Restringido a Encargados?</b></input>
 	</div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=baja')">Eliminar</button>		

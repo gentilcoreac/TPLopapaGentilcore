@@ -114,18 +114,30 @@ case "alta":%>
   	<div class="form-group">
      <label>ID Reserva:&nbsp<%=request.getAttribute("proxid") %></label>
     </div>
-    <%if(per.getCategoria().getDescripcion().equals("Administrador")){ %>
+    <div class="form-group">
+     <label>ID Persona:&nbsp<%=((Persona)session.getAttribute("user")).getId() %></label>
+     <label>Dni:&nbsp<%=((Persona)session.getAttribute("user")).getDni() %></label>
+     <label>Apellido y Nombre:&nbsp<%=((Persona)session.getAttribute("user")).getApellido()+","+((Persona)session.getAttribute("user")).getNombre() %></label>
+     <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
+    </div>
+    <%-- <%if(per.getCategoria().getDescripcion().equals("Administrador")){ %>
     <div class="form-group">
       <label for="inputidpersona">ID Persona:</label>
       <input name="idpersona" type="text" class="form-control" id="inputidpersona"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
     </div>
     <%}else{ %>
 	  <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
-    <%} %>
+    <%} %> --%>
     <div class="form-group">
+     <label>ID Elemento:&nbsp<%=request.getAttribute("idelelistado") %></label>
+     <label>Nombre:&nbsp<%=request.getAttribute("nombreelelistado") %></label>
+     <label>Tipo:&nbsp<%=request.getAttribute("tipoelelistado") %></label>
+     <input name="idelemento" type="hidden" class="form-control" id="inputidelemento" value="<%=request.getAttribute("idelelistado") %>" >    
+    </div>
+    <%-- <div class="form-group">
       <label for="inputidelemento">ID Elemento:</label>
-      <input name="idelemento" type="text" class="form-control" id="inputidelemento"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("ideledesdelistado") %>" >    
-    </div>  
+      <input name="idelemento" type="text" class="form-control" id="inputidelemento"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idelelistado") %>" >    
+    </div>   --%>
     <div class="form-group">
       <label for="inputfechareservadesde">Fecha-Hora Desde:</label>       
       <div class='input-group date' id='datetimepickerdesde'>

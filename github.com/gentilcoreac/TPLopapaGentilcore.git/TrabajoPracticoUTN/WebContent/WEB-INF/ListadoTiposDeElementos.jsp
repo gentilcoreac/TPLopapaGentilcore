@@ -78,7 +78,7 @@ if(session.getAttribute("user")==null){
   	</button>
   </form>
   <br>
-  <p>Busque por algun dato del Tipo de Elemento:</p>  
+  <p><b>Busque por algun dato del Tipo de Elemento:</b></p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
   

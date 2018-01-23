@@ -89,7 +89,10 @@ public class ServletFormsReservas extends HttpServletConFunciones {
 		request.setAttribute("fechareservahasta", request.getParameter("fechareservahasta")==null?null:request.getParameter("fechareservahasta"));
 		request.setAttribute("fechareservaentrega", request.getParameter("fechareservaentrega")==null?null:request.getParameter("fechareservaentrega"));
 		request.setAttribute("detalle", request.getParameter("detalle")==null?"":request.getParameter("detalle"));
-		request.setAttribute("ideledesdelistado", request.getParameter("id")==null?"":request.getParameter("id"));
+		request.setAttribute("idelelistado", request.getParameter("id")==null?"":request.getParameter("id"));
+		request.setAttribute("nombreelelistado", request.getParameter("nombre")==null?"":request.getParameter("nombre"));
+		request.setAttribute("tipoelelistado", request.getParameter("tipoelemento")==null?"":request.getParameter("tipoelemento"));
+
 	}
 		
 	

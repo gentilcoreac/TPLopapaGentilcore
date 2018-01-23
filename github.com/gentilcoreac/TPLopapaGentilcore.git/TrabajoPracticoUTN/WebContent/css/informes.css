@@ -12,7 +12,11 @@ img{
 
 body{
 	text-align:center;
+	background-image: url("../imagenes/compu.jpg");
+    background-size:100% 100%;
+    background-attachment: fixed;
 }
 .alert{
 	margin-bottom:0px;
 }
+

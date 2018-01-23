@@ -129,12 +129,13 @@ if(session.getAttribute("user")==null){
   <br>
   <h2>Lista de Reservas</h2>
   <br>
-  
-  <form method="post" action="ServletFormsReservas?accion=alta">
+  <br>
+  <br>
+<!--   <form method="post" action="ServletFormsReservas?accion=alta">
   	<button class="btn btn-success btn-md nuevo" type="submit">
   		<span class="glyphicon glyphicon-plus" >&nbspNueva</span>
   	</button>
-  </form>
+  </form> -->
   
   <br>
   
@@ -193,7 +194,7 @@ if(session.getAttribute("user")==null){
 	</div><!-- fin busqueda avanzada -->
   
   <br><br>
-  <p>Busque por algun dato de la Reserva:</p>  
+  <p><b>Busque por algun dato de la Reserva:</b></p> 
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
  
@@ -218,9 +219,13 @@ if(session.getAttribute("user")==null){
 			for(Reserva r : listaReservas){
 		%>
 		<tr>
-			<td><%=r.getId_reserva() %></td>			
-			<td><%=r.getPersona().getId() %></td>
-			<td><%=r.getElemento().getId_elemento() %></td>
+			<td><%=r.getId_reserva() %></td>
+			<%if(((Persona)session.getAttribute("user")).getCategoria().getDescripcion().equals("Administrador")){ %>			
+			<td><a href="ServletListaUsuarios?accion=consulta&dni=<%=r.getPersona().getDni()%>"><%=r.getPersona().getId() %></a></td>
+			<%}else{ %>
+			<td><%=r.getPersona().getId()%></td>
+			<%} %>
+			<td><a href="ServletListaElementos?accion=consulta&eselbusqueda=POR_ID&beporid=<%=r.getElemento().getId_elemento()%>"><%=r.getElemento().getId_elemento() %></a></td>
 			<td><button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="<%="#myModal"+String.valueOf(r.getId_reserva())%>">Ver</button>
 				<div class="modal fade" id="<%="myModal"+String.valueOf(r.getId_reserva())%>" role="dialog">
 			     <div class="modal-content">

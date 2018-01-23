@@ -75,7 +75,7 @@ if(session.getAttribute("user")==null){
 <div class="container">
   <br>
   <br>
-  <h2>Lista de usuarios</h2>
+  <h2>Lista de Usuarios</h2>
   <br>
   <form method="post" action="ServletFormsUsuarios?accion=alta">
   	<button class="btn btn-success btn-md nuevo" type="submit">
@@ -83,7 +83,7 @@ if(session.getAttribute("user")==null){
   	</button>
   </form>
   <br>
-  <p>Busque por algun dato del usuario:</p>  
+  <p><b>Busque por algun dato del usuario:</b></p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>
   
