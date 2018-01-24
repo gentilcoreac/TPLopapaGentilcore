@@ -75,12 +75,12 @@ if(session.getAttribute("user")==null){
 		<li >
           <a href="ServletListaUsuarios">Usuarios</a>
         </li>
-        
+     <%}%>   
         <li >
           <a href="ServletListaTiposDeElementos">Tipos de Elementos</a>
         </li>
         
-	<%}%>
+	
     </ul>
 
     <ul class="nav navbar-nav navbar-right">

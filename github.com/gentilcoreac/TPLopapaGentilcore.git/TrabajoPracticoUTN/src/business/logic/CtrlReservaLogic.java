@@ -89,9 +89,18 @@ public class CtrlReservaLogic {
 			return true;
 		}
 	}
-	
+	public int getNumResPen(Persona persona,Reserva reserva)throws Exception{
+		return datRes.getNumResPen(persona, reserva);
+	}
+	public int getNumResPen(Persona persona,TipoDeElemento te)throws Exception{
+		Reserva res=new Reserva();
+		Elemento ele=new Elemento();
+		ele.setTipo(te);
+		res.setElemento(ele);
+		return datRes.getNumResPen(persona, res);
+	}
 	public Boolean hayLimtResPen(Persona persona,Reserva res)throws Exception{
-		return datRes.numResPen(persona, res)>=res.getElemento().getTipo().getCant_max_res_pen()?true:false;
+		return getNumResPen(persona, res)>=res.getElemento().getTipo().getCant_max_res_pen()?true:false;
 	}
 	
 	public float getDaysBetween(Date fecha1,Date fecha2){

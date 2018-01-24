@@ -97,12 +97,12 @@ if(session.getAttribute("user")==null){
 		<li >
           <a href="ServletListaUsuarios">Usuarios</a>
         </li>
-        
+    <%}%>    
         <li >
           <a href="ServletListaTiposDeElementos">Tipos de Elementos</a>
         </li>
         
-	<%}%>
+	
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -262,8 +262,9 @@ if(session.getAttribute("user")==null){
 					<%if(categoria.equals("Administrador")){ %>
 					<button class="btn btn-info btn-md cerrar" type="submit"  onclick="javascript: submitForm('ServletFormsReservas?accion=cerrar',<%=r.getId_reserva()%>)" data-toggle="tooltip" title="cerrar"><span class="glyphicon glyphicon-folder-open"></span></button>	
 					<%} %>
+					<%if(categoria.equals("Administrador") || r.getFecha_hora_entregado()==null){ %>
 					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCReserva?accion=baja',<%=r.getId_reserva()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	
-					
+					<%} %>
 								
 				</form>
 		

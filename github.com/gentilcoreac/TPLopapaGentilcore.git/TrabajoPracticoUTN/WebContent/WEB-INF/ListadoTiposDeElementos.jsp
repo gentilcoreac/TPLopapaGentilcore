@@ -41,12 +41,12 @@ if(session.getAttribute("user")==null){
 		<li >
           <a href="ServletListaUsuarios">Usuarios</a>
         </li>
-        
+     <%}%>   
         <li >
           <a href="ServletListaTiposDeElementos">Tipos de Elementos</a>
         </li>
         
-	<%}%>
+	
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -72,11 +72,15 @@ if(session.getAttribute("user")==null){
   <br>
   <h2>Lista de Tipos de Elementos</h2>
   <br>
+  <%if(categoria.equals("Administrador")){ %>
   <form method="post" action="ServletFormsTiposDeElementos?accion=alta">
   	<button class="btn btn-success btn-md nuevo" type="submit">
   		<span class="glyphicon glyphicon-plus" >&nbspNuevo</span>
   	</button>
   </form>
+  <%}else{ %>
+  <br><br>
+  <%} %>
   <br>
   <p><b>Busque por algun dato del Tipo de Elemento:</b></p>  
   <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -87,7 +91,8 @@ if(session.getAttribute("user")==null){
       <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Max Reservas Pendientes&nbsp<span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" title="es la cantidad máxima de elementos de este tipo que cada usuario puede tener pendiente a futuro">
+        <th>Res. Pendientes</th>
+        <th>Max Res. Pendientes&nbsp<span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" title="es la cantidad máxima de elementos de este tipo que cada usuario puede tener pendiente a futuro">
         </span></th>
         <th>Max Horas de Reserva&nbsp<span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="límite máximo de tiempo de reserva (en horas) de este tipo de elemento">
         </span></th>
@@ -99,11 +104,15 @@ if(session.getAttribute("user")==null){
     <tbody id="myTable">
 		<%
 			ArrayList<TipoDeElemento> listaTipos= (ArrayList<TipoDeElemento>)request.getAttribute("listaTipos");
+			int[] respendientes=(int[])request.getAttribute("respendientes");
+			int i=-1;
 			for(TipoDeElemento te : listaTipos){
+				++i;
 		%>
 		<tr>
 			<td><%=te.getId() %></td>			
 			<td><%=te.getNombre() %></td>
+			<td><%=respendientes[i] %></td>
 			<td><%=te.getCant_max_res_pen() %></td>
 			<td><%=te.getLimite_horas_res() %></td>	
 			<td><%=te.getDias_max_anticipacion() %></td>	
@@ -117,9 +126,10 @@ if(session.getAttribute("user")==null){
 					<input type="hidden" name="limite_horas_res" value="<%=te.getLimite_horas_res() %>" >		
 					<input type="hidden" name="dias_max_anticipacion" value="<%=te.getDias_max_anticipacion() %>" >		
 					<input type="hidden" name="only_encargados" value="<%=te.isOnly_encargados() %>" >				
+					<%if(categoria.equals("Administrador")){ %>
 					<button  class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsTiposDeElementos?accion=modificacion',<%=te.getId()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCTipoDeElemento?accion=baja',<%=te.getId()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	
-			
+					<%} %>
 				</form>
 		
 			</td>

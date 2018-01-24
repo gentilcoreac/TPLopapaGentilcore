@@ -506,7 +506,7 @@ public class DataReserva {
 		return intersecciones;
 	}
 	
-	public int numResPen(Persona persona,Reserva reserva)throws Exception{
+	public int getNumResPen(Persona persona,Reserva reserva)throws Exception{
 		int cantidad=0;
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
