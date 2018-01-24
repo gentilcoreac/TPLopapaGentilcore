@@ -137,6 +137,7 @@ public class DataElemento {
 					te.setCant_max_res_pen(res.getInt("cantmaxrespen"));
 					te.setLimite_horas_res(res.getInt("limite_horas_res"));
 					te.setDias_max_anticipacion(res.getInt("dias_max_anticipacion"));
+					te.setOnly_encargados(res.getBoolean("only_encargados"));
 					ele.setTipo(te);
 					elementos.add(ele);
 				}
@@ -194,6 +195,7 @@ public class DataElemento {
 					te.setCant_max_res_pen(res.getInt("te.cantmaxrespen"));
 					te.setLimite_horas_res(res.getInt("te.limite_horas_res"));
 					te.setDias_max_anticipacion(res.getInt("te.dias_max_anticipacion"));
+					te.setOnly_encargados(res.getBoolean("only_encargados"));
 					ele.setTipo(te);
 					elementos.add(ele);
 				}

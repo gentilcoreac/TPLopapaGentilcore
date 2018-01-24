@@ -229,6 +229,7 @@ if(session.getAttribute("user")==null){
         <th>ID</th>
         <th>Nombre</th>
         <th>Tipo</th>
+        <th>Restringido a Encargados?</th>
       </tr>
     </thead>
     <tbody id="myTable">
@@ -239,14 +240,21 @@ if(session.getAttribute("user")==null){
 		<tr>
 			<td><%=e.getId_elemento() %></td>			
 			<td><%=e.getNombre() %></td>
-			<td><%=e.getTipo().getNombre() %></td>											
+			<td><%=e.getTipo().getNombre() %></td>
+			<td><%=e.getTipo().isOnly_encargados()?"Si":"No" %></td>											
 			<td>
 			
 				<form  id=<%=e.getId_elemento()%> name="myForm" action="" method="post" >
 					<input type="hidden" name="id" value="<%=e.getId_elemento() %>" >
 					<input type="hidden" name="nombre" value="<%=e.getNombre()%>" >		
 					<input type="hidden" name="tipoelemento" value="<%=e.getTipo().getNombre()%>" >			
+					<input type="hidden" name="limite_horas_res" value="<%=e.getTipo().getLimite_horas_res() %>" >		
+					<input type="hidden" name="dias_max_anticipacion" value="<%=e.getTipo().getDias_max_anticipacion() %>" >		
+					<%if(!categoria.equals("Encargado") && e.getTipo().isOnly_encargados()){ %>
+					<button class="btn reservar btn-md"  type="button" data-toggle="tooltip" title="necesita ser encargado para reservar este elemento"><span class="glyphicon glyphicon-calendar"></span></button>	
+					<%}else{ %>
 					<button class="btn btn-primary reservar btn-md" type="submit"  onclick="javascript: submitForm('ServletFormsReservas?accion=alta',<%=e.getId_elemento()%>)" data-toggle="tooltip" title="reservar elemento"><span class="glyphicon glyphicon-calendar"></span></button>	
+					<%} %>
 					<%if(categoria.equals("Administrador")){ %>
 					<button class="btn btn-info btn-md editar" type="submit"  onclick="javascript: submitForm('ServletFormsElementos?accion=modificacion',<%=e.getId_elemento()%>)" data-toggle="tooltip" title="modificar"><span class="glyphicon glyphicon-pencil"></span></button>	
 					<button class="btn  btn-danger eliminar" type="submit" onclick="javascript: submitForm('ServletABMCElemento?accion=baja',<%=e.getId_elemento()%>)"  data-toggle="tooltip" title="eliminar"><span class="glyphicon glyphicon-trash"></span></button>	

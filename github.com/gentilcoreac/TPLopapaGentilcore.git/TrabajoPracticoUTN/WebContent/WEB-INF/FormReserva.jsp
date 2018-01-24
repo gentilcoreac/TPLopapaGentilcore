@@ -134,6 +134,10 @@ case "alta":%>
      <label>Tipo:&nbsp<%=request.getAttribute("tipoelelistado") %></label>
      <input name="idelemento" type="hidden" class="form-control" id="inputidelemento" value="<%=request.getAttribute("idelelistado") %>" >    
     </div>
+    <div class="form-group">
+     <label>Tiempo maximo de reserva:&nbsp<%=request.getAttribute("limite_horas_res") %>hs</label>
+     <label>Cantidad maxima de dias de anticipacion:&nbsp<%=request.getAttribute("dias_max_anticipacion") %>&nbspdias</label>    
+    </div>
     <%-- <div class="form-group">
       <label for="inputidelemento">ID Elemento:</label>
       <input name="idelemento" type="text" class="form-control" id="inputidelemento"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idelelistado") %>" >    
