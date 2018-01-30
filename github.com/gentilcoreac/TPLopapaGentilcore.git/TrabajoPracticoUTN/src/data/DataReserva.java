@@ -61,7 +61,7 @@ public class DataReserva {
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
-								+ "where datediff(r.fecha_hora_desde_solicitada,now())>0 "
+								+ "where r.fecha_hora_desde_solicitada > now() "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								break;
 			case VENCIDAS:
@@ -71,7 +71,7 @@ public class DataReserva {
 								+ "on e.id_elemento=r.id_elemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
 								+ "where r.fecha_hora_entregado is null and "
-								+ "datediff(r.fecha_hora_hasta_solicitada,now())<0 "
+								+ "r.fecha_hora_hasta_solicitada < now() "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								break;
 			case TRAER_TODAS:
@@ -172,7 +172,7 @@ public class DataReserva {
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
-								+ "where datediff(r.fecha_hora_desde_solicitada,now())>0 and r.id_persona=? "
+								+ "where r.fecha_hora_desde_solicitada > now() and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, persona.getId());
 								break;
@@ -183,7 +183,7 @@ public class DataReserva {
 								+ "on e.id_elemento=r.id_elemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
 								+ "where r.fecha_hora_entregado is null and "
-								+ "datediff(r.fecha_hora_hasta_solicitada,now())<0 and r.id_persona=? "
+								+ "r.fecha_hora_hasta_solicitada < now() and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, persona.getId());
 								break;
