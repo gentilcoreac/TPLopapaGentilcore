@@ -112,7 +112,6 @@
         </Root>
 
         <Logger name="servlet" level="INFO">
-            <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="SERVLETS"/>
         </Logger>
     </Loggers>

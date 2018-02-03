@@ -7,9 +7,9 @@ public class FactoryConexion {
 	private String driver="com.mysql.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";
-	private String user="root";			////////COMPLETAR///////
-	private String password="1618314";		////////COMPLETAR///////
-	private String db="BaseReservas";			////////COMPLETAR///////
+	private String user="root";			
+	private String password="1618314";		
+	private String db="BaseReservas";			
 	
 	private static FactoryConexion instancia;
 	
@@ -42,7 +42,7 @@ public class FactoryConexion {
 		cantConn++;
 		return conn;
 	}
-/////////////
+
 	public void releaseConn()throws SQLException,AppDataException{
 		try {
 			cantConn--;
