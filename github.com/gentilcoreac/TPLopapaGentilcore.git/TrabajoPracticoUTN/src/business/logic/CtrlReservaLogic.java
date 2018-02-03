@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
 
 
 import business.entities.Elemento;
 import business.entities.Persona;
 import business.entities.Reserva;
 import business.entities.TipoDeElemento;
-import data.DataElemento;
-import data.DataPersona;
 import data.DataReserva;
-import data.DataTipoDeElemento;
 import tools.AppDataException;
 import tools.BookingException;
 import tools.Campo;
@@ -33,8 +29,6 @@ public class CtrlReservaLogic {
 	public CtrlReservaLogic(){
 
 		datRes = new DataReserva();
-//		datPer = new DataPersona();
-//		datElem = new DataElemento();
 		reservas=new ArrayList<Reserva>();
 	}
 	
@@ -127,12 +121,6 @@ public class CtrlReservaLogic {
 		return datRes.getMaxId();
 	}
 	
-
-	
-	/*
-	public void update(Reserva r) throws SQLException, AppDataException{
-		datRes.update(r);
-	}*/
 	
 	public void updateParaCerrarRes(Reserva r) throws SQLException, AppDataException{
 		datRes.updateParaCerrarRes(r);

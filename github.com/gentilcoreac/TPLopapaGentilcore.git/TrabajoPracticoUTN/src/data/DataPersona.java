@@ -1,6 +1,9 @@
 package data;
 
 import java.util.ArrayList;
+
+import org.apache.logging.log4j.Level;
+
 import java.sql.*;
 
 import business.entities.*;
@@ -27,7 +30,7 @@ public class DataPersona{
 							p.setApellido(rs.getString("apellido"));
 							p.setDni(rs.getString("dni"));
 							p.setUsuario(rs.getString("usuario"));		
-							p.setContrasenia(rs.getString("contrasenia"));	//NO DEBER�A SER ALGUN METODO DE CONTRASE�AS?							
+							p.setContrasenia(rs.getString("contrasenia"));								
 							p.setEmail(rs.getString("email"));
 							p.setHabilitado(rs.getBoolean("habilitado"));		
 							int idCat= rs.getInt("id_categoria");
@@ -36,7 +39,7 @@ public class DataPersona{
 						}
 					}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al recuperar todas las personas");
+			throw new AppDataException(sqlex, "Error al recuperar todas las personas",Level.ERROR);
 		}
 		    finally{
 			try {
@@ -44,7 +47,7 @@ public class DataPersona{
 				if(stmt!=null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 			}
 		}
 		return pers;
@@ -74,7 +77,7 @@ public class DataPersona{
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex,"Error al agregar persona.\n"
-					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos.");
+					+ "Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos.",Level.ERROR);
 		}
 		finally{
 			try {
@@ -82,7 +85,7 @@ public class DataPersona{
 				if(pstmt!=null) pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 			}
 		}
 	}
@@ -110,22 +113,21 @@ public class DataPersona{
 			if(rowsAffected==0){throw new AppDataException(new Exception("Persona Inexistente, no se pudo actualizar"),"Error");}
 			
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al modificar persona. "
-					+ " Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos. "
-					+ " En caso de no poder resolverlo contactese con Patalalas S.A.");
+			throw new AppDataException(sqlex,"Error al modificar persona."
+					+ "Verifique que el usuario y/o DNI no existan, dichos registros deben ser unicos.",Level.ERROR);
 		} 
 		finally {
 			try {
 				if(stmt!=null)stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion de update, statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion de update, statement",Level.ERROR);
 			} 
 		}	
 	}
 
 	
-	public void delete(Persona p) throws SQLException,AppDataException{	/////////////preguntar si baja logica o baja fisica///////////////////////
+	public void delete(Persona p) throws SQLException,AppDataException{	
 		PreparedStatement pstmt1 = null;
 		PreparedStatement pstmt2 = null;
 		try {
@@ -143,13 +145,17 @@ public class DataPersona{
 			}
 			
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al eliminar persona"
-											+ " En caso de no poder resolverlo contactese con Patalalas S.A.");
+			throw new AppDataException(sqlex, "Error al eliminar persona",Level.ERROR);
 		}
 		finally{
-			if(pstmt1!=null){pstmt1.close();}
-			if(pstmt2!=null){pstmt2.close();}
-			FactoryConexion.getInstancia().releaseConn();
+			try{
+				if(pstmt1!=null){pstmt1.close();}
+				if(pstmt2!=null){pstmt2.close();}
+				FactoryConexion.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new AppDataException(sqlex, "Error al cerrar conexion o preparedstatement de delete",Level.ERROR);
+			}
 		}
 	}
 	
@@ -171,14 +177,14 @@ public class DataPersona{
 				p.setApellido(rs.getString("apellido"));
 				p.setDni(rs.getString("dni"));
 				p.setUsuario(rs.getString("usuario"));		
-				p.setContrasenia(rs.getString("contrasenia"));	//NO DEBERIA SER ALGUN METODO DE CONTRASEnia?							
+				p.setContrasenia(rs.getString("contrasenia"));								
 				p.setEmail(rs.getString("email"));
 				p.setHabilitado(rs.getBoolean("habilitado"));
 				int idCat= rs.getInt("id_categoria");
 				p.setCategoria(dc.getOne(idCat));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una persona por dni.");
+			throw new AppDataException(sqlex, "Error al buscar una persona por dni.",Level.ERROR);
 		}
 		finally{
 			try {
@@ -186,7 +192,7 @@ public class DataPersona{
 				if(pstmt!=null)pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o preparedstatement",Level.ERROR);
 			}
 		}
 		return p;
@@ -216,7 +222,7 @@ public class DataPersona{
 				p.setCategoria(dc.getOne(idCat));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una persona por id");
+			throw new AppDataException(sqlex, "Error al buscar una persona por id",Level.ERROR);
 		}
 		finally{
 			try {
@@ -224,7 +230,7 @@ public class DataPersona{
 				if(pstmt!=null)pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o preparedstatement",Level.ERROR);
 			}
 		}
 		return p;
@@ -254,7 +260,7 @@ public class DataPersona{
 				p.setCategoria(dc.getOne(idCat));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una persona por id");
+			throw new AppDataException(sqlex, "Error al buscar una persona por id",Level.ERROR);
 		}
 		finally{
 			try {
@@ -262,7 +268,7 @@ public class DataPersona{
 				if(pstmt!=null)pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o preparedstatement",Level.ERROR);
 			}
 		}
 		return p;
@@ -299,7 +305,7 @@ public class DataPersona{
 			
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar usuario logueado");
+			throw new AppDataException(sqlex,"Error al buscar usuario logueado",Level.ERROR);
 		}
 		finally{
 			try{
@@ -307,7 +313,7 @@ public class DataPersona{
 			if(pstmt!=null)pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 			}
 		}
 		return per;

@@ -28,17 +28,16 @@ public class Campo {
     	@Override
     	public String toString(){return texto;}}
     	
-        public static enum TipoBusquedaE{ POR_ID("Por Id"),POR_NOMBRE("Por Nombre"),
-		     POR_TIPO("Por Tipo"),POR_NOMBRE_Y_TIPO("Por Nombre y Tipo"),
-		     POR_TIPO_Y_FH("Por Tipo y FH Disponible"),TRAER_TODOS("Traer Todos");
-				private final String texto;
-				private TipoBusquedaE(final String texto){this.texto=texto;}
-				@Override
-		    	public String toString(){return texto;}}
+    public static enum TipoBusquedaE{ POR_ID("Por Id"),POR_NOMBRE("Por Nombre"),
+	     POR_TIPO("Por Tipo"),POR_NOMBRE_Y_TIPO("Por Nombre y Tipo"),
+	     POR_TIPO_Y_FH("Por Tipo y FH Disponible"),TRAER_TODOS("Traer Todos");
+			private final String texto;
+			private TipoBusquedaE(final String texto){this.texto=texto;}
+			@Override
+	    	public String toString(){return texto;}}
 	
 	public static boolean Valida(String campo,tipo tipoCampo){
 		if(campo==null || campo.isEmpty()  ){
-			//JOptionPane.showMessageDialog(null,"Complete todos los campos por favor", "", JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="Complete todos los campos requeridos por favor";
 			return false;
 			}
@@ -84,7 +83,6 @@ public class Campo {
 		formatter.parse(hora);
 		}
 		catch(ParseException pe){
-			//JOptionPane.showMessageDialog(null,"hora invalida\n"+hora, "",JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="Hora invalida\n"+hora;
 			return false;
 		}
@@ -97,7 +95,6 @@ public class Campo {
 		formatter.parse(fecha);
 		}
 		catch(ParseException pe){
-			//JOptionPane.showMessageDialog(null,"fecha invalida\n"+fecha, "",JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="Fecha invalida\n"+fecha;
 			return false;
 		}
@@ -114,7 +111,6 @@ public class Campo {
            valido = true;  
         }
         else{
-        	//JOptionPane.showMessageDialog(null, "Email invalido","",JOptionPane.INFORMATION_MESSAGE);
         	Mensaje="Email invalido";
         }
         return valido;
@@ -123,7 +119,6 @@ public class Campo {
 	private static boolean validaDni(String dni){
 		boolean correcto=dni.matches("[0-9]+");
 		if(!correcto){
-			//JOptionPane.showMessageDialog(null, "Dni invalido","",JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="Dni invalido";
 		}
 		return correcto;
@@ -132,7 +127,6 @@ public class Campo {
 	private static boolean validaIndice(String indice){
 		boolean correcto=indice.matches("[1-9][0-9]*");
 		if(!correcto){
-			//JOptionPane.showMessageDialog(null, "El indice debe tener un valor numerico mayor a 0","",JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="El indice debe tener un valor numerico mayor a 0";
 		}
 	    return correcto;
@@ -165,7 +159,6 @@ public class Campo {
 	private static boolean validaId(String id){
 		boolean correcto=id.matches("[1-9][0-9]*");
 		if(!correcto){
-			//JOptionPane.showMessageDialog(null, "El id debe tener un valor numerico mayor a 0","",JOptionPane.INFORMATION_MESSAGE);
 			Mensaje="El id debe tener un valor numerico mayor a 0";
 		}
 		return correcto;

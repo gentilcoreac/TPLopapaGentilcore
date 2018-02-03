@@ -5,15 +5,9 @@ import java.util.Date;
 
 
 
-
-
-
-
 public class Reserva implements Serializable{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int id_reserva;
 	private Persona persona;
@@ -23,8 +17,7 @@ public class Reserva implements Serializable{
 	private Date fecha_hora_hasta_solicitada;   
 	private Date fecha_hora_entregado;
 	private String detalle;
-	/*campos en base de datos: id_reserva, id_persona, id_elemento, fecha_hora_reserva_hecha, fecha_hora_desde_solicitada, fecha_hora_hasta_solicitada, fecha_hora_entregado, detalle
-*/
+
 	
 	public Reserva(){
 	}

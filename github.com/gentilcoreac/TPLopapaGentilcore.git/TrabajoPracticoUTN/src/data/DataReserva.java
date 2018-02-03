@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.logging.log4j.Level;
 
 import business.entities.Elemento;
 import business.entities.Persona;
 import business.entities.Reserva;
-import business.entities.TipoDeElemento;
 import tools.AppDataException;
 import tools.Campo;
 
@@ -106,7 +106,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer las reservas\n"+sqlex.getMessage());
+			throw new AppDataException(sqlex,"Error al traer las reservas\n"+sqlex.getMessage(),Level.ERROR);
 		}
 		finally{
 			try{
@@ -115,7 +115,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
 		return reservas;
@@ -124,11 +124,6 @@ public class DataReserva {
 	
 	public ArrayList<Reserva> getSome(Persona persona,Campo.TipoBusquedaR tipob,Reserva reserva)throws Exception,SQLException,AppDataException{
 		
-		//persona es siempre la entro al sistema
-		//puede ser diferente a la que esta en la reserva pasada como parametro
-		//por ejemplo un administrador busca las reservas de un encargado, 
-		//ahi persona y reserva.getpreserona son diferentes
-		//aca no cambia nada pero en el futuro puede ser util
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
 		ArrayList<Reserva> reservas=new ArrayList<Reserva>();
@@ -221,7 +216,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer las reservas\n"+sqlex.getMessage());
+			throw new AppDataException(sqlex,"Error al traer las reservas\n"+sqlex.getMessage(),Level.ERROR);
 		}
 		finally{
 			try{
@@ -230,7 +225,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
 		return reservas;
@@ -250,27 +245,24 @@ public class DataReserva {
 						+ " fecha_hora_reserva_hecha,"
 						+ " fecha_hora_desde_solicitada,"
 						+ " fecha_hora_hasta_solicitada, "
-					//	+ " fecha_hora_entregado, "				//este solo se usa para cuando el administrador, o quien sea, registre que se devolvi�
+					//	+ " fecha_hora_entregado, "				//este campo solo se usa en update cuando el administrador registra la devolucion
 						+ " detalle) "
 					+ "values(?,?,?,?,?,?); "
 						,PreparedStatement.RETURN_GENERATED_KEYS);
 		
 			pstmt.setInt(1,r.getPersona().getId());
 			pstmt.setInt(2, r.getElemento().getId_elemento());
-			//pstmt.setString(3, String.valueOf(new java.sql.Date(r.getFecha_hora_reserva_hecha().getTime())));
-			//pstmt.setString(3, String.valueOf(r.getFecha_hora_reserva_hecha()));
 			pstmt.setString(3, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(r.getFecha_hora_reserva_hecha()));		
 			pstmt.setString(4,new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format( r.getFecha_hora_desde_solicitada()));
 			pstmt.setString(5, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format( r.getFecha_hora_hasta_solicitada()));
-		//	pstmt.setDate(5, (java.sql.Date)r.getFecha_hora_entregado());     //este solo se usa para cuando el administrador, o quien sea, registre que se devolvi�
-			pstmt.setString(6,r.getDetalle());
-			pstmt.executeUpdate();							//execute= ejecuta todo      /executequery solo consultas select   /executeupdate solo add update o delete
+		    pstmt.setString(6,r.getDetalle());
+			pstmt.executeUpdate();							
 			keyResultSet = pstmt.getGeneratedKeys();
 			if(keyResultSet!=null && keyResultSet.next()){
 				r.setId_reserva(keyResultSet.getInt(1));				
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al crear reserva");
+			throw new AppDataException(sqlex,"Error al crear reserva",Level.ERROR);
 		}
 		finally{
 			try {
@@ -278,7 +270,7 @@ public class DataReserva {
 				if(pstmt!=null) pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o preparedstatement",Level.ERROR);
 			}
 		}
 	}	
@@ -293,7 +285,7 @@ public class DataReserva {
 			pstmt.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al intentar borrar reserva");
+			throw new AppDataException(sqlex,"Error al intentar borrar reserva",Level.ERROR);
 		}
 		finally{
 			try{
@@ -301,39 +293,13 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement o Conexion");
+				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement o Conexion",Level.ERROR);
 			}
 		}
 	}
 	
 	
 	
-	/*
-	public void update(Reserva r)throws SQLException,AppDataException{
-		PreparedStatement pstmt=null;
-		try{
-			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "update reserva set fecha_hora_reserva_hecha=?,"
-					+ "set fecha_hora_desde_solicitada=?,set fecha_hora_hasta_solicitada=?,"
-					+ "set fecha_hora_entregado=?,set detalle=?");
-			pstmt.executeUpdate();
-		}
-		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al modificar reserva");
-		}
-		finally{
-			try{
-				if(pstmt!=null){pstmt.close();}
-				FactoryConexion.getInstancia().releaseConn();
-			}
-			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al intentar cerrar conexion o PreparedStatement");
-			}
-		}
-	}
-	*/
-	
-	//METODO PARA "ESTABLECER" LA FECHA DE DE FIN RESERVAS, ES DECIR, DAR POR FINALIZADA LA RESERVA
 	public void updateParaCerrarRes(Reserva r)throws SQLException,AppDataException{
 		PreparedStatement pstmt=null;					
 		try{
@@ -349,7 +315,7 @@ public class DataReserva {
 			pstmt.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al modificar reserva");
+			throw new AppDataException(sqlex,"Error al modificar reserva para cerrarla",Level.ERROR);
 		}
 		finally{
 			try{
@@ -357,7 +323,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al intentar cerrar conexion o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al intentar cerrar conexion o PreparedStatement",Level.ERROR);
 			}
 		}
 	}
@@ -387,7 +353,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar una reserva");
+			throw new AppDataException(sqlex,"Error al buscar una reserva",Level.ERROR);
 		}
 		finally{
 			try{
@@ -396,7 +362,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
 		return reserva;
@@ -426,7 +392,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar una reserva");
+			throw new AppDataException(sqlex,"Error al buscar una reserva",Level.ERROR);
 		}
 		finally{
 			try{
@@ -435,7 +401,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
 		return reserva;
@@ -454,7 +420,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar el Id mas grande entre las reservas\n"+sqlex.getMessage());
+			throw new AppDataException(sqlex,"Error al buscar el Id mas grande entre las reservas\n"+sqlex.getMessage(),Level.ERROR);
 		}
 		finally{
 			try{
@@ -462,7 +428,7 @@ public class DataReserva {
 			if(res!=null){stmt.close();}
 			FactoryConexion.getInstancia().releaseConn();}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,sqlex.getMessage());
+				throw new AppDataException(sqlex,sqlex.getMessage(),Level.ERROR);
 			}
 		}
 		return id;
@@ -492,7 +458,7 @@ public class DataReserva {
 		
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al verificar si se puede reservar en el intervalo fechaDesde-fechaHasta");
+			throw new AppDataException(sqlex,"Error al verificar si se puede reservar en el intervalo fechaDesde-fechaHasta",Level.ERROR);
 		}
 		finally{
 			try{
@@ -500,7 +466,7 @@ public class DataReserva {
 			if(res!=null){res.close();}
 			FactoryConexion.getInstancia().releaseConn();}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion,resultset o preparedstatement");
+				throw new AppDataException(sqlex,"Error al cerrar conexion,resultset o preparedstatement",Level.ERROR);
 			}
 		}
 		return intersecciones;
@@ -528,7 +494,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al contar numero de reservas pendientes");
+			throw new AppDataException(sqlex,"Error al contar numero de reservas pendientes",Level.ERROR);
 		}
 		finally{
 			try{
@@ -537,7 +503,7 @@ public class DataReserva {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement,ResultSet o Conexion");
+				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement,ResultSet o Conexion",Level.ERROR);
 			}
 		}
 		return cantidad;

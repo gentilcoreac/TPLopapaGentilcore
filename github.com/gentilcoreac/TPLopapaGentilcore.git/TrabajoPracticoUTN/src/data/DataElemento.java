@@ -1,6 +1,9 @@
 package data;
 
 import java.util.ArrayList;
+
+import org.apache.logging.log4j.Level;
+
 import java.sql.*;
 import business.entities.Elemento;
 import business.entities.TipoDeElemento;
@@ -9,43 +12,7 @@ import tools.Campo;
 
 
 public class DataElemento {
-	//id_elemento, nombre, tipo
-	
 
-//	public ArrayList<Elemento> getAll() throws SQLException, AppDataException{
-//		Statement stmt = null;
-//		ResultSet rs=null;
-//		ArrayList<Elemento> elems= new ArrayList<Elemento>(); 
-//		DataTipoDeElemento dtde = new DataTipoDeElemento();	
-//		
-//		try {
-//			stmt = FactoryConexion.getInstancia().getConn().createStatement();
-//			rs = stmt.executeQuery("select* from elemento");
-//			if(rs!=null){
-//				while(rs.next()){
-//					Elemento el = new Elemento();
-//					el.setNombre(rs.getString("nombre"));
-//					el.setId_elemento(rs.getInt("id_elemento"));
-//					int idTipEl = rs.getInt("id_tipodeelemento");
-//					el.setTipo(dtde.getOne(idTipEl));
-//					elems.add(el);				
-//				}
-//			}
-//		} catch (SQLException sqlex) {
-//			throw new AppDataException(sqlex, "Error al recuperar todos los elementos");
-//		}
-//		finally{
-//				try {
-//					if(rs!=null) rs.close();
-//					if(stmt!=null) stmt.close();
-//					FactoryConexion.getInstancia().releaseConn();
-//				} catch (SQLException sqlex) {
-//					throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement (Clase: DataElemento)");
-//				}		
-//		}
-//		return elems;	
-//	}
-//	
 	public ArrayList<Elemento> getSome(Campo.TipoBusquedaE tipob,Elemento elemento)throws Exception,SQLException,AppDataException{
 		PreparedStatement pstmt=null;
 		ResultSet res=null;
@@ -56,7 +23,6 @@ public class DataElemento {
 			case POR_ID:
 						pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 						+ "select* from elemento e "
-						//+"left join reserva r on e.id_elemento=r.id_elemento "
 						+ "inner join tipodeelemento te "
 						+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 						+ "where e.id_elemento=? ");
@@ -67,7 +33,6 @@ public class DataElemento {
 							if(nombre==null || nombre.isEmpty()){
 								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 										+ "select* from elemento e "
-										//+"left join reserva r on e.id_elemento=r.id_elemento "
 										+ "inner join tipodeelemento te "
 										+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 										+ "where e.nombre is null || e.nombre='' ");
@@ -75,7 +40,6 @@ public class DataElemento {
 			
 								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 										+ "select* from elemento e "
-										//+"left join reserva r on e.id_elemento=r.id_elemento "
 										+ "inner join tipodeelemento te "
 										+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 										+ "where e.nombre like ? ");
@@ -86,7 +50,6 @@ public class DataElemento {
 							int idTipo=elemento.getTipo().getId();
 							pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 									+ "select* from elemento e "
-									//+"left join reserva r on e.id_elemento=r.id_elemento "
 									+ "inner join tipodeelemento te "
 									+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 									+ "where e.id_tipodeelemento=? ");
@@ -98,7 +61,6 @@ public class DataElemento {
 							if(nom==null || nom.isEmpty()){
 								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 										+ "select* from elemento e "
-										//+"left join reserva r on e.id_elemento=r.id_elemento "
 										+ "inner join tipodeelemento te "
 										+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 										+ "where (e.nombre is null || e.nombre='') and e.id_tipodeelemento=? ");
@@ -107,7 +69,6 @@ public class DataElemento {
 							else{
 								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 										+ "select* from elemento e "
-										//+"left join reserva r on e.id_elemento=r.id_elemento "
 										+ "inner join tipodeelemento te "
 										+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 										+ "where e.nombre like ? and e.id_tipodeelemento=? ");
@@ -119,7 +80,6 @@ public class DataElemento {
 			default:
 					pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 						+ "select* from elemento e "
-						//+"left join reserva r on e.id_elemento=r.id_elemento "
 						+ "inner join tipodeelemento te "
 						+ "on e.id_tipodeelemento=te.id_tipodeelemento "
 						+ "order by e.nombre desc");
@@ -144,7 +104,7 @@ public class DataElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer un grupo de elementos\n"+sqlex.getMessage());
+			throw new AppDataException(sqlex,"Error al traer un grupo de elementos\n"+sqlex.getMessage(),Level.ERROR);
 		}
 		finally{
 			try{
@@ -153,7 +113,7 @@ public class DataElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar Conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
 		return elementos;
@@ -202,7 +162,7 @@ public class DataElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer elementos de un tipo disponibles en una fecha");
+			throw new AppDataException(sqlex,"Error al traer elementos de un tipo disponibles en una fecha",Level.ERROR);
 		}
 		finally{
 			try{
@@ -211,7 +171,7 @@ public class DataElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement,ResultSet o Conexion");
+				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement,ResultSet o Conexion",Level.ERROR);
 			}
 		}
 		return elementos;
@@ -228,29 +188,18 @@ public class DataElemento {
 		
 		try {
 			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id_elemento,nombre,id_tipodeelemento from elemento where id_elemento=?"
-			/*//		
-			 "select e.id_elemento, e.nombre_elemento, e.id_tipodeelemento"
-					+ " from elemento e "
-					+ " inner join tipodeelemento tde "
-					+ "  on e.id_tipo=tde.id_tipodeelemento "
-					+ " where e.id_elemento=? "*/
-					);
+					"select id_elemento,nombre,id_tipodeelemento from elemento where id_elemento=?");
 			pstmt.setInt(1,elem.getId_elemento());
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				e = new Elemento();
 				e.setId_elemento(rs.getInt("id_elemento"));
 				e.setNombre(rs.getString("nombre"));
-
-				//e.getTipo().setId(rs.getInt("id_tipo"));
-				//e.getTipo().setNombre(rs.getString("nombre_tipo_elemento"));
-				
 				int idTipo = rs.getInt("id_tipodeelemento");
 				e.setTipo(dtde.getOne(idTipo));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una Elemento");
+			throw new AppDataException(sqlex, "Error al buscar un Elemento",Level.ERROR);
 		}
 		finally{
 			try {
@@ -258,7 +207,7 @@ public class DataElemento {
 				if(pstmt!=null) pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion en busqueda de elemento");
+				throw new AppDataException(sqlex, "Error al cerrar resultset,preparedstatement o conexion en busqueda de elemento",Level.ERROR);
 			}
 		}
 		
@@ -274,28 +223,18 @@ public class DataElemento {
 		
 		try {
 			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from elemento where id_elemento=?"
-			/*		"select e.id_elemento, e.nombre_elemento, e.id_tipo"
-					+ " from elemento e "
-					+ " inner join tipodeelemento tde "
-					+ "  on e.id_tipo=tde.id_tipodeelemento "
-					+ " where e.id_elemento=? "*/
-					);
+					"select * from elemento where id_elemento=?");
 			pstmt.setInt(1,id_elem_p);
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				e = new Elemento();
 				e.setId_elemento(rs.getInt("id_elemento"));
 				e.setNombre(rs.getString("nombre"));
-
-				//e.getTipo().setId(rs.getInt("id_tipo"));
-				//e.getTipo().setNombre(rs.getString("nombre_tipo_elemento"));
-				
 				int idTipo = rs.getInt("id_tipodeelemento");
 				e.setTipo(dtde.getOne(idTipo));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una Elemento");
+			throw new AppDataException(sqlex, "Error al buscar una Elemento",Level.ERROR);
 		}
 		finally{
 			try {
@@ -303,7 +242,7 @@ public class DataElemento {
 				if(pstmt!=null) pstmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex, "Error al cerrar conexion en busqueda de elemento");
+				throw new AppDataException(sqlex, "Error al cerrar resultset,preparedstatement o conexion en busqueda de elemento",Level.ERROR);
 			}
 		}
 		return e;
@@ -323,7 +262,7 @@ public class DataElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al agregar elemento");
+			throw new AppDataException(sqlex,"Error al agregar elemento",Level.ERROR);
 		}
 		finally{
 			try{
@@ -332,7 +271,7 @@ public class DataElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion, resultset o statement");
+				throw new AppDataException(sqlex,"Error al cerrar conexion, resultset o statement",Level.ERROR);
 			}
 			
 		}
@@ -351,7 +290,7 @@ public class DataElemento {
 			pstmt2.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al borrar elemento");
+			throw new AppDataException(sqlex,"Error al borrar elemento",Level.ERROR);
 		}
 		finally{
 			try{
@@ -360,7 +299,7 @@ public class DataElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement",Level.ERROR);
 			}
 		}
 	}
@@ -375,7 +314,7 @@ public class DataElemento {
 			pstmt.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al modificar elemento");
+			throw new AppDataException(sqlex,"Error al modificar elemento",Level.ERROR);
 		}
 		finally{
 			try{
@@ -383,7 +322,7 @@ public class DataElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement");}
+				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement",Level.ERROR);}
 		}
 	}
 	
@@ -399,7 +338,7 @@ public class DataElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al buscar el Id mas grande entre los elementos\n"+sqlex.getMessage());
+			throw new AppDataException(sqlex,"Error al buscar el Id mas grande entre los elementos\n"+sqlex.getMessage(),Level.ERROR);
 		}
 		finally{
 			try{
@@ -407,7 +346,7 @@ public class DataElemento {
 			if(res!=null){stmt.close();}
 			FactoryConexion.getInstancia().releaseConn();}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,sqlex.getMessage());
+				throw new AppDataException(sqlex,sqlex.getMessage(),Level.ERROR);
 			}
 		}
 		return id;

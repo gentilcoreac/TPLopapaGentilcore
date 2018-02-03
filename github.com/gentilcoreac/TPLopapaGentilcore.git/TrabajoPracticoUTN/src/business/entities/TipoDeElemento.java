@@ -4,15 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class TipoDeElemento implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int id_tipodeelemento;
 	private String nombre;
 	private int cant_max_res_pen; 
-	private int limite_horas_res; //es el limite de tiempo de la reseva en horas
-	private int dias_max_anticipacion;//es la cantidad maxima de dias de anticipacion			
+	private int limite_horas_res; 
+	private int dias_max_anticipacion;			
 	private boolean only_encargados;
 	
 	public int getId() {

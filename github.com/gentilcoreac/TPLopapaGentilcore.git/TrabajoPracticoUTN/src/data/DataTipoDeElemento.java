@@ -3,13 +3,14 @@ package data;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
 
 import business.entities.TipoDeElemento;
 import tools.AppDataException;
 
 public class DataTipoDeElemento {
 	
-	//id_tipodeelemento,  nombre,  cantmaxrespen,  limite_horas_res,  dias_max_anticipacion
+	
 
 	public TipoDeElemento getOne(TipoDeElemento tde_p)throws SQLException,AppDataException{
 		TipoDeElemento te = null;
@@ -33,7 +34,7 @@ public class DataTipoDeElemento {
 				te.setOnly_encargados(rs.getBoolean("only_encargados"));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento");
+			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento",Level.ERROR);
 		}
 		
 		finally{
@@ -42,7 +43,7 @@ public class DataTipoDeElemento {
 				if(stmt != null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException sqlex) {
-				throw new AppDataException(sqlex,"Error al cerrar conexion,PreparedStatement o ResultSet");
+				throw new AppDataException(sqlex,"Error al cerrar conexion,PreparedStatement o ResultSet",Level.ERROR);
 			}
 		}
 		return te;
@@ -72,7 +73,7 @@ public class DataTipoDeElemento {
 				te.setOnly_encargados(rs.getBoolean("only_encargados"));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento");
+			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento",Level.ERROR);
 		}
 		
 		finally{
@@ -81,7 +82,7 @@ public class DataTipoDeElemento {
 				if(stmt != null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException  sqlex) {
-				throw new AppDataException(sqlex,"Error al cerrar la conexion,PreparedStatement o Resultset");
+				throw new AppDataException(sqlex,"Error al cerrar la conexion,PreparedStatement o Resultset",Level.ERROR);
 			}
 		}
 		return te;
@@ -109,7 +110,7 @@ public class DataTipoDeElemento {
 					
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento por su nombre");
+			throw new AppDataException(sqlex,"Error al recuperar un tipo de elemento por su nombre",Level.ERROR);
 		}
 		finally{
 			try{
@@ -118,7 +119,7 @@ public class DataTipoDeElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement, Resultset o conexion");
+				throw new AppDataException(sqlex,"Error al cerrar PreparedStatement, Resultset o conexion",Level.ERROR);
 			}
 		}
 		return te;
@@ -146,7 +147,7 @@ public class DataTipoDeElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al recuperar todos los tipos de elementos");
+			throw new AppDataException(sqlex,"Error al recuperar todos los tipos de elementos",Level.ERROR);
 		}
 		finally{
 			try{
@@ -155,7 +156,7 @@ public class DataTipoDeElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar Conexion,Statement o ResultSet");
+				throw new AppDataException(sqlex,"Error al cerrar Conexion,Statement o ResultSet",Level.ERROR);
 			}
 		}
 		return tiposelementos;
@@ -183,7 +184,7 @@ public class DataTipoDeElemento {
 		}
 		catch(SQLException sqlex){
 			throw new AppDataException(sqlex,"Error al agregar tipo de elemento.\n"
-					+ "Verifique que el nombre sea unico.");
+					+ "Verifique que el nombre sea unico.",Level.ERROR);
 		}
 		finally{
 			try{
@@ -192,7 +193,7 @@ public class DataTipoDeElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion,PreparedStatement o Resultset");
+				throw new AppDataException(sqlex,"Error al cerrar conexion,PreparedStatement o Resultset",Level.ERROR);
 			}
 		}
 	}
@@ -217,7 +218,7 @@ public class DataTipoDeElemento {
 				}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al modificar tipo de elemento");
+			throw new AppDataException(sqlex,"Error al modificar tipo de elemento",Level.ERROR);
 		}
 		finally{
 			try{
@@ -225,7 +226,7 @@ public class DataTipoDeElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement",Level.ERROR);
 			}
 		}
 	}
@@ -241,7 +242,7 @@ public class DataTipoDeElemento {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al borrar tipo de elemento");
+			throw new AppDataException(sqlex,"Error al borrar tipo de elemento",Level.ERROR);
 		}
 		finally{
 			try{
@@ -249,7 +250,7 @@ public class DataTipoDeElemento {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar Conexion o PreparedStatement");
+				throw new AppDataException(sqlex,"Error al cerrar Conexion o PreparedStatement",Level.ERROR);
 			}
 		}
 	}

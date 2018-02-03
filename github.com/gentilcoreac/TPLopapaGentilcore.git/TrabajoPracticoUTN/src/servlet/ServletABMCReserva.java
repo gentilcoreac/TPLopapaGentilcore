@@ -13,11 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import business.entities.Elemento;
 import business.entities.Persona;
 import business.entities.Reserva;
-import business.entities.TipoDeElemento;
 import business.logic.CtrlElementoLogic;
 import business.logic.CtrlPersonaLogic;
 import business.logic.CtrlReservaLogic;
-import business.logic.CtrlTipoDeElementoLogic;
 import tools.BookingException;
 import tools.Campo;
 import tools.Emailer;
@@ -112,7 +110,12 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 				else{
 						if(ctrl.sePuedeEliminar((Persona)request.getSession().getAttribute("user"), res)){
 							ctrl.delete(res);
-							Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
+							try{
+								Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
+							}
+							catch(Exception ex){
+								throw new Exception("Reserva eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
+							}
 							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");			
 						}
 						else{
@@ -148,7 +151,12 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 						if(ctrl.sePuedeCerrar(res)){
 							res.setFecha_hora_entregado(fc);
 							ctrl.updateParaCerrarRes(res);
-							Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Cerrada", "La siguiente reserva ha sido cerrada"+res.toString());
+							try{
+								Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Cerrada", "La siguiente reserva ha sido cerrada"+res.toString());
+							}
+							catch(Exception ex){
+								throw new Exception("Reserva cerrada correctamente.Se produjo un error de Email:"+ex.getMessage());
+							}
 							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva cerrada correctamente","ServletListaReservas");			
 						}
 						else{
@@ -190,58 +198,16 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					res.setDetalle(request.getParameter("detalle"));
 					ctrl.validaAlta(res);
 					ctrl.add(res);
+					try{
 					Emailer.getInstance().send(persona.getEmail(), "MyReserva-Reserva efectuada correctamente", "Nueva Reserva realizada"+res.toString());
+					}
+					catch(Exception ex){
+						throw new Exception("Reserva creada correctamente.Se produjo un error de Email:"+ex.getMessage());
+					}
 					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
 					
 				}
-//					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
-//					CtrlReservaLogic ctrl=new CtrlReservaLogic();
-//					if(null!=elemento){
-//						Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
-//						if(null!=persona){
-//							Date fd=Campo.parseaFecha(request.getParameter("fechareservadesde"));
-//							Date fh=Campo.parseaFecha(request.getParameter("fechareservahasta"));
-//							String errores=ctrl.retornaErroresFechas(fd,fh,elemento);  
-//							if(errores==null){
-//										Reserva res=new Reserva();
-//										res.setPersona(persona);
-//										res.setElemento(elemento);
-//										res.setFecha_hora_desde_solicitada(fd);
-//										res.setFecha_hora_hasta_solicitada(fh);
-//										SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//										res.setFecha_hora_reserva_hecha(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())));
-//										res.setDetalle(request.getParameter("detalle"));
-//										if(ctrl.sePuedeCrear(persona, res)){//para saber si es encargado
-//											if(!ctrl.hayLimtResPen(persona, res)){
-//												ctrl.add(res);
-//												hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
-//											}
-//											else{
-//												hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No se pueden reservar mas elementos de este tipo\n"
-//														                                                   + "Limite de reservas pendientes alcanzadas para el tipo:"
-//														                                                   + res.getElemento().getTipo().getNombre());			
-//											}
-//										}
-//										else{
-//											hacerInforme(request, response, TipoInforme.INFO , "Reserva", "Solo los encargados pueden reservar este tipo de elemento");			
-//										}
-//
-//									}
-//							  else{
-//									hacerInforme(request, response, TipoInforme.INFO , "Reserva", errores);			
-//							  }
-//							}
-//						else{
-//							hacerInforme(request, response, TipoInforme.INFO , "Reserva", "La persona no existe");			
-//						}
-//					}
-//					else{
-//						hacerInforme(request, response, TipoInforme.INFO , "Reserva", "El elemento no existe");			
-//					}
-//				}
-//				else{
-//					hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
-//				}
+
 		}catch(BookingException bex){
 			hacerInforme(request, response, TipoInforme.INFO , "Reserva", bex.getMessage());
 		} 
@@ -252,8 +218,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 	}
 	
-	//usar try catch
-	//throws booking exception
+
 	
 	private boolean validaCampos(String idPer,String idEle,String fhD,String fhH){
 		return (Campo.Valida(idPer, Campo.tipo.ID)&& Campo.Valida(idEle, Campo.tipo.ID) 

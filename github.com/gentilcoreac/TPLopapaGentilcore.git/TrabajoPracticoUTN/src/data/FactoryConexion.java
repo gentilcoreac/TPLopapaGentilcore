@@ -1,6 +1,8 @@
 package data;
 import java.sql.*;
 
+import org.apache.logging.log4j.Level;
+
 import tools.AppDataException;
 
 public class FactoryConexion {
@@ -8,7 +10,7 @@ public class FactoryConexion {
 	private String host="localhost";
 	private String port="3306";
 	private String user="root";			
-	private String password="1618314";		
+	private String password="root";		
 	private String db="BaseReservas";			
 	
 	private static FactoryConexion instancia;
@@ -17,7 +19,7 @@ public class FactoryConexion {
 		try {
 			Class.forName(driver);
 		} catch (Exception e) {
-			throw new AppDataException(e,"error al registrar el driver de conexion para la base de datos");
+			throw new AppDataException(e,"error al registrar el driver de conexion para la base de datos",Level.ERROR);
 		}
 	}
 	
@@ -37,7 +39,7 @@ public class FactoryConexion {
 						"jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+password);
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al conectarse a la base de datos");
+			throw new AppDataException(sqlex,"Error al conectarse a la base de datos",Level.ERROR);
 		}
 		cantConn++;
 		return conn;
@@ -50,7 +52,7 @@ public class FactoryConexion {
 				conn.close();
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al cerrar conexion");
+			throw new AppDataException(sqlex, "Error al cerrar conexion",Level.ERROR);
 		}
 	}
 }

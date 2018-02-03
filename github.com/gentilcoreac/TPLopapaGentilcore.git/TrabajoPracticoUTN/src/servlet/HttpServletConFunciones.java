@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class HttpServletConFunciones
- */
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+
+
 @WebServlet("/HttpServletConFunciones")
 public class HttpServletConFunciones extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	protected Logger logger;
     
 	public static enum TipoInforme{  ERROR("error"),INFO("info"),EXITO("exito");
 									private final String texto;
@@ -24,32 +25,30 @@ public class HttpServletConFunciones extends HttpServlet {
 	
     public HttpServletConFunciones() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 		doGet(request, response);
 	}
 
 	
 	protected void error(HttpServletRequest request,HttpServletResponse response){
+		logger.log(Level.ERROR,"Server Status 404");
 		response.setStatus(404);
 	}
 
 	protected void error(HttpServletRequest request, HttpServletResponse response,Exception ex) {
 		
+		logger.log(Level.ERROR,ex.getMessage());
 		this.hacerInforme(request, response, TipoInforme.ERROR, "Error", ex.getMessage());
 	
 	}
@@ -65,6 +64,7 @@ public class HttpServletConFunciones extends HttpServlet {
 		try{
 			request.getRequestDispatcher("WEB-INF/Informes.jsp?tipo="+tipo).forward(request, response);				
 		} catch (Exception e) {
+			logger.log(Level.FATAL,"Error de direccionamiento-Server Status 500");
 			response.setStatus(500);
 		} 
 	}

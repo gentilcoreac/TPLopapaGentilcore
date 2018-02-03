@@ -3,6 +3,8 @@ package business.entities;
 import java.io.Serializable;
 
 public class Persona implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private int id_persona;
 	private String dni;
 	private String nombre;
@@ -10,8 +12,8 @@ public class Persona implements Serializable{
 	private String usuario;
 	private String contrasenia;
 	private String email;
-	private boolean habilitado; //true or false
-	private Categoria categoria; //prom. direct     1-encargado 2-admin 3-usuario
+	private boolean habilitado; 
+	private Categoria categoria; //Encargado Administrador Usuario
 	
 	public Categoria getCategoria() {
 		return categoria;

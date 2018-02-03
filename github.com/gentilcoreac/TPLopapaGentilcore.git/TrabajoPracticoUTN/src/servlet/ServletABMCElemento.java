@@ -150,7 +150,6 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 		
 		try {	
 				Elemento ele=new Elemento();
-				//ele.setId_elemento(Integer.parseInt(request.getParameter("id")));
 				ele.setNombre(request.getParameter("nombre"));
 				TipoDeElemento te=new TipoDeElemento();
 				te.setNombre(request.getParameter("tipo"));

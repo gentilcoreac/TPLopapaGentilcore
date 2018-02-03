@@ -1,7 +1,7 @@
 package data;
 import java.util.ArrayList;
 
-
+import org.apache.logging.log4j.Level;
 
 import java.sql.*;
 
@@ -27,7 +27,7 @@ public class DataCategoria {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer todas las categorias de la base de datos");
+			throw new AppDataException(sqlex,"Error al traer todas las categorias de la base de datos",Level.ERROR);
 			}		
 		finally{
 				try{
@@ -36,7 +36,7 @@ public class DataCategoria {
 					FactoryConexion.getInstancia().releaseConn();
 					}
 				catch(SQLException sqlex){
-					throw new AppDataException(sqlex,"Error al cerrar conexion, resultset o statement");
+					throw new AppDataException(sqlex,"Error al cerrar conexion, resultset o statement",Level.ERROR);
 					}
 		}	
 		return categorias;
@@ -60,7 +60,7 @@ public class DataCategoria {
 				
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una categoria por id");
+			throw new AppDataException(sqlex, "Error al buscar una categoria por id",Level.ERROR);
 		}
 		
 		finally{
@@ -69,7 +69,7 @@ public class DataCategoria {
 			if(pstmt != null) pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();
 		} catch (Exception sqlex) {
-			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 		}
 		}
 		return c;
@@ -92,7 +92,7 @@ public class DataCategoria {
 				
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una categoria por id");
+			throw new AppDataException(sqlex, "Error al buscar una categoria por descripcion",Level.ERROR);
 		}
 		
 		finally{
@@ -101,7 +101,7 @@ public class DataCategoria {
 			if(pstmt != null) pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();
 		} catch (Exception sqlex) {
-			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 		}
 		}
 		return c;
@@ -123,7 +123,7 @@ public class DataCategoria {
 				c.setDescripcion(rs.getString("descripcion"));
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al buscar una categoria por id");
+			throw new AppDataException(sqlex, "Error al buscar una categoria por id",Level.ERROR);
 		}		
 		finally{
 		try {
@@ -131,7 +131,7 @@ public class DataCategoria {
 			if(pstmt != null) pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+			throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 		} }
 		return c;		
 	}
@@ -151,7 +151,7 @@ public class DataCategoria {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al agregar categoria");
+			throw new AppDataException(sqlex,"Error al agregar categoria",Level.ERROR);
 		}
 		finally{
 				try{
@@ -159,7 +159,7 @@ public class DataCategoria {
 					if(pstmt!=null)pstmt.close();
 					FactoryConexion.getInstancia().releaseConn();}
 				catch(SQLException sqlex){
-					throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement");
+					throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o preparedstatement",Level.ERROR);
 		}
 	  }
 	}
@@ -175,7 +175,7 @@ public class DataCategoria {
 			pstmt.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al modificar categoria");
+			throw new AppDataException(sqlex,"Error al modificar categoria",Level.ERROR);
 		}
 		finally{
 			try{
@@ -183,7 +183,7 @@ public class DataCategoria {
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
-				throw new AppDataException(sqlex,"Error al cerrar conexion o statement");
+				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement",Level.ERROR);
 			}
 		}
 	}
@@ -201,12 +201,17 @@ public class DataCategoria {
 			pstmt2.executeUpdate();
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al borrar categoria");
+			throw new AppDataException(sqlex,"Error al borrar categoria",Level.ERROR);
 		}
 		finally{
-			if(pstmt1!=null){pstmt1.close();}
-			if(pstmt2!=null){pstmt2.close();}
-			FactoryConexion.getInstancia().releaseConn();
+			try{
+				if(pstmt1!=null){pstmt1.close();}
+				if(pstmt2!=null){pstmt2.close();}
+				FactoryConexion.getInstancia().releaseConn();
+			}
+			catch(SQLException sqlex){
+				throw new AppDataException(sqlex,"Error al cerrar conexion o PreparedStatement",Level.ERROR);
+			}
 		}
 	}
 }

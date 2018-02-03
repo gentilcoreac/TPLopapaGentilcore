@@ -3,23 +3,18 @@ package servlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 
-import business.entities.Categoria;
 import business.entities.Persona;
 import business.logic.CtrlCategoriaLogic;
 import business.logic.CtrlPersonaLogic;
 import tools.Campo;
 import tools.Emailer;
 
-/**
- * Servlet implementation class ABMCPersona
- */
+
 @WebServlet({ "/ServletABMCPersona/*", "/servletabmcpersona/*", "/ServletAbmcpersona/*",  "/servletabmcPersona/*", "/ServletAbmcPersona/*", "/SERVLETABMCPERSONA/*", "/servletABMCpersona/*" })
 public class ServletABMCPersona extends HttpServletConFunciones {
 	private static final long serialVersionUID = 1L;
@@ -31,7 +26,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 		doPost(request, response);
 	}
 
@@ -116,7 +111,13 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 				}
 				else{
 					ctrl.delete(per);
-					Emailer.getInstance().send(per.getEmail(), "MyReserva-Su usuario ha sido eliminado", "Datos del usuario eliminado"+per.toString());
+					logger.log(Level.INFO,"Persona eliminada Dni:"+per.getDni()+" user:"+per.getUsuario());
+					try{
+						Emailer.getInstance().send(per.getEmail(), "MyReserva-Su usuario ha sido eliminado", "Datos del usuario eliminado"+per.toString());
+					}
+					catch(Exception ex){
+						throw new Exception("Persona eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
+					}
 					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
 				}
 			}
@@ -152,6 +153,7 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 					per.setHabilitado(request.getParameter("habilitado")==null?false:true);
 					per.setEmail(request.getParameter("email"));
 					ctrl.update(per);
+					logger.log(Level.INFO,"Persona modificada id:"+per.getId());
 					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Datos de persona actualizados correctamente","ServletListaUsuarios");			
 				}
 			}
@@ -181,7 +183,13 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 				CtrlPersonaLogic ctrl= new CtrlPersonaLogic();
 				ctrl.add(per);
-				Emailer.getInstance().send(per.getEmail(), "Bienvenido a MyReserva", "Usted ya forma parte del mejor sistema del universo\n\n"+per.toString());
+				logger.log(Level.INFO,"Persona agregada Dni:"+per.getDni()+" user:"+per.getUsuario());
+				try{
+					Emailer.getInstance().send(per.getEmail(), "Bienvenido a MyReserva", "Usted ya forma parte del mejor sistema del universo\n\n"+per.toString());
+				}
+				catch(Exception ex){
+					throw new Exception("Persona agregada correctamente.Se produjo un error de Email:"+ex.getMessage());
+				}
 				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona agregada correctamente","ServletListaUsuarios");			
 			}
 			else{
