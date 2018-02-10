@@ -23,14 +23,31 @@ body {
       font-size: 11px !important;
       letter-spacing: 4px;
       opacity: 0.9;
+      
 
+  }
+  
+  .navbar-nav .glyphicon{
+  font-size: 15px;
+  margin-right:4px;
+  vertical-align: top;
+  margin-top:2px;
   }
   .navbar li a, .navbar .navbar-brand { 
       color: #d5d5d5 !important;
   }
-  .navbar-nav li a:hover {
-      color: #fff !important;
+  .navbar li a:hover {
+      color: #6fb7fd!important;
   }
+  .navbar-nav a:hover {
+      background-color: #1a1a1a!important;
+  }
+  
+  .navbar-header a:hover{
+  	color: #6fb7fd!important;
+  	background-color: #1a1a1a!important;
+  }
+  
   .navbar-nav li.active a {
       color: #fff !important;
       background-color: #29292c !important;
@@ -54,7 +71,7 @@ body {
   textarea {
       resize: none;
   } 
-
+  
 
 .eliminar{
 	margin-left:10px;
@@ -176,3 +193,33 @@ table a{
 #btngototop:hover {
     background-color: #555; /* Add a dark-grey background on hover */
 }
+
+/*Para el loader*/
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  z-index:0;
+  display: none;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/*fin loader*/

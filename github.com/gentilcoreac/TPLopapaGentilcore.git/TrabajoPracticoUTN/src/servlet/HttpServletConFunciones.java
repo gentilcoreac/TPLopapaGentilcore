@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
@@ -25,6 +26,7 @@ public class HttpServletConFunciones extends HttpServlet {
 	
     public HttpServletConFunciones() {
         super();
+		logger = LogManager.getLogger(getClass());
         
     }
 

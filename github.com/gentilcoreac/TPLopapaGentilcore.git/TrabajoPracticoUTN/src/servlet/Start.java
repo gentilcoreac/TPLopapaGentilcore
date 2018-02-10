@@ -20,7 +20,6 @@ public class Start extends HttpServletConFunciones {
    
 
     public Start() {
-    	logger = LogManager.getLogger(getClass());
     }
 
 	

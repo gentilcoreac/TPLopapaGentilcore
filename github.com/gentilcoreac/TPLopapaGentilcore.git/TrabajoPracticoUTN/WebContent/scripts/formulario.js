@@ -13,3 +13,11 @@ window.addEventListener('resize', function(event){
     $("@media (min-width: 768px)").css("position", "fixed");
 
 });
+
+/*para mostrar loader*/
+$(document).ready(function () {
+	$("a:not(a[href='#usudesplegable'])").click(function () {
+	    $('form').hide();
+	    $('.loader').show();
+	});
+});
