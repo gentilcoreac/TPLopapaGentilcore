@@ -33,35 +33,41 @@ public class ServletListaElementos extends HttpServletConFunciones {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		CtrlElementoLogic ctrl=new CtrlElementoLogic();
 		try{
+			CtrlElementoLogic ctrl=new CtrlElementoLogic();
+			Campo.TipoBusquedaE tbe;
 			if(request.getParameter("accion")!=null && request.getParameter("accion").equals("consulta")){
-				Elemento ele=mapearDatos(request, response);
-				Date fecha=request.getParameter("bedtportipoyfh")==null?null:Campo.parseaFecha(request.getParameter("bedtportipoyfh"));
-				request.setAttribute("listaElementos", ctrl.getSome(Campo.TipoBusquedaE.valueOf(request.getParameter("eselbusqueda")), ele,fecha ));
+				tbe=Campo.TipoBusquedaE.valueOf(request.getParameter("eselbusqueda"));
 			}
 			else{
-				
-				request.setAttribute("listaElementos", ctrl.getSome(Campo.TipoBusquedaE.TRAER_TODOS, null, null));
+				tbe=Campo.TipoBusquedaE.TRAER_TODOS;
 			}
-			request.setAttribute("tiposelementos", new CtrlTipoDeElementoLogic().getAll());
-			this.setearAtributos(request);
-			request.getRequestDispatcher("WEB-INF/ListaElementos.jsp").forward(request, response);
+			Elemento ele=mapearDatos(request, response,tbe);
+			if(ele!=null){
+				Date fecha=request.getParameter("bedtportipoyfh")==null?null:Campo.parseaFecha(request.getParameter("bedtportipoyfh"));
+				request.setAttribute("listaElementos", ctrl.getSome(tbe, ele,fecha ));
+				request.setAttribute("tiposelementos", new CtrlTipoDeElementoLogic().getAll());
+				this.setearAtributos(request);
+				request.getRequestDispatcher("WEB-INF/ListaElementos.jsp").forward(request, response);
+			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());	
+			}
 		}
 		catch(Exception ex){
 			error(request,response,ex);
 		}
 	}
 	
-	private Elemento mapearDatos(HttpServletRequest request,HttpServletResponse response)throws Exception{
+	private Elemento mapearDatos(HttpServletRequest request,HttpServletResponse response,Campo.TipoBusquedaE tbe)throws Exception{
 	    Elemento ele=new Elemento();
-		switch(Campo.TipoBusquedaE.valueOf(request.getParameter("eselbusqueda"))){
+		switch(tbe){
 		case POR_ID:
 					  if(Campo.Valida(request.getParameter("beporid"), Campo.tipo.ID)){
 						 ele.setId_elemento(Integer.parseInt(request.getParameter("beporid")));
 			          }
 					  else{
-						hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());	
+						 return null;
 					  }
 			          break;
 		case POR_NOMBRE:
@@ -87,18 +93,18 @@ public class ServletListaElementos extends HttpServletConFunciones {
 							  ele.setTipo(new CtrlTipoDeElementoLogic().getByName(tdel));
 						  }
 						  else{
-							  hacerInforme(request, response, TipoInforme.INFO , "Elemento", "La fecha-hora debe ser actual o futura\n"
-								  		+ "No puede reservar elementos con fecha pasada");	
+							  Campo.setMensaje("La fecha-hora debe ser actual o futura\n"
+								  		+ "No puede reservar elementos con fecha pasada");
+							  return null;	
 						
 						  }
 					  }
 					  else{
-							hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());	
+							return null;	
 					  }
 					  break;
 		case TRAER_TODOS:
 		default:
-					 ele=null;
 					 break;
 		}
 		return ele;

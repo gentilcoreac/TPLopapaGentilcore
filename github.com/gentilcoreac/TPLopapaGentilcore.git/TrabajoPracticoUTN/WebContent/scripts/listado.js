@@ -78,3 +78,10 @@ $(document).ready(function () {
 	});
 });
 
+$(document).ready(function () {
+	$("#btnlupa").click(function () {
+	    $('.container').hide();
+	    $('.loader').show();
+	});
+});
+/* fin loader*/

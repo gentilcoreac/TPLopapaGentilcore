@@ -17,7 +17,15 @@ window.addEventListener('resize', function(event){
 /*para mostrar loader*/
 $(document).ready(function () {
 	$("a:not(a[href='#usudesplegable'])").click(function () {
-	    $('form').hide();
+	    $('.container-form').hide();
 	    $('.loader').show();
 	});
 });
+
+$(document).ready(function () {
+	$("#btnlupa").click(function () {
+	    $('.container-form').hide();
+	    $('.loader').show();
+	});
+});
+/*fin loader*/

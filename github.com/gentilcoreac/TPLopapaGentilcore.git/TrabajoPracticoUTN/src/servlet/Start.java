@@ -57,7 +57,9 @@ public class Start extends HttpServletConFunciones {
 					}
 			}
 		else{
-			request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
+			request.setAttribute("loginError", "nombre-usu-vacio");
+			this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Nombre de usuario inexistente");
+			
 
 			}
 		}

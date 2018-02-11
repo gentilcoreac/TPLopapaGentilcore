@@ -86,6 +86,11 @@ h2{
 	margin-top:30px;
 }
 
+/*para el chrome que pone amarillos los inputs*/
+input:-webkit-autofill,input:-webkit-autofill:hover, input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
 
 .btn{
   width:280px;

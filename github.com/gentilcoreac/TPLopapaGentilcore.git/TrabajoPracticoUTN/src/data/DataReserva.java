@@ -106,7 +106,7 @@ public class DataReserva {
 			}
 		}
 		catch(SQLException sqlex){
-			throw new AppDataException(sqlex,"Error al traer las reservas\n"+sqlex.getMessage(),Level.ERROR);
+			throw new AppDataException(sqlex,"Error al traer las reservas",Level.ERROR);
 		}
 		finally{
 			try{

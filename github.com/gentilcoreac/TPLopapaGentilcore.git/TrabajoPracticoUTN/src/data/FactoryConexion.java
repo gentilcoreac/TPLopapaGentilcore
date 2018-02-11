@@ -45,7 +45,7 @@ public class FactoryConexion {
 				conn = DriverManager.getConnection(url,user,password);
 			}
 		} catch (SQLException sqlex) {
-			throw new AppDataException(sqlex,"Error al conectarse a la base de datos "+sqlex.getCause(),Level.ERROR);
+			throw new AppDataException(sqlex,"Error al conectarse a la base de datos.\n"+sqlex.getCause(),Level.ERROR);
 		}
 		cantConn++;
 		return conn;
