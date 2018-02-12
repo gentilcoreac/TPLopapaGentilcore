@@ -23,7 +23,7 @@ if(session.getAttribute("user")==null){
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="Start">MyReserva</a>
+      <a class="navbar-brand" href="ServletInicio">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
         <li >
@@ -69,7 +69,7 @@ if(session.getAttribute("user")==null){
   <h2>Datos del Perfil</h2>
   <br>
    <div class="card text-center">
-	  <img src="imagenes/img_avatar.png" alt="Avatar" style="width:25%">
+	  <img src="imagenes/img_avatar.png" alt="Avatar" style="width:130px;height:130pz">
 	  <div class="container">
 	    <h4>
 	    	<b><%=((Persona)session.getAttribute("user")).getApellido() %>, 

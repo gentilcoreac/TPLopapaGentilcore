@@ -191,14 +191,25 @@ public class DataCategoria {
 	public void delete(Categoria cat)throws SQLException,AppDataException{
 	    PreparedStatement pstmt1=null;
 	    PreparedStatement pstmt2=null;
+	    PreparedStatement pstmt3=null;
 		try{
-			pstmt1=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "delete from cat_tip where id_categoria=?;");
-			pstmt1.setInt(1, cat.getId());
-			pstmt1.executeUpdate();
-			pstmt2=FactoryConexion.getInstancia().getConn().prepareStatement("delete from categoria where id_categoria=?");
+			pstmt3=FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "delete from reserva "
+					+ "where id_persona in ( "
+					+ "                     select p.id_persona "
+					+ "                     from persona p "
+					+ "                     where p.id_categoria=?);");
+			pstmt3.setInt(1, cat.getId());
+			pstmt3.executeUpdate();
+			
+			pstmt2=FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "delete from persona where id_categoria=?;");
 			pstmt2.setInt(1, cat.getId());
 			pstmt2.executeUpdate();
+			
+			pstmt1=FactoryConexion.getInstancia().getConn().prepareStatement("delete from categoria where id_categoria=?");
+			pstmt1.setInt(1, cat.getId());
+			pstmt1.executeUpdate();
 		}
 		catch(SQLException sqlex){
 			throw new AppDataException(sqlex,"Error al borrar categoria",Level.ERROR);
@@ -207,6 +218,9 @@ public class DataCategoria {
 			try{
 				if(pstmt1!=null){pstmt1.close();}
 				if(pstmt2!=null){pstmt2.close();}
+				if(pstmt3!=null){pstmt2.close();}
+				FactoryConexion.getInstancia().releaseConn();
+				FactoryConexion.getInstancia().releaseConn();
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){

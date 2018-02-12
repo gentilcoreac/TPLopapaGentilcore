@@ -285,6 +285,7 @@ public class DataElemento {
 					+ "delete from reserva where id_elemento=?;");
 			pstmt1.setInt(1, ele.getId_elemento());
 			pstmt1.executeUpdate();
+			
 			pstmt2=FactoryConexion.getInstancia().getConn().prepareStatement("delete from elemento where id_elemento=?");
 			pstmt2.setInt(1, ele.getId_elemento());
 			pstmt2.executeUpdate();
@@ -296,6 +297,7 @@ public class DataElemento {
 			try{
 				if(pstmt1!=null){pstmt1.close();}
 				if(pstmt2!=null){pstmt2.close();}
+				FactoryConexion.getInstancia().releaseConn();
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){

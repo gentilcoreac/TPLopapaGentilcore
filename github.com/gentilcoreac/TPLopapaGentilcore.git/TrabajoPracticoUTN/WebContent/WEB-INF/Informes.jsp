@@ -59,7 +59,7 @@
 		</div>
 		<br>
 		<form action=<%=request.getAttribute("urlvolver") %> method="post">
-		<button class="btn btn-default" type="submit">Ir al Listado</button>
+		<button class="btn btn-default" type="submit">Volver al Listado</button>
 		</form>
 		<%
 		break;

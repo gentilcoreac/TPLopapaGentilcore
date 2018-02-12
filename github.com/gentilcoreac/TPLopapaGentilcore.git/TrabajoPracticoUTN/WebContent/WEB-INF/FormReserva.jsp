@@ -59,7 +59,7 @@ if(session.getAttribute("user")==null){
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="Start">MyReserva</a>
+      <a class="navbar-brand" href="ServletInicio">MyReserva</a>
     </div>
     <ul class="nav navbar-nav">
         <li >
@@ -165,7 +165,7 @@ case "alta":%>
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=alta')">Reservar</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript:window.history.go(-1);return false;">Cancelar</button>
 	</div>
 	</form>
 </div>
@@ -205,7 +205,7 @@ case "cerrar":
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=cerrar')">Cerrar Reserva</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript:window.history.go(-1);return false;">Cancelar</button>
 	</div>
    
    </form>
@@ -271,7 +271,7 @@ case "baja":
     </div>
 	<div class="botones">
     	<button class="boton btn btn-lg btn-primary " onclick="javascript: submitForm('ServletABMCReserva?accion=baja')">Eliminar</button>		
-		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript: submitForm('javascript:window.history.back();')">Cancelar</button>
+		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript:window.history.go(-1);return false;">Cancelar</button>
 	</div>
 	</form>
 </div>
