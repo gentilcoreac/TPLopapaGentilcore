@@ -232,28 +232,11 @@ public class DataTipoDeElemento {
 	}
 	
 	public void delete(TipoDeElemento te)throws SQLException,AppDataException{
-		PreparedStatement pstmt1=null;
-		PreparedStatement pstmt2=null;
-		PreparedStatement pstmt3=null;
+		PreparedStatement pstmt=null;
 		try{
-			pstmt1=FactoryConexion.getInstancia().getConn().prepareStatement(""
-																			+ " delete from reserva "
-																			+ " where id_elemento in ( "
-																			+ " select e.id_elemento "
-																			+ " from elemento e "
-																			+ " where e.id_tipodeelemento=? "
-																			+ " );");
-			pstmt1.setInt(1, te.getId());
-			pstmt1.executeUpdate();
-			
-			pstmt2=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "delete from elemento where id_tipodeelemento=?;");
-			pstmt2.setInt(1, te.getId());
-			pstmt2.executeUpdate();
-			
-			pstmt3=FactoryConexion.getInstancia().getConn().prepareStatement("delete from tipodeelemento where nombre=?;");
-			pstmt3.setString(1, te.getNombre());
-			int rowsAffected=pstmt3.executeUpdate();
+			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement("delete from tipodeelemento where nombre=?;");
+			pstmt.setString(1, te.getNombre());
+			int rowsAffected=pstmt.executeUpdate();
 			if(rowsAffected==0){
 				throw new AppDataException(new Exception("Tipo de elemento inexistente\nNo se pudo eliminar"),"Error");
 			}
@@ -263,11 +246,7 @@ public class DataTipoDeElemento {
 		}
 		finally{
 			try{
-				if(pstmt1!=null){pstmt3.close();}
-				if(pstmt2!=null){pstmt3.close();}
-				if(pstmt3!=null){pstmt3.close();}
-				FactoryConexion.getInstancia().releaseConn();
-				FactoryConexion.getInstancia().releaseConn();
+				if(pstmt!=null){pstmt.close();}
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){

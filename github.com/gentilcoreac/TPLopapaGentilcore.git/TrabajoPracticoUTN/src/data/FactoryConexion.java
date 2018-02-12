@@ -61,6 +61,4 @@ public class FactoryConexion {
 			throw new AppDataException(sqlex, "Error al cerrar conexion",Level.ERROR);
 		}
 	}
-	
-	
 }

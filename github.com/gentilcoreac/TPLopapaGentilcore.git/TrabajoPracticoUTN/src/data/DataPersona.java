@@ -152,7 +152,6 @@ public class DataPersona{
 				if(pstmt1!=null){pstmt1.close();}
 				if(pstmt2!=null){pstmt2.close();}
 				FactoryConexion.getInstancia().releaseConn();
-				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
 				throw new AppDataException(sqlex, "Error al cerrar conexion o preparedstatement de delete",Level.ERROR);
