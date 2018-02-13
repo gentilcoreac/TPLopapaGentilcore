@@ -101,7 +101,7 @@ case "alta":%>
     </div>
     <div class="form-group">
       <label for="inputemail">Email:</label>
-      <input name="email" type="text" class="form-control" id="inputemail"  required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Formato de email invalido')" onchange="try{setCustomValidity('')}catch(e){}">
+      <input name="email" type="text" class="form-control" id="inputemail"  required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,}" oninvalid="setCustomValidity('Formato de email invalido')" onchange="try{setCustomValidity('')}catch(e){}" />
     </div>
     <div class="form-group">
       <label for="inputCategoriaLista">Categoria</label>
@@ -146,9 +146,6 @@ case "modificacion":
 	   </td></tr> 
       </table>
     </div>
-<%--     <div class="form-group">
-      <label for="inputid">Id</label><input name="id" type="text" class="form-control" id="inputid"  required="" value=<%=request.getAttribute("id")%> >
-  	</div> --%>
     <div class="form-group">
       <label for="inputapel">Apellido:</label>
       <input name="apellido" type="text" class="form-control" id="inputapel" required  value="<%=request.getAttribute("apellido") %>" >

@@ -1,11 +1,12 @@
 body {
 
-  padding-top: 40px;
+  padding-top: 10px;
 
   padding-bottom: 40px;
 
   background-color: white;
 
+  text-align:center;
 }
 
 
@@ -121,3 +122,8 @@ input:-webkit-autofill,input:-webkit-autofill:hover, input:-webkit-autofill:focu
   opacity:1;
 }
 
+#logo{
+	width:150px;
+	height:150px;
+	text-align: center;
+}

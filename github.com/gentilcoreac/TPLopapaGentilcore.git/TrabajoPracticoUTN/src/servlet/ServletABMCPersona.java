@@ -65,8 +65,9 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 
 	private void consulta(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
-			try {			
+		
+		try {			
+			if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
 				Persona per=new CtrlPersonaLogic().getByDni(request.getParameter("dni"));
 				if(per==null){
 					hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
@@ -84,50 +85,48 @@ public class ServletABMCPersona extends HttpServletConFunciones {
 					request.setAttribute("habilitado", String.valueOf(per.isHabilitado()));
 					request.getRequestDispatcher("WEB-INF/FormUsuario.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
-				
-				
-			} catch (Exception ex) {
-			
-				this.error(request, response, ex);
 			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
+			}
+			
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
-		}
+		
 		
 	}
 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("dni"), Campo.tipo.DNI)){
-			try{
+		
+		try{
+			
+			CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
+			Persona per=ctrl.getByDni(request.getParameter("dni"));
+			if(per==null){
+				hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
 
-				CtrlPersonaLogic ctrl =new CtrlPersonaLogic();
-				Persona per=ctrl.getByDni(request.getParameter("dni"));
-				if(per==null){
-					hacerInforme(request, response, TipoInforme.INFO , "Usuario", "No existe ninguna persona con el dni "+request.getParameter("dni"));			
-	
-				}
-				else{
-					ctrl.delete(per);
-					logger.log(Level.INFO,"Persona eliminada Dni:"+per.getDni()+" user:"+per.getUsuario());
-					try{
-						Emailer.getInstance().send(per.getEmail(), "MyReserva-Su usuario ha sido eliminado", "Datos del usuario eliminado"+per.toString());
-					}
-					catch(Exception ex){
-						throw new Exception("Persona eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
-					}
-					hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
-				}
 			}
-			catch(Exception ex){
-				this.error(request, response,ex);
+			else{
+				ctrl.delete(per);
+				logger.log(Level.INFO,"Persona eliminada Dni:"+per.getDni()+" user:"+per.getUsuario());
+				try{
+					Emailer.getInstance().send(per.getEmail(), "MyReserva-Su usuario ha sido eliminado", "Datos del usuario eliminado"+per.toString());
+				}
+				catch(Exception ex){
+					throw new Exception("Persona eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
+				}
+				hacerInforme(request, response, TipoInforme.EXITO , "Usuario", "Persona eliminada correctamente","ServletListaUsuarios");			
 			}
+				
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Usuario", Campo.getMensaje());			
+		catch(Exception ex){
+			this.error(request, response,ex);
 		}
+		
 	}
 
 

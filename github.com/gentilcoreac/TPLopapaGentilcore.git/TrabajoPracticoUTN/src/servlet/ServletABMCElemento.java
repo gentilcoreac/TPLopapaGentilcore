@@ -66,8 +66,9 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 	
 	private void consulta(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
-			try {
+		
+		try {
+			if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
 				Elemento ele=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("id")));
 				if(ele==null){
 					hacerInforme(request, response, TipoInforme.INFO , "Elemento", "No existe ningun elemento con el id "+request.getParameter("id"));			
@@ -79,42 +80,39 @@ public class ServletABMCElemento extends HttpServletConFunciones {
 					request.setAttribute("tipoelemento", ele.getTipo().getNombre());
 					request.getRequestDispatcher("WEB-INF/FormElemento.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
-				
-				
-			} catch (Exception ex) {
 			
-				this.error(request, response, ex);
 			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());			
+			}	
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());			
-		}
+		
 		
 	}
 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("id"), Campo.tipo.ID)){
-			try{
-				CtrlElementoLogic ctrl =new CtrlElementoLogic();
-				Elemento ele=ctrl.getOne(Integer.parseInt(request.getParameter("id")));
-				if(ele==null){
-					hacerInforme(request, response, TipoInforme.INFO , "Elemento", "No existe ningun elemento con el id "+request.getParameter("id"));			
-	
-				}
-				else{
-					ctrl.delete(ele);
-					hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Elemento eliminado correctamente","ServletListaElementos");			
-				}
+		
+		try{
+			CtrlElementoLogic ctrl =new CtrlElementoLogic();
+			Elemento ele=ctrl.getOne(Integer.parseInt(request.getParameter("id")));
+			if(ele==null){
+				hacerInforme(request, response, TipoInforme.INFO , "Elemento", "No existe ningun elemento con el id "+request.getParameter("id"));			
+
 			}
-			catch(Exception ex){
-				this.error(request, response,ex);
+			else{
+				ctrl.delete(ele);
+				hacerInforme(request, response, TipoInforme.EXITO , "Elemento", "Elemento eliminado correctamente","ServletListaElementos");			
 			}
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Elemento", Campo.getMensaje());			
+		catch(Exception ex){
+			this.error(request, response,ex);
 		}
+		
 	}
 
 

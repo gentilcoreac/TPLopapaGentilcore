@@ -107,22 +107,19 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 		
 		try{
-			if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
-				CtrlReservaLogic ctrl =new CtrlReservaLogic();
-				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
-				ctrl.validaBaja(res, (Persona)request.getSession().getAttribute("user"));
-				ctrl.delete(res);
-				try{
-					Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
-				}
-				catch(Exception ex){
-					throw new Exception("Reserva eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
-				}
-				hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");					
+			
+			CtrlReservaLogic ctrl =new CtrlReservaLogic();
+			Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
+			ctrl.validaBaja(res, (Persona)request.getSession().getAttribute("user"));
+			ctrl.delete(res);
+			try{
+				Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
 			}
-			else{
-				hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
+			catch(Exception ex){
+				throw new Exception("Reserva eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
 			}
+			hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");					
+		
 		}
 		catch(BookingException bex){
 			hacerInforme(request, response, TipoInforme.INFO , "Reserva", bex.getMessage());
@@ -172,8 +169,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 	private void alta(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {	
-				if(validaCampos(request.getParameter("idpersona"),request.getParameter("idelemento"),
-						       request.getParameter("fechareservadesde"),request.getParameter("fechareservahasta"))){
+				if(validaCampos(request.getParameter("fechareservadesde"),request.getParameter("fechareservahasta"))){
 					CtrlReservaLogic ctrl=new CtrlReservaLogic();
 					Elemento elemento=new CtrlElementoLogic().getOne(Integer.parseInt(request.getParameter("idelemento")));
 					Persona persona=new CtrlPersonaLogic().getOne(Integer.parseInt(request.getParameter("idpersona")));
@@ -211,9 +207,8 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 	
 
 	
-	private boolean validaCampos(String idPer,String idEle,String fhD,String fhH){
-		return (Campo.Valida(idPer, Campo.tipo.ID)&& Campo.Valida(idEle, Campo.tipo.ID) 
-				&& Campo.Valida(fhD,Campo.tipo.FECHAHORA) && Campo.Valida(fhH,Campo.tipo.FECHAHORA));
+	private boolean validaCampos(String fhD,String fhH){
+		return (Campo.Valida(fhD,Campo.tipo.FECHAHORA) && Campo.Valida(fhH,Campo.tipo.FECHAHORA));
 	}
 
 

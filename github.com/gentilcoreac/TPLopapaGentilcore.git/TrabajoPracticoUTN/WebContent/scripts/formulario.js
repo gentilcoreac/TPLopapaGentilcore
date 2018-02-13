@@ -1,12 +1,15 @@
-function submitForm(met) {
-	//document.myForm.action=met;
-    /* document.getElementbyName("contrasenia").val(document.getElementbyName("passqueseborra"));
-    document.getElementbyName("contraseborra").remove();
-    document.getElementbyName("passqueseborra").remove(); */
+//function submitForm(met) {
+//
+//	document.getElementById("myForm").action =met;
+//	document.getElementById("myForm").submit();
+//   }
 
-	document.getElementById("myForm").action =met;
-	document.getElementById("myForm").submit();
-   }
+//submit para chrome q saltea requireds and patterns
+function submitForm($acti) {
+	   $("#myForm").attr('action', $acti);
+	   $(event.currentTarget).click();//click al boton q llama
+	}
+
 
 window.addEventListener('resize', function(event){
 	

@@ -39,6 +39,8 @@ function submitForm(met,id) {
 		document.getElementById(id).submit();
   }/*para usar varios botones en un form*/
 
+
+
 $(document).ready(function() {
 	$('#datetimepicker1').datetimepicker({
 
