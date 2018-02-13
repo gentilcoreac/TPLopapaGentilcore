@@ -16,25 +16,29 @@ public class DataPersona{
 		Statement stmt = null;
 		ResultSet rs=null;
 		ArrayList<Persona> pers= new ArrayList<Persona>();
-		DataCategoria dc = new DataCategoria();
 		
 		try {
 			stmt = FactoryConexion.getInstancia().getConn().createStatement();
 			
-			rs = stmt.executeQuery("select * from persona"); 	
+			rs = stmt.executeQuery(""
+					+ "select p.*,c.* from persona p "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria"); 	
 					if(rs!=null){
 						while(rs.next()){
 							Persona p= new Persona();
-							p.setId(rs.getInt("id_persona"));
-							p.setNombre(rs.getString("nombre"));
-							p.setApellido(rs.getString("apellido"));
-							p.setDni(rs.getString("dni"));
-							p.setUsuario(rs.getString("usuario"));		
-							p.setContrasenia(rs.getString("contrasenia"));								
-							p.setEmail(rs.getString("email"));
-							p.setHabilitado(rs.getBoolean("habilitado"));		
-							int idCat= rs.getInt("id_categoria");
-							p.setCategoria(dc.getOne(idCat));
+							p.setId(rs.getInt("p.id_persona"));
+							p.setNombre(rs.getString("p.nombre"));
+							p.setApellido(rs.getString("p.apellido"));
+							p.setDni(rs.getString("p.dni"));
+							p.setUsuario(rs.getString("p.usuario"));		
+							p.setContrasenia(rs.getString("p.contrasenia"));								
+							p.setEmail(rs.getString("p.email"));
+							p.setHabilitado(rs.getBoolean("p.habilitado"));
+							Categoria cat=new Categoria();
+							cat.setId(rs.getInt("c.id_categoria"));
+							cat.setDescripcion(rs.getString("c.descripcion"));
+							p.setCategoria(cat);
 							pers.add(p);
 						}
 					}
@@ -162,27 +166,31 @@ public class DataPersona{
 	
 	
 	public Persona getByDni(Persona per) throws SQLException,AppDataException{
-		Persona p = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataCategoria dc = new DataCategoria();
+		Persona p=null;
 		try {
-			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from persona where dni=?");
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "select p.*,c.* from persona p "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria "
+					+ "where p.dni=?");
 			pstmt.setString(1, per.getDni());
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				p= new Persona();
-				p.setId(rs.getInt("id_persona"));
-				p.setNombre(rs.getString("nombre"));
-				p.setApellido(rs.getString("apellido"));
-				p.setDni(rs.getString("dni"));
-				p.setUsuario(rs.getString("usuario"));		
-				p.setContrasenia(rs.getString("contrasenia"));								
-				p.setEmail(rs.getString("email"));
-				p.setHabilitado(rs.getBoolean("habilitado"));
-				int idCat= rs.getInt("id_categoria");
-				p.setCategoria(dc.getOne(idCat));
+				p.setId(rs.getInt("p.id_persona"));
+				p.setNombre(rs.getString("p.nombre"));
+				p.setApellido(rs.getString("p.apellido"));
+				p.setDni(rs.getString("p.dni"));
+				p.setUsuario(rs.getString("p.usuario"));		
+				p.setContrasenia(rs.getString("p.contrasenia"));								
+				p.setEmail(rs.getString("p.email"));
+				p.setHabilitado(rs.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(rs.getInt("c.id_categoria"));
+				cat.setDescripcion(rs.getString("c.descripcion"));
+				p.setCategoria(cat);
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al buscar una persona por dni.",Level.ERROR);
@@ -203,24 +211,28 @@ public class DataPersona{
 		Persona p = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataCategoria dc = new DataCategoria();
 		try {
-			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from persona where id_persona=?");
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "select p.*,c.* from persona p "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria "
+					+ "where p.id_persona=?");
 			pstmt.setInt(1, per.getId());
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				p= new Persona();
-				p.setId(rs.getInt("id_persona"));
-				p.setNombre(rs.getString("nombre"));
-				p.setApellido(rs.getString("apellido"));
-				p.setDni(rs.getString("dni"));
-				p.setUsuario(rs.getString("usuario"));		
-				p.setContrasenia(rs.getString("contrasenia"));						
-				p.setEmail(rs.getString("email"));
-				p.setHabilitado(rs.getBoolean("habilitado"));
-				int idCat= rs.getInt("id_categoria");
-				p.setCategoria(dc.getOne(idCat));
+				p.setId(rs.getInt("p.id_persona"));
+				p.setNombre(rs.getString("p.nombre"));
+				p.setApellido(rs.getString("p.apellido"));
+				p.setDni(rs.getString("p.dni"));
+				p.setUsuario(rs.getString("p.usuario"));		
+				p.setContrasenia(rs.getString("p.contrasenia"));								
+				p.setEmail(rs.getString("p.email"));
+				p.setHabilitado(rs.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(rs.getInt("c.id_categoria"));
+				cat.setDescripcion(rs.getString("c.descripcion"));
+				p.setCategoria(cat);
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al buscar una persona por id",Level.ERROR);
@@ -241,24 +253,28 @@ public class DataPersona{
 		Persona p = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataCategoria dc = new DataCategoria();
 		try {
-			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from persona where id_persona=?");
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "select p.*,c.* from persona p "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria "
+					+ "where p.id_persona=?");
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				p= new Persona();
-				p.setId(rs.getInt("id_persona"));
-				p.setNombre(rs.getString("nombre"));
-				p.setApellido(rs.getString("apellido"));
-				p.setDni(rs.getString("dni"));
-				p.setUsuario(rs.getString("usuario"));		
-				p.setContrasenia(rs.getString("contrasenia"));							
-				p.setEmail(rs.getString("email"));
-				p.setHabilitado(rs.getBoolean("habilitado"));
-				int idCat= rs.getInt("id_categoria");
-				p.setCategoria(dc.getOne(idCat));
+				p.setId(rs.getInt("p.id_persona"));
+				p.setNombre(rs.getString("p.nombre"));
+				p.setApellido(rs.getString("p.apellido"));
+				p.setDni(rs.getString("p.dni"));
+				p.setUsuario(rs.getString("p.usuario"));		
+				p.setContrasenia(rs.getString("p.contrasenia"));								
+				p.setEmail(rs.getString("p.email"));
+				p.setHabilitado(rs.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(rs.getInt("c.id_categoria"));
+				cat.setDescripcion(rs.getString("c.descripcion"));
+				p.setCategoria(cat);
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al buscar una persona por id",Level.ERROR);
@@ -280,28 +296,33 @@ public class DataPersona{
 	
 	
 	public Persona getLoggedUser(String usuario,String pass)throws SQLException,AppDataException{
-		Persona per=null;
+		Persona p=null;
 		PreparedStatement pstmt=null;
-		ResultSet res=null;
+		ResultSet rs=null;
 		try{
 			
-			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from persona where usuario=? and contrasenia=?;");
+			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ "select p.*,c.* from persona p "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria "
+					+ "where p.usuario=? and p.contrasenia=?;");
 			pstmt.setString(1, usuario);
 			pstmt.setString(2, pass);
-			res=pstmt.executeQuery();
-			if(res!=null && res.next()){
-				per=new Persona();
-				per.setId(res.getInt("id_persona"));
-				per.setDni(res.getString("dni"));
-				per.setNombre(res.getString("nombre"));
-				per.setApellido(res.getString("apellido"));
-				per.setUsuario(res.getString("usuario"));
-				per.setContrasenia(res.getString("contrasenia"));
-				per.setHabilitado(res.getBoolean("habilitado"));
-				int id_categoria=res.getInt("id_categoria");
-				per.setCategoria(new DataCategoria().getOne(id_categoria));
-				per.setEmail(res.getString("email"));
+			rs=pstmt.executeQuery();
+			if(rs!=null && rs.next()){
+				p= new Persona();
+				p.setId(rs.getInt("p.id_persona"));
+				p.setNombre(rs.getString("p.nombre"));
+				p.setApellido(rs.getString("p.apellido"));
+				p.setDni(rs.getString("p.dni"));
+				p.setUsuario(rs.getString("p.usuario"));		
+				p.setContrasenia(rs.getString("p.contrasenia"));								
+				p.setEmail(rs.getString("p.email"));
+				p.setHabilitado(rs.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(rs.getInt("c.id_categoria"));
+				cat.setDescripcion(rs.getString("c.descripcion"));
+				p.setCategoria(cat);
 			}
 			
 		}
@@ -310,14 +331,14 @@ public class DataPersona{
 		}
 		finally{
 			try{
-			if(res!=null)res.close();
+			if(rs!=null)rs.close();
 			if(pstmt!=null)pstmt.close();
 			FactoryConexion.getInstancia().releaseConn();}
 			catch(SQLException sqlex){
 				throw new AppDataException(sqlex, "Error al cerrar conexion, resultset o statement",Level.ERROR);
 			}
 		}
-		return per;
+		return p;
 	}
 	
 }

@@ -184,19 +184,27 @@ public class DataElemento {
 		Elemento e =null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataTipoDeElemento dtde = new DataTipoDeElemento();
 		
 		try {
-			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id_elemento,nombre,id_tipodeelemento from elemento where id_elemento=?");
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ " select e.*,t.* from elemento e"
+					+ " inner join tipodeelemento t"
+					+ " on e.id_tipodeelemento=t.id_tipodeelemento"
+					+ " where e.id_elemento=?");
 			pstmt.setInt(1,elem.getId_elemento());
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				e = new Elemento();
-				e.setId_elemento(rs.getInt("id_elemento"));
-				e.setNombre(rs.getString("nombre"));
-				int idTipo = rs.getInt("id_tipodeelemento");
-				e.setTipo(dtde.getOne(idTipo));
+				e.setId_elemento(rs.getInt("e.id_elemento"));
+				e.setNombre(rs.getString("e.nombre"));
+				TipoDeElemento te=new TipoDeElemento();
+				te.setId(rs.getInt("t.id_tipodeelemento"));
+				te.setNombre(rs.getString("t.nombre"));
+				te.setCant_max_res_pen(rs.getInt("t.cantmaxrespen"));
+				te.setLimite_horas_res(rs.getInt("t.limite_horas_res"));
+				te.setDias_max_anticipacion(rs.getInt("t.dias_max_anticipacion"));
+				te.setOnly_encargados(rs.getBoolean("t.only_encargados"));
+				e.setTipo(te);
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al buscar un Elemento",Level.ERROR);
@@ -219,19 +227,27 @@ public class DataElemento {
 		Elemento e =null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		DataTipoDeElemento dtde = new DataTipoDeElemento();
 		
 		try {
-			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from elemento where id_elemento=?");
+			pstmt = FactoryConexion.getInstancia().getConn().prepareStatement(""
+					+ " select e.*,t.* from elemento e"
+					+ " inner join tipodeelemento t"
+					+ " on e.id_tipodeelemento=t.id_tipodeelemento"
+					+ " where e.id_elemento=?");
 			pstmt.setInt(1,id_elem_p);
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()){
 				e = new Elemento();
-				e.setId_elemento(rs.getInt("id_elemento"));
-				e.setNombre(rs.getString("nombre"));
-				int idTipo = rs.getInt("id_tipodeelemento");
-				e.setTipo(dtde.getOne(idTipo));
+				e.setId_elemento(rs.getInt("e.id_elemento"));
+				e.setNombre(rs.getString("e.nombre"));
+				TipoDeElemento te=new TipoDeElemento();
+				te.setId(rs.getInt("t.id_tipodeelemento"));
+				te.setNombre(rs.getString("t.nombre"));
+				te.setCant_max_res_pen(rs.getInt("t.cantmaxrespen"));
+				te.setLimite_horas_res(rs.getInt("t.limite_horas_res"));
+				te.setDias_max_anticipacion(rs.getInt("t.dias_max_anticipacion"));
+				te.setOnly_encargados(rs.getBoolean("t.only_encargados"));
+				e.setTipo(te);
 			}
 		} catch (SQLException sqlex) {
 			throw new AppDataException(sqlex, "Error al buscar una Elemento",Level.ERROR);

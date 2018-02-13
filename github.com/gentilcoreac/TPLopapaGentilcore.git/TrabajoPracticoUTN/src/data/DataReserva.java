@@ -9,9 +9,11 @@ import java.util.Date;
 
 import org.apache.logging.log4j.Level;
 
+import business.entities.Categoria;
 import business.entities.Elemento;
 import business.entities.Persona;
 import business.entities.Reserva;
+import business.entities.TipoDeElemento;
 import tools.AppDataException;
 import tools.Campo;
 
@@ -30,7 +32,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_reserva=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, reserva.getId_reserva());
@@ -40,7 +46,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_elemento=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, reserva.getElemento()!=null?reserva.getElemento().getId_elemento():-1);
@@ -50,7 +60,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, reserva.getPersona()!=null?reserva.getPersona().getId():-1);
@@ -60,7 +74,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.fecha_hora_desde_solicitada > now() "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								break;
@@ -69,7 +87,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.fecha_hora_entregado is null and "
 								+ "r.fecha_hora_hasta_solicitada < now() "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
@@ -80,28 +102,55 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								break;
 			}
 			res=pstmt.executeQuery();
 			if(res!=null){
 				while(res.next()){
-					Elemento ele=new DataElemento().getOne(res.getInt("r.id_elemento"));
-					Persona per=new DataPersona().getOne(res.getInt("r.id_persona"));
-					Reserva re=new Reserva();
-					re=new Reserva();
-					re.setId_reserva(res.getInt("r.id_reserva"));
-					re.setPersona(per);
-					re.setElemento(ele);
+					Elemento ele=new Elemento();
+					ele.setId_elemento(res.getInt("e.id_elemento"));
+					ele.setNombre(res.getString("e.nombre"));
+					TipoDeElemento te=new TipoDeElemento();
+					te.setId(res.getInt("t.id_tipodeelemento"));
+					te.setNombre(res.getString("t.nombre"));
+					te.setCant_max_res_pen(res.getInt("t.cantmaxrespen"));
+					te.setLimite_horas_res(res.getInt("t.limite_horas_res"));
+					te.setDias_max_anticipacion(res.getInt("t.dias_max_anticipacion"));
+					te.setOnly_encargados(res.getBoolean("t.only_encargados"));
+					ele.setTipo(te);
 					
-					re.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
-					re.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
-					re.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
-					re.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
-					re.setDetalle(res.getString("r.detalle"));
+					Persona p= new Persona();
+					p.setId(res.getInt("p.id_persona"));
+					p.setNombre(res.getString("p.nombre"));
+					p.setApellido(res.getString("p.apellido"));
+					p.setDni(res.getString("p.dni"));
+					p.setUsuario(res.getString("p.usuario"));		
+					p.setContrasenia(res.getString("p.contrasenia"));								
+					p.setEmail(res.getString("p.email"));
+					p.setHabilitado(res.getBoolean("p.habilitado"));
+					Categoria cat=new Categoria();
+					cat.setId(res.getInt("c.id_categoria"));
+					cat.setDescripcion(res.getString("c.descripcion"));
+					p.setCategoria(cat);
 					
-					reservas.add(re);
+					
+					Reserva r=new Reserva();
+					r.setId_reserva(res.getInt("r.id_reserva"));
+					r.setPersona(p);
+					r.setElemento(ele);
+					r.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
+					r.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
+					r.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
+					r.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
+					r.setDetalle(res.getString("r.detalle"));
+					
+					reservas.add(r);
 				}
 			}
 		}
@@ -134,7 +183,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_reserva=? and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, reserva.getId_reserva());
@@ -145,28 +198,26 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_elemento=? and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, reserva.getElemento()!=null?reserva.getElemento().getId_elemento():-1);
 								pstmt.setInt(2, persona.getId());
-								break;
-			case POR_IDPERSONA:
-								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-								+ "select* from reserva r "
-								+ "inner join elemento e "
-								+ "on e.id_elemento=r.id_elemento "
-								+ "inner join persona p on p.id_persona=r.id_persona "
-								+ "where r.id_persona=? "
-								+ "order by r.fecha_hora_reserva_hecha desc ");
-								pstmt.setInt(1, reserva.getPersona()!=null?reserva.getPersona().getId():-1);
 								break;
 			case PENDIENTES:	
 								pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.fecha_hora_desde_solicitada > now() and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, persona.getId());
@@ -176,7 +227,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.fecha_hora_entregado is null and "
 								+ "r.fecha_hora_hasta_solicitada < now() and r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
@@ -188,7 +243,11 @@ public class DataReserva {
 								+ "select* from reserva r "
 								+ "inner join elemento e "
 								+ "on e.id_elemento=r.id_elemento "
+								+ "inner join tipodeelemento t "
+								+ "on t.id_tipodeelemento=e.id_tipodeelemento "
 								+ "inner join persona p on p.id_persona=r.id_persona "
+								+ "inner join categoria c "
+								+ "on p.id_categoria=c.id_categoria "
 								+ "where r.id_persona=? "
 								+ "order by r.fecha_hora_reserva_hecha desc ");
 								pstmt.setInt(1, persona.getId());
@@ -197,21 +256,44 @@ public class DataReserva {
 			res=pstmt.executeQuery();
 			if(res!=null){
 				while(res.next()){
-					Elemento ele=new DataElemento().getOne(res.getInt("r.id_elemento"));
-					Persona per=new DataPersona().getOne(res.getInt("r.id_persona"));
-					Reserva re=new Reserva();
-					re=new Reserva();
-					re.setId_reserva(res.getInt("r.id_reserva"));
-					re.setPersona(per);
-					re.setElemento(ele);
+					Elemento ele=new Elemento();
+					ele.setId_elemento(res.getInt("e.id_elemento"));
+					ele.setNombre(res.getString("e.nombre"));
+					TipoDeElemento te=new TipoDeElemento();
+					te.setId(res.getInt("t.id_tipodeelemento"));
+					te.setNombre(res.getString("t.nombre"));
+					te.setCant_max_res_pen(res.getInt("t.cantmaxrespen"));
+					te.setLimite_horas_res(res.getInt("t.limite_horas_res"));
+					te.setDias_max_anticipacion(res.getInt("t.dias_max_anticipacion"));
+					te.setOnly_encargados(res.getBoolean("t.only_encargados"));
+					ele.setTipo(te);
 					
-					re.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
-					re.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
-					re.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
-					re.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
-					re.setDetalle(res.getString("r.detalle"));
+					Persona p= new Persona();
+					p.setId(res.getInt("p.id_persona"));
+					p.setNombre(res.getString("p.nombre"));
+					p.setApellido(res.getString("p.apellido"));
+					p.setDni(res.getString("p.dni"));
+					p.setUsuario(res.getString("p.usuario"));		
+					p.setContrasenia(res.getString("p.contrasenia"));								
+					p.setEmail(res.getString("p.email"));
+					p.setHabilitado(res.getBoolean("p.habilitado"));
+					Categoria cat=new Categoria();
+					cat.setId(res.getInt("c.id_categoria"));
+					cat.setDescripcion(res.getString("c.descripcion"));
+					p.setCategoria(cat);
 					
-					reservas.add(re);
+					
+					Reserva r=new Reserva();
+					r.setId_reserva(res.getInt("r.id_reserva"));
+					r.setPersona(p);
+					r.setElemento(ele);
+					r.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
+					r.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
+					r.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
+					r.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
+					r.setDetalle(res.getString("r.detalle"));
+					
+					reservas.add(r);
 				}
 			}
 		}
@@ -330,26 +412,61 @@ public class DataReserva {
 	
 	
 	
-	public Reserva getOne(Reserva r)throws Exception{
-		Reserva reserva=null;
+	public Reserva getOne(Reserva reser)throws Exception{
+		Reserva r=null;
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
+		ResultSet res=null;
 		try{
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "select * from reserva r where r.id_reserva=?;");
-			pstmt.setInt(1, r.getId_reserva());
-			rs=pstmt.executeQuery();
-			if(rs.next() && rs!=null){
-				reserva=new Reserva();
-				reserva.setId_reserva(rs.getInt("r.id_reserva"));
-				reserva.setPersona(new DataPersona().getOne(rs.getInt("r.id_persona")));
-				reserva.setElemento(new DataElemento().getOne(rs.getInt("r.id_elemento")));
-				java.text.SimpleDateFormat formatter=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				reserva.setFecha_hora_reserva_hecha(rs.getString("r.fecha_hora_reserva_hecha")!=null?formatter.parse(rs.getString("r.fecha_hora_reserva_hecha")):null);
-				reserva.setFecha_hora_desde_solicitada(rs.getString("r.fecha_hora_desde_solicitada")!=null?formatter.parse(rs.getString("r.fecha_hora_desde_solicitada")):null);
-				reserva.setFecha_hora_hasta_solicitada(rs.getString("r.fecha_hora_hasta_solicitada")!=null?formatter.parse(rs.getString("r.fecha_hora_hasta_solicitada")):null);
-				reserva.setFecha_hora_entregado(rs.getString("r.fecha_hora_entregado")!=null?formatter.parse(rs.getString("r.fecha_hora_entregado")):null);
-				reserva.setDetalle(rs.getString("detalle"));
+					+ "select* from reserva r "
+					+ "inner join elemento e "
+					+ "on e.id_elemento=r.id_elemento "
+					+ "inner join tipodeelemento t "
+					+ "on t.id_tipodeelemento=e.id_tipodeelemento "
+					+ "inner join persona p on p.id_persona=r.id_persona "
+					+ "inner join categoria c "
+					+ "on p.id_categoria=c.id_categoria "
+					+ "where r.id_reserva=?;");
+			pstmt.setInt(1, reser.getId_reserva());
+			res=pstmt.executeQuery();
+			if(res.next() && res!=null){
+				Elemento ele=new Elemento();
+				ele.setId_elemento(res.getInt("e.id_elemento"));
+				ele.setNombre(res.getString("e.nombre"));
+				TipoDeElemento te=new TipoDeElemento();
+				te.setId(res.getInt("t.id_tipodeelemento"));
+				te.setNombre(res.getString("t.nombre"));
+				te.setCant_max_res_pen(res.getInt("t.cantmaxrespen"));
+				te.setLimite_horas_res(res.getInt("t.limite_horas_res"));
+				te.setDias_max_anticipacion(res.getInt("t.dias_max_anticipacion"));
+				te.setOnly_encargados(res.getBoolean("t.only_encargados"));
+				ele.setTipo(te);
+				
+				Persona p= new Persona();
+				p.setId(res.getInt("p.id_persona"));
+				p.setNombre(res.getString("p.nombre"));
+				p.setApellido(res.getString("p.apellido"));
+				p.setDni(res.getString("p.dni"));
+				p.setUsuario(res.getString("p.usuario"));		
+				p.setContrasenia(res.getString("p.contrasenia"));								
+				p.setEmail(res.getString("p.email"));
+				p.setHabilitado(res.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(res.getInt("c.id_categoria"));
+				cat.setDescripcion(res.getString("c.descripcion"));
+				p.setCategoria(cat);
+				
+				
+				r=new Reserva();
+				r.setId_reserva(res.getInt("r.id_reserva"));
+				r.setPersona(p);
+				r.setElemento(ele);
+				r.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
+				r.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
+				r.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
+				r.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
+				r.setDetalle(res.getString("r.detalle"));
+				
 			}
 		}
 		catch(SQLException sqlex){
@@ -358,37 +475,64 @@ public class DataReserva {
 		finally{
 			try{
 				if(pstmt!=null){pstmt.close();}
-				if(rs!=null){rs.close();}
+				if(res!=null){res.close();}
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
 				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
-		return reserva;
+		return r;
 	}
 	
-	public Reserva getOne(int idr,Persona p)throws Exception{
-		Reserva reserva=null;
+	public Reserva getOne(int idr,Persona per)throws Exception{
+		Reserva r=null;
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
+		ResultSet res=null;
 		try{
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "select * from reserva r where r.id_reserva=? and r.id_persona=?;");
+					+ "select * from reserva r "
+					+ "where r.id_reserva=? and r.id_persona=?;");
 			pstmt.setInt(1, idr);
-			pstmt.setInt(2, p.getId());
-			rs=pstmt.executeQuery();
-			if(rs.next() && rs!=null){
-				reserva=new Reserva();
-				reserva.setId_reserva(rs.getInt("r.id_reserva"));
-				reserva.setPersona(new DataPersona().getOne(rs.getInt("r.id_persona")));
-				reserva.setElemento(new DataElemento().getOne(rs.getInt("r.id_elemento")));
-				java.text.SimpleDateFormat formatter=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				reserva.setFecha_hora_reserva_hecha(rs.getString("r.fecha_hora_reserva_hecha")!=null?formatter.parse(rs.getString("r.fecha_hora_reserva_hecha")):null);
-				reserva.setFecha_hora_desde_solicitada(rs.getString("r.fecha_hora_desde_solicitada")!=null?formatter.parse(rs.getString("r.fecha_hora_desde_solicitada")):null);
-				reserva.setFecha_hora_hasta_solicitada(rs.getString("r.fecha_hora_hasta_solicitada")!=null?formatter.parse(rs.getString("r.fecha_hora_hasta_solicitada")):null);
-				reserva.setFecha_hora_entregado(rs.getString("r.fecha_hora_entregado")!=null?formatter.parse(rs.getString("r.fecha_hora_entregado")):null);
-				reserva.setDetalle(rs.getString("detalle"));
+			pstmt.setInt(2, per.getId());
+			res=pstmt.executeQuery();
+			if(res.next() && res!=null){
+				Elemento ele=new Elemento();
+				ele.setId_elemento(res.getInt("e.id_elemento"));
+				ele.setNombre(res.getString("e.nombre"));
+				TipoDeElemento te=new TipoDeElemento();
+				te.setId(res.getInt("t.id_tipodeelemento"));
+				te.setNombre(res.getString("t.nombre"));
+				te.setCant_max_res_pen(res.getInt("t.cantmaxrespen"));
+				te.setLimite_horas_res(res.getInt("t.limite_horas_res"));
+				te.setDias_max_anticipacion(res.getInt("t.dias_max_anticipacion"));
+				te.setOnly_encargados(res.getBoolean("t.only_encargados"));
+				ele.setTipo(te);
+				
+				Persona p= new Persona();
+				p.setId(res.getInt("p.id_persona"));
+				p.setNombre(res.getString("p.nombre"));
+				p.setApellido(res.getString("p.apellido"));
+				p.setDni(res.getString("p.dni"));
+				p.setUsuario(res.getString("p.usuario"));		
+				p.setContrasenia(res.getString("p.contrasenia"));								
+				p.setEmail(res.getString("p.email"));
+				p.setHabilitado(res.getBoolean("p.habilitado"));
+				Categoria cat=new Categoria();
+				cat.setId(res.getInt("c.id_categoria"));
+				cat.setDescripcion(res.getString("c.descripcion"));
+				p.setCategoria(cat);
+				
+				
+				r=new Reserva();
+				r.setId_reserva(res.getInt("r.id_reserva"));
+				r.setPersona(p);
+				r.setElemento(ele);
+				r.setFecha_hora_reserva_hecha(res.getTimestamp("r.fecha_hora_reserva_hecha"));
+				r.setFecha_hora_desde_solicitada(res.getTimestamp("r.fecha_hora_desde_solicitada"));
+				r.setFecha_hora_hasta_solicitada(res.getTimestamp("r.fecha_hora_hasta_solicitada"));
+				r.setFecha_hora_entregado(res.getTimestamp("r.fecha_hora_entregado"));
+				r.setDetalle(res.getString("r.detalle"));
 			}
 		}
 		catch(SQLException sqlex){
@@ -397,14 +541,14 @@ public class DataReserva {
 		finally{
 			try{
 				if(pstmt!=null){pstmt.close();}
-				if(rs!=null){rs.close();}
+				if(res!=null){res.close();}
 				FactoryConexion.getInstancia().releaseConn();
 			}
 			catch(SQLException sqlex){
 				throw new AppDataException(sqlex,"Error al intentar cerrar conexion,ResultSet o PreparedStatement",Level.ERROR);
 			}
 		}
-		return reserva;
+		return r;
 	}
 
 	
@@ -424,9 +568,10 @@ public class DataReserva {
 		}
 		finally{
 			try{
-			if(stmt!=null){stmt.close();}
-			if(res!=null){stmt.close();}
-			FactoryConexion.getInstancia().releaseConn();}
+				if(stmt!=null){stmt.close();}
+				if(res!=null){stmt.close();}
+				FactoryConexion.getInstancia().releaseConn();
+			}
 			catch(SQLException sqlex){
 				throw new AppDataException(sqlex,sqlex.getMessage(),Level.ERROR);
 			}
@@ -443,13 +588,10 @@ public class DataReserva {
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
 					+ "select count(*) from reserva "
 					+ "where id_elemento=? and "
-					+ "((?>=fecha_hora_desde_solicitada and fecha_hora_hasta_solicitada>?) or "
-					+ "(?>fecha_hora_desde_solicitada and fecha_hora_hasta_solicitada>=?));");
+					+ "(?>=fecha_hora_desde_solicitada and fecha_hora_hasta_solicitada>=?);");
 			pstmt.setInt(1, idEle);
 			pstmt.setString(2, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaD));
 			pstmt.setString(3, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaD));
-			pstmt.setString(4, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaH));
-			pstmt.setString(5, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaH));
 			res=pstmt.executeQuery();
 		
 			if(res!=null && res.next()){
