@@ -189,9 +189,13 @@ case "modificacion":
 </div>
 <% 
 break;
-case "baja":
+default:
+	response.sendRedirect("ServletListaUsuarios");
+	break;
+}
+/* case "baja": */
 %>
-<div class="container-form">
+<%-- <div class="container-form">
   <h2>Eliminar Persona</h2>
 
   
@@ -257,7 +261,7 @@ default:
 	break;
 }
 
-%>
+%> --%>
 <br><br>
 <div class="loader"></div>
 </body>

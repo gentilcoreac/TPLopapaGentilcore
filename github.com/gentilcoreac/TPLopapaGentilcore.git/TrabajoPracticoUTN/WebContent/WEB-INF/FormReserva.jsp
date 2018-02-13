@@ -35,7 +35,7 @@
 			});
 			$('#datetimepickercierre').datetimepicker({
 				
-				defaultDate: new Date(), 
+				/* defaultDate: new Date(), */ 
 			    format: 'DD/MM/YYYY HH:mm:ss ',
 			    sideBySide: true
 			});
@@ -119,14 +119,6 @@ case "alta":%>
      <label>Apellido y Nombre:&nbsp<%=((Persona)session.getAttribute("user")).getApellido()+","+((Persona)session.getAttribute("user")).getNombre() %></label>
      <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
     </div>
-    <%-- <%if(per.getCategoria().getDescripcion().equals("Administrador")){ %>
-    <div class="form-group">
-      <label for="inputidpersona">ID Persona:</label>
-      <input name="idpersona" type="text" class="form-control" id="inputidpersona"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
-    </div>
-    <%}else{ %>
-	  <input name="idpersona" type="hidden" class="form-control" id="inputidpersona"  value="<%=((Persona)request.getSession().getAttribute("user")).getId()%>" >    
-    <%} %> --%>
     <div class="form-group">
      <label>ID Elemento:&nbsp<%=request.getAttribute("idelelistado") %></label>
      <label>Nombre:&nbsp<%=request.getAttribute("nombreelelistado") %></label>
@@ -137,10 +129,6 @@ case "alta":%>
      <label>Tiempo maximo de reserva:&nbsp<%=request.getAttribute("limite_horas_res") %>hs</label>
      <label>Cantidad maxima de dias de anticipacion:&nbsp<%=request.getAttribute("dias_max_anticipacion") %>&nbspdias</label>    
     </div>
-    <%-- <div class="form-group">
-      <label for="inputidelemento">ID Elemento:</label>
-      <input name="idelemento" type="text" class="form-control" id="inputidelemento"  required pattern="[1-9][0-9]*" oninvalid="setCustomValidity('Id invalido')" onchange="try{setCustomValidity('')}catch(e){}" value="<%=request.getAttribute("idelelistado") %>" >    
-    </div>   --%>
     <div class="form-group">
       <label for="inputfechareservadesde">Fecha-Hora Desde:</label>       
       <div class='input-group date' id='datetimepickerdesde'>
@@ -193,7 +181,22 @@ case "cerrar":
 	      </button>
 	   </td></tr> 
       </table>
+    </div>
+    <div class="form-group">
+     <label>ID Persona:&nbsp<%=request.getAttribute("idpersona") %></label>
+     <label>Dni:&nbsp<%=request.getAttribute("dniusulistadores") %></label>
+     <label>Apellido y Nombre:&nbsp<%=request.getAttribute("apellidousulistadores")+","+request.getAttribute("nombreusulistadores") %></label>
+    </div>
+	<div class="form-group">
+     <label>ID Elemento:&nbsp<%=request.getAttribute("idelemento") %></label>
+     <label>Nombre:&nbsp<%=request.getAttribute("nombreelelistadores") %></label>
+     <label>Tipo:&nbsp<%=request.getAttribute("tipoelelistadores") %></label>
     </div>  
+    <div class="form-group">
+     <label>Fecha-Hora Desde:&nbsp<%=request.getAttribute("fechareservadesde") %></label>
+     <label>Fecha-Hora Hasta:&nbsp<%=request.getAttribute("fechareservahasta") %></label>
+     <label>Fecha-Hora Hecha:&nbsp<%=request.getAttribute("fechareservahecha") %></label>
+    </div>    
     <div class="form-group">
       <label for="inputfechareservaentrega">Fecha-Hora Cierre:</label>       
       <div class='input-group date' id='datetimepickercierre'>
@@ -212,9 +215,13 @@ case "cerrar":
   </div>
 <% 
 break;
-case "baja":
+default:
+	response.sendRedirect("ServletListaElementos");
+	break;
+}
+/* case "baja": */
 %>
-<div class="container-form">
+<%-- <div class="container-form">
   <h2>Eliminar Reserva</h2>
 
   
@@ -274,15 +281,15 @@ case "baja":
 		<button class="boton btn btn-lg btn-default " formnovalidate onclick="javascript:window.history.go(-1);return false;">Cancelar</button>
 	</div>
 	</form>
-</div>
-<%	
-break;
+</div> --%>
+<%-- <%	
+/* break; */
 default:
 	response.sendRedirect("ServletListaElementos");
 	break;
 }
 
-%>
+%> --%>
 <br><br>
 <div class="loader"></div>
 </body>

@@ -258,7 +258,12 @@ if(session.getAttribute("user")==null){
 					<input type="hidden" name="fechareservadesde" value="<%=r.getFecha_hora_desde_solicitada()==null?null:formatter.format(r.getFecha_hora_desde_solicitada())%>" >		
 					<input type="hidden" name="fechareservahasta" value="<%=r.getFecha_hora_hasta_solicitada()==null?null:formatter.format(r.getFecha_hora_hasta_solicitada())%>" >			
 					<input type="hidden" name="fechareservaentrega" value="<%=r.getFecha_hora_entregado()==null?null:formatter.format(r.getFecha_hora_entregado())%>" >		
-					<input type="hidden" name="detalle" value="<%=r.getDetalle()%>" >			
+					<input type="hidden" name="detalle" value="<%=r.getDetalle()%>" >
+				    <input type="hidden" name="nombreusulistadores" value="<%=r.getPersona().getNombre()%>" >
+				    <input type="hidden" name="apellidousulistadores" value="<%=r.getPersona().getApellido()%>" >
+				    <input type="hidden" name="dniusulistadores" value="<%=r.getPersona().getDni()%>" >
+				    <input type="hidden" name="nombreelelistadores" value="<%=r.getElemento().getNombre()%>" >
+				    <input type="hidden" name="tipoelelistadores" value="<%=r.getElemento().getTipo().getNombre()%>" >									
 					<%if(categoria.equals("Administrador")){ %>
 					<button class="btn btn-info btn-md cerrar" type="submit"  onclick="javascript: submitForm('ServletFormsReservas?accion=cerrar',<%=r.getId_reserva()%>)" data-toggle="tooltip" title="cerrar"><span class="glyphicon glyphicon-folder-open"></span></button>	
 					<%} %>

@@ -144,9 +144,13 @@ case "modificacion":
 </div>
 <% 
 break;
-case "baja":
+default:
+	response.sendRedirect("ServletListaElementos");
+	break;
+}
+/* case "baja": */
 %>
-<div class="container-form">
+<%-- <div class="container-form">
   <h2>Eliminar Elemento</h2>
 
   
@@ -192,7 +196,7 @@ default:
 	break;
 }
 
-%>
+%> --%>
 <br><br>
 <div class="loader"></div>
 </body>

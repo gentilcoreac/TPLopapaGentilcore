@@ -107,7 +107,7 @@ case "alta":%>
 </div>
 <% 
 break;
-case "modificacion":
+case "modificacion": 
 %>
 <div class="container-form">
   <h2>Modificar Tipo De Elemento</h2>
@@ -153,9 +153,13 @@ case "modificacion":
 </div>
 <% 
 break;
-case "baja":
+default:
+	response.sendRedirect("ServletListaTiposDeElementos");
+	break;
+}
+/* case "baja": */
 %>
-<div class="container-form">
+<%-- <div class="container-form">
   <h2>Eliminar Tipo de Elemento</h2>
 
   
@@ -197,14 +201,14 @@ case "baja":
 	</div>
 	</form>
 </div>
-<%	
-break;
+<%	 --%>
+<!-- break;
 default:
 	response.sendRedirect("ServletListaTiposDeElementos");
 	break;
 }
 
-%>
+%> --%> -->
 <br><br>
 <div class="loader"></div>
 </body>

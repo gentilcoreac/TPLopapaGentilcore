@@ -82,6 +82,11 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					request.setAttribute("fechareservahasta", res.getFecha_hora_hasta_solicitada()==null?null:formatter.format(res.getFecha_hora_hasta_solicitada()));
 					request.setAttribute("fechareservaentrega", res.getFecha_hora_entregado()==null?null:formatter.format(res.getFecha_hora_entregado()));
 					request.setAttribute("detalle",res.getDetalle() );
+					request.setAttribute("nombreusulistadores",res.getPersona().getNombre());
+					request.setAttribute("apellidousulistadores",res.getPersona().getApellido());
+					request.setAttribute("dniusulistadores",res.getPersona().getDni());
+					request.setAttribute("nombreelelistadores", res.getElemento().getNombre()==null?"":res.getElemento().getNombre());
+					request.setAttribute("tipoelelistadores", res.getElemento().getTipo().getNombre());
 					request.getRequestDispatcher("WEB-INF/FormReserva.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
 				
