@@ -19,9 +19,16 @@
 			window.history.go(-1);
 			return false;
 		}
+		$(document).ready(function () {
+			$("#btnExito").click(function () {
+			    $('.container').hide();
+			    $('.loader').show();
+			});
+		});
 	</script>
   </head>
 <body>
+<div class="container">
 	<%
 	 if(session.getAttribute("user")==null && request.getAttribute("loginError")==null){
 		response.sendRedirect("Login.html");
@@ -59,12 +66,13 @@
 		</div>
 		<br>
 		<form action=<%=request.getAttribute("urlvolver") %> method="post">
-		<button class="btn btn-default" type="submit">Volver al Listado</button>
+		<button id="btnExito" class="btn btn-default" type="submit">Volver al Listado</button>
 		</form>
 		<%
 		break;
 	}
 	%>
-
+</div>
+<div class="loader"></div>
 </body>
 </html>

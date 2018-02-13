@@ -66,7 +66,7 @@ public class CtrlReservaLogic {
 		return !isReservaPendiente(res);
 	}
 	
-	public Boolean sePuedeEliminar(Persona persona,Reserva res)throws Exception{
+	public Boolean perPuedeEliminar(Persona persona,Reserva res)throws Exception{
 		if(!isReservaPendiente(res) && !persona.getCategoria().getDescripcion().equals("Administrador")){
 			return false;
 		}
@@ -209,6 +209,16 @@ public class CtrlReservaLogic {
 		}
 		if(!hasItStarted(res)){
 			throw new BookingException(ex,"No se puede cerrar la reserva:aun no ha iniciado.");
+		}
+	}
+	
+	public void validaBaja(Reserva res,Persona per)throws BookingException,Exception{
+		Exception ex=new Exception("");
+		if(res==null){
+			throw new BookingException(ex,"Reserva inexistente");
+		}
+		if(!perPuedeEliminar(per, res)){
+			throw new BookingException(ex,"Solo se pueden eliminar reservas pendientes");
 		}
 	}
 }

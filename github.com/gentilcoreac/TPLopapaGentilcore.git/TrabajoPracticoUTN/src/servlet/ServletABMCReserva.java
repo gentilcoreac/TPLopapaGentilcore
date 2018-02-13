@@ -64,8 +64,9 @@ public class ServletABMCReserva extends HttpServletConFunciones {
 	}
 private void consulta(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
-			try {
+		
+		try {
+			if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
 				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
 				if(res==null){
 					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
@@ -84,52 +85,47 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					request.getRequestDispatcher("WEB-INF/FormReserva.jsp?accion="+request.getParameter("fin")).forward(request, response);
 				}
 				
-				
-			} catch (Exception ex) {
-			
-				this.error(request, response, ex);
 			}
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
+			}
+		} catch (Exception ex) {
+		
+			this.error(request, response, ex);
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
-		}
+		
 		
 	}
 
 
 	private void baja(HttpServletRequest request, HttpServletResponse response) {
 		
-		if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
-			try{
+		
+		try{
+			if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)){
 				CtrlReservaLogic ctrl =new CtrlReservaLogic();
 				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
-				if(res==null){
-					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
-	
+				ctrl.validaBaja(res, (Persona)request.getSession().getAttribute("user"));
+				ctrl.delete(res);
+				try{
+					Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
 				}
-				else{
-						if(ctrl.sePuedeEliminar((Persona)request.getSession().getAttribute("user"), res)){
-							ctrl.delete(res);
-							try{
-								Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Eliminada", "La siguiente reserva ha sido eliminada"+res.toString());
-							}
-							catch(Exception ex){
-								throw new Exception("Reserva eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
-							}
-							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");			
-						}
-						else{
-							hacerInforme(request, response, TipoInforme.INFO , "Reserva", "Solo se pueden eliminar reservas pendientes");			
-						}
-					}
+				catch(Exception ex){
+					throw new Exception("Reserva eliminada correctamente.Se produjo un error de Email:"+ex.getMessage());
+				}
+				hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva eliminada correctamente","ServletListaReservas");					
 			}
-			catch(Exception ex){
-				this.error(request, response,ex);
+			else{
+				hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
 			}
 		}
-		else{
-			hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
+		catch(BookingException bex){
+			hacerInforme(request, response, TipoInforme.INFO , "Reserva", bex.getMessage());
 		}
+		catch(Exception ex){
+			this.error(request, response,ex);
+		}
+		
 	}
 
 
