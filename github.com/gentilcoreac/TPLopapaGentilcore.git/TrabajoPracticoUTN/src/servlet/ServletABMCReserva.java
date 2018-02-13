@@ -137,41 +137,31 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 		
 		try {
 		
-			if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)&&
-			   Campo.Valida(request.getParameter("fechareservaentrega"), Campo.tipo.FECHAHORA)){
+			 if(Campo.Valida(request.getParameter("idreserva"), Campo.tipo.ID)&&
+			    Campo.Valida(request.getParameter("fechareservaentrega"), Campo.tipo.FECHAHORA)){
+				 
 				CtrlReservaLogic ctrl =new CtrlReservaLogic();
 				Reserva res=new CtrlReservaLogic().getOne(Integer.parseInt(request.getParameter("idreserva")),(Persona)request.getSession().getAttribute("user"));
-				if(res==null){
-					hacerInforme(request, response, TipoInforme.INFO , "Reserva", "No existe ninguna reserva con el id "+request.getParameter("idreserva"));			
-	
+				Date fc=Campo.parseaFecha(request.getParameter("fechareservaentrega"));
+				res.setFecha_hora_entregado(fc);
+				ctrl.validaCierre(res);
+				ctrl.updateParaCerrarRes(res);
+				try{
+					Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Cerrada", "La siguiente reserva ha sido cerrada"+res.toString());
 				}
-				else{
-					Date fc=Campo.parseaFecha(request.getParameter("fechareservaentrega"));
-					if(ctrl.isFCierreMayorQFDesde(fc,res.getFecha_hora_desde_solicitada())){
-						if(ctrl.sePuedeCerrar(res)){
-							res.setFecha_hora_entregado(fc);
-							ctrl.updateParaCerrarRes(res);
-							try{
-								Emailer.getInstance().send(res.getPersona().getEmail(), "MyReserva-Reserva Cerrada", "La siguiente reserva ha sido cerrada"+res.toString());
-							}
-							catch(Exception ex){
-								throw new Exception("Reserva cerrada correctamente.Se produjo un error de Email:"+ex.getMessage());
-							}
-							hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva cerrada correctamente","ServletListaReservas");			
-						}
-						else{
-							hacerInforme(request,response,TipoInforme.INFO,"Reserva","No se puede cerrar la reserva:aun no ha iniciado.");
-						}
-					}
-					else{
-						hacerInforme(request,response,TipoInforme.INFO,"Reserva","La fecha de cierre debe ser posterior al inicio de la reserva");
-					}
+				catch(Exception ex){
+					throw new Exception("Reserva cerrada correctamente.Se produjo un error de Email:"+ex.getMessage());
 				}
+				hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva cerrada correctamente","ServletListaReservas");			
+			
 			}
 			else{
 				hacerInforme(request, response, TipoInforme.INFO , "Reserva", Campo.getMensaje());			
 			}
-		} catch (Exception ex) {
+		} catch(BookingException bex){
+			hacerInforme(request, response, TipoInforme.INFO , "Reserva", bex.getMessage());
+		}
+		catch (Exception ex) {
 		
 			this.error(request, response, ex);
 		}
@@ -204,7 +194,7 @@ private void consulta(HttpServletRequest request, HttpServletResponse response) 
 					catch(Exception ex){
 						throw new Exception("Reserva creada correctamente.Se produjo un error de Email:"+ex.getMessage());
 					}
-					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaReservas");			
+					hacerInforme(request, response, TipoInforme.EXITO , "Reserva", "Reserva creada correctamente","ServletListaElementos");			
 					
 				}
 

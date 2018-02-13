@@ -62,7 +62,7 @@ public class CtrlReservaLogic {
 		return res.getFecha_hora_desde_solicitada().compareTo(Calendar.getInstance().getTime())<0?false:true;
 	}
 	
-	public Boolean sePuedeCerrar(Reserva res)throws Exception{
+	public Boolean hasItStarted(Reserva res)throws Exception{
 		return !isReservaPendiente(res);
 	}
 	
@@ -75,7 +75,8 @@ public class CtrlReservaLogic {
 		}
 	}
 	
-	public Boolean sePuedeCrear(Persona persona,Reserva res){
+	//sin problema de categoria
+	public Boolean sinProblemDeCat(Persona persona,Reserva res){
 		if(res.getElemento().getTipo().isOnly_encargados() && !persona.getCategoria().getDescripcion().equals("Encargado")){
 			return false;
 		}
@@ -188,13 +189,26 @@ public class CtrlReservaLogic {
 			throw new BookingException(ex,"La Persona no existe");
 		}
 		retornaErroresFechas(res.getFecha_hora_desde_solicitada(),res.getFecha_hora_hasta_solicitada(),elemento);
-		if(!sePuedeCrear(persona, res)){
+		if(!sinProblemDeCat(persona, res)){
 			throw new BookingException(ex,"Solo los encargados pueden reservar este tipo de elemento");
 		}
 		if(hayLimtResPen(persona, res)){
 			throw new BookingException(ex,"No se pueden reservar mas elementos de este tipo\n"
                     + "Limite de reservas pendientes alcanzadas para el tipo:"
                     + res.getElemento().getTipo().getNombre());
+		}
+	}
+	
+	public void validaCierre(Reserva res)throws BookingException,Exception{
+		Exception ex=new Exception("");
+		if(res==null){
+			throw new BookingException(ex,"Reserva inexistente");
+		}
+		if(!isFCierreMayorQFDesde(res.getFecha_hora_entregado(),res.getFecha_hora_desde_solicitada())){
+			throw new BookingException(ex,"La fecha de cierre debe ser posterior al inicio de la reserva");
+		}
+		if(!hasItStarted(res)){
+			throw new BookingException(ex,"No se puede cerrar la reserva:aun no ha iniciado.");
 		}
 	}
 }

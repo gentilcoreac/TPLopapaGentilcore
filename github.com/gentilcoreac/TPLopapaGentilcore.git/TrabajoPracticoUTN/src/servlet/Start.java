@@ -15,6 +15,10 @@ import org.apache.logging.log4j.Level;
 @WebServlet({"/Start","/start"})
 public class Start extends HttpServletConFunciones {
 	private static final long serialVersionUID = 1L;
+	
+
+   
+
     public Start() {
     }
 
@@ -29,29 +33,35 @@ public class Start extends HttpServletConFunciones {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 					
 		try{
-			
-			String user=request.getParameter("username");
-			String pass=request.getParameter("password");
-			
-			CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
-			Persona usu=ctrl.getLoggedUser(user, pass);
-			if(usu!=null){
-				if(usu.isHabilitado()){
-					request.getSession().setAttribute("user", usu);	
-					logger.log(Level.INFO,"Log in - Cat:"+usu.getCategoria().getDescripcion()+" Usr:"+usu.getUsuario()+" DNI:"+usu.getDni());
-					request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
-				}else{
-					 logger.log(Level.INFO,"Usuario inhabilitado - User:"+user+" Password:"+pass);		
-					 request.setAttribute("loginError", "usuarioinhabilitado");
-					 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
-					 }
+			if(request.getParameter("username")!=null){
+				String user=request.getParameter("username");
+				String pass=request.getParameter("password");
+				
+				CtrlPersonaLogic ctrl=new CtrlPersonaLogic();
+				Persona usu=ctrl.getLoggedUser(user, pass);
+				if(usu!=null){
+					if(usu.isHabilitado()){
+						request.getSession().setAttribute("user", usu);	
+						logger.log(Level.INFO,"Log in - Cat:"+usu.getCategoria().getDescripcion()+" Usr:"+usu.getUsuario()+" DNI:"+usu.getDni());
+						request.getRequestDispatcher("WEB-INF/Inicio.jsp").forward(request, response);
+					}else{
+						 logger.log(Level.INFO,"Usuario inhabilitado - User:"+user+" Password:"+pass);		
+						 request.setAttribute("loginError", "usuarioinhabilitado");
+						 this.hacerInforme(request, response, TipoInforme.INFO, "Info", "El usuario no se halla habilitado para ingresar al sistema");
+						 }
+				}
+				else{
+					logger.log(Level.INFO,"Intento de logueo fallido - Usr:"+user+" Pass:"+pass);					
+					request.setAttribute("loginError", "usuarionulo");
+					this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
+					}
 			}
-			else{
-				logger.log(Level.INFO,"Intento de logueo fallido - Usr:"+user+" Pass:"+pass);					
-				request.setAttribute("loginError", "usuarionulo");
-				this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Usuario no encontrado");
-			}
+		else{
+			request.setAttribute("loginError", "nombre-usu-vacio");
+			this.hacerInforme(request, response, TipoInforme.INFO, "Info", "Nombre de usuario inexistente");
 			
+
+			}
 		}
 		catch(Exception ex){
 			request.setAttribute("loginError", "usuarioinhabilitado");
