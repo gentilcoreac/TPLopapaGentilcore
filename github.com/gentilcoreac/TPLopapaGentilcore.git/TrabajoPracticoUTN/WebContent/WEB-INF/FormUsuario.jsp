@@ -25,7 +25,7 @@ if(session.getAttribute("user")==null){
 %>
 <!-- <div class="menu_bar">
 			<div class="bt-menu">MyReserva<span class="glyphicon glyphicon-menu-hamburger"></span></div>
-</d -->iv>
+</d iv>-->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
