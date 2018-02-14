@@ -586,12 +586,15 @@ public class DataReserva {
 		ResultSet res=null;
 		try{
 			pstmt=FactoryConexion.getInstancia().getConn().prepareStatement(""
-					+ "select count(*) from reserva "
-					+ "where id_elemento=? and "
-					+ "(?>=fecha_hora_desde_solicitada and fecha_hora_hasta_solicitada>=?);");
+					+ "select count(*) from reserva r "
+					+ "where r.id_elemento=? and "
+					+ "not (r.fecha_hora_desde_solicitada<? and r.fecha_hora_hasta_solicitada<=?) " 
+					+ "and not (r.fecha_hora_desde_solicitada>=? and r.fecha_hora_hasta_solicitada>?);");
 			pstmt.setInt(1, idEle);
 			pstmt.setString(2, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaD));
 			pstmt.setString(3, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaD));
+			pstmt.setString(4, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaH));
+			pstmt.setString(5, new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(fechaH));
 			res=pstmt.executeQuery();
 		
 			if(res!=null && res.next()){

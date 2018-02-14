@@ -25,6 +25,11 @@ body {
       
 
   }
+  ul.navbar-nav{
+	 	margin-top:0px;
+	 	margin-bottom: 0px;
+	 	
+ 	}
   
   .navbar-nav .glyphicon{
   font-size: 15px;
@@ -70,7 +75,9 @@ body {
   textarea {
       resize: none;
   } 
-  
+  .navbar-nav .open .dropdown-menu {
+ 		background-color:white;
+ 	}
 
 .eliminar{
 	margin-left:10px;
