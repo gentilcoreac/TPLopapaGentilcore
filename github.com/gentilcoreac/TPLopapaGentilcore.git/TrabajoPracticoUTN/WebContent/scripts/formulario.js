@@ -31,31 +31,37 @@ $(document).ready(function () {
 	    $('.loader').show();
 	});
 });
+
+window.onunload  = function(e) {
+    
+	$('.container-form').show();
+    $('.loader').hide();
+};
 /*fin loader*/
 
 /*menu responsive*/
 
-$(document).ready(main);
- 
-var contador = 1;
- 
-function main(){
-	$('.glyphicon-menu-hamburger').click(function(){
-		// $('nav').toggle(); 
- 
-		if(contador == 1){
-			$('nav').animate({
-				left: '0'
-			});
-			contador = 0;
-		} else {
-			contador = 1;
-			$('nav').animate({
-				left: '-100%'
-			});
-		}
- 
-	});
- 
-};
+//$(document).ready(main);
+// 
+//var contador = 1;
+// 
+//function main(){
+//	$('.glyphicon-menu-hamburger').click(function(){
+//		// $('nav').toggle(); 
+// 
+//		if(contador == 1){
+//			$('nav').animate({
+//				left: '0'
+//			});
+//			contador = 0;
+//		} else {
+//			contador = 1;
+//			$('nav').animate({
+//				left: '-100%'
+//			});
+//		}
+// 
+//	});
+// 
+//};
 /*fin menu responsive*/

@@ -86,6 +86,13 @@ $(document).ready(function () {
 	    $('.loader').show();
 	});
 });
+
+//para firefox q deja el loader cargando cuando volves back button
+window.onunload  = function(e) {
+    
+	$('.container').show();
+    $('.loader').hide();
+};
 /* fin loader*/
 
 /*menu responsive*/
