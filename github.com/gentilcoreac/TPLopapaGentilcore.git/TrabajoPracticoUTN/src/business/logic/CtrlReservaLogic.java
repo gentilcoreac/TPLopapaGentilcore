@@ -110,8 +110,9 @@ public class CtrlReservaLogic {
 		return horas;
 	}
 	
-	public Boolean noEsFechaPasada(Date fecha){
-		return fecha.compareTo(Calendar.getInstance().getTime())<0?false:true;
+	public Boolean noEsFechaPasada(Date fecha)throws Exception{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		return fecha.compareTo(formatter.parse(new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime())))<0?false:true;
 	}
 	
 	public int getReservasEnIntervalo(int idEle,Date fechaD,Date fechaH)throws Exception{
